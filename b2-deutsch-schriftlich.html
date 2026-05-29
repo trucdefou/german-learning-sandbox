@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B2 Deutsch — 350 Übungen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+/* Tiya Golf Club inspired palette */
+:root{
+  --white:#ffffff;
+  --primary:#81B29A;
+  --secondary:#3D405B;
+  --section-bg:#F4F1DE;
+  --btn-bg:#F2CC8F;
+  --btn-hover:#E07A5F;
+  --dark:#000000;
+  --p:#717275;
+  --link-hover:#F2CC8F;
+  --ok:#5aab8a;
+  --err:#c96060;
+  --brd:#e8e3d0;
+  --font:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--white);color:var(--p);font-family:var(--font);font-weight:400;min-height:100vh;line-height:1.65}
+header{border-bottom:1px solid var(--brd);padding:1.8rem 2.5rem 1.5rem;display:flex;justify-content:space-between;align-items:flex-end;position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(12px)}
+.h-left h1{font-family:var(--font);font-size:1.9rem;color:var(--secondary);font-weight:700;letter-spacing:-1px}
+.h-left span{font-size:.7rem;color:var(--primary);letter-spacing:.15em;text-transform:uppercase;display:block;margin-bottom:.3rem;font-weight:500}
+.score-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:.4rem}
+.score-badge{font-size:.85rem;color:var(--white);background:var(--primary);padding:.4rem 1.1rem;border-radius:100px;letter-spacing:.03em;font-weight:500}
+.pct-badge{font-size:.75rem;color:var(--p);letter-spacing:.03em}
+.tabs{display:flex;flex-wrap:wrap;gap:.5rem;padding:1rem 2.5rem .9rem;background:var(--section-bg);position:sticky;top:88px;z-index:90;border-bottom:1px solid var(--brd)}
+.tab-btn{background:var(--white);border:1px solid var(--brd);color:var(--secondary);font-family:var(--font);font-size:.72rem;letter-spacing:.05em;padding:.45rem 1rem;cursor:pointer;border-radius:100px;text-transform:uppercase;font-weight:500;transition:all .2s}
+.tab-btn:hover,.tab-btn.active{background:var(--btn-bg);border-color:var(--btn-bg);color:var(--secondary)}
+.tab-btn .cnt{display:inline-block;background:rgba(61,64,91,.08);border-radius:100px;padding:0 .5rem;margin-left:.4rem;font-size:.65rem;color:var(--secondary)}
+.tab-btn.active .cnt{background:rgba(61,64,91,.2);color:var(--secondary)}
+.container{max-width:860px;margin:0 auto;padding:2.5rem 1.5rem 7rem}
+.sec-hdr{display:flex;align-items:center;gap:1rem;margin:2.5rem 0 1.2rem}
+.sec-hdr::before{content:attr(data-num);font-size:.7rem;color:var(--white);background:var(--secondary);padding:.3rem .75rem;border-radius:100px;letter-spacing:.05em;white-space:nowrap;font-weight:500}
+.sec-hdr h2{font-family:var(--font);font-size:1.5rem;color:var(--secondary);font-weight:700;letter-spacing:-.5px}
+.sec-hdr::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--brd),transparent)}
+.subsec{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin:2rem 0 .8rem;padding-left:.7rem;border-left:3px solid var(--primary);font-weight:500}
+.card{background:var(--white);border:1px solid var(--brd);border-left:4px solid transparent;border-radius:20px;padding:1.4rem 1.6rem;margin-bottom:1rem;transition:border-color .2s,box-shadow .2s;position:relative;box-shadow:0 2px 6px rgba(61,64,91,.04)}
+.card:hover{border-left-color:var(--primary);box-shadow:0 4px 16px rgba(61,64,91,.08)}
+.card.ok{border-left-color:var(--ok)}
+.card.err{border-left-color:var(--err)}
+.card-num{font-size:.7rem;color:var(--p);position:absolute;top:.8rem;right:1rem;background:var(--section-bg);padding:.18rem .6rem;border-radius:100px}
+.prompt{font-size:.95rem;color:var(--secondary);margin-bottom:1rem;line-height:1.75}
+.prompt em{color:var(--primary);font-style:normal;font-weight:500}
+.prompt strong{color:var(--btn-hover);font-weight:700}
+.choices{display:grid;gap:.5rem}
+.opt{background:var(--section-bg);border:1px solid var(--brd);color:var(--secondary);font-family:var(--font);font-size:.9rem;padding:.7rem 1rem;text-align:left;cursor:pointer;border-radius:10px;transition:all .15s;display:flex;align-items:flex-start;gap:.7rem}
+.opt:hover:not(:disabled){background:var(--white);color:var(--secondary);border-color:var(--primary)}
+.opt .ltr{font-family:var(--font);font-size:.78rem;color:var(--primary);min-width:1rem;flex-shrink:0;margin-top:.1rem;font-weight:700}
+.opt.ok{background:rgba(129,178,154,.15);border-color:var(--ok);color:#2d6a4f}
+.opt.err{background:rgba(224,122,95,.12);border-color:var(--err);color:#a04545}
+.opt:disabled{cursor:default}
+.inp{background:var(--white);border:1px solid var(--brd);color:var(--secondary);font-family:var(--font);font-size:.9rem;padding:.55rem .9rem;border-radius:10px;outline:none;transition:border-color .2s;margin-top:.2rem}
+.inp:focus{border-color:var(--primary)}
+.inp.ok{border-color:var(--ok);color:#2d6a4f}
+.inp.err{border-color:var(--err);color:#a04545}
+.inp-sm{width:140px}.inp-md{width:220px}.inp-lg{width:100%}
+textarea.inp{width:100%;min-height:70px;resize:vertical;font-family:var(--font);line-height:1.6}
+.btn{background:var(--btn-bg);border:none;color:var(--secondary);font-family:var(--font);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1.2rem;cursor:pointer;border-radius:100px;margin-top:.8rem;font-weight:700;transition:all .2s}
+.btn:hover{background:var(--btn-hover);color:var(--white)}
+.fb{margin-top:.7rem;font-size:.87rem;padding:.6rem .95rem;border-radius:10px;display:none;line-height:1.55}
+.fb.show{display:block}
+.fb.ok{background:rgba(129,178,154,.12);color:#2d6a4f;border-left:3px solid var(--ok)}
+.fb.err{background:rgba(224,122,95,.1);color:#a04545;border-left:3px solid var(--err)}
+.hint-lnk{font-size:.78rem;color:var(--primary);cursor:pointer;margin-top:.5rem;display:inline-block;transition:color .2s;font-weight:500}
+.hint-lnk:hover{color:var(--btn-hover)}
+.hint-box{display:none;font-size:.85rem;color:var(--secondary);background:rgba(129,178,154,.08);padding:.5rem .85rem;border-left:3px solid var(--primary);border-radius:0 10px 10px 0;margin-top:.5rem;font-style:italic;line-height:1.55}
+.hint-box.show{display:block}
+.fill-row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.3rem}
+.pg-info{font-size:.75rem;color:var(--p);text-align:center;margin:1.5rem 0 .5rem;letter-spacing:.05em}
+.pg-btns{display:flex;gap:.5rem;justify-content:center;margin-bottom:1rem;flex-wrap:wrap}
+.pg-btn{background:var(--white);border:1px solid var(--brd);color:var(--secondary);font-family:var(--font);font-size:.75rem;padding:.4rem .9rem;cursor:pointer;border-radius:100px;transition:all .15s;font-weight:500}
+.pg-btn:hover{border-color:var(--primary);color:var(--primary)}
+.pg-btn.active-pg{background:var(--primary);border-color:var(--primary);color:var(--white)}
+.pbar-wrap{position:fixed;bottom:0;left:0;right:0;height:4px;background:var(--section-bg);z-index:200}
+.pbar{height:100%;background:linear-gradient(to right,var(--primary),var(--btn-bg));width:0%;transition:width .4s}
+.fb i[class^="bi-"],.hint-lnk i[class^="bi-"]{margin-right:.3rem;font-size:.95em;vertical-align:-.05em}
+@media(max-width:600px){header{padding:1.2rem 1rem;flex-direction:column;align-items:flex-start;gap:.8rem}.tabs{padding:.8rem 1rem;top:auto;position:relative}.container{padding:1.5rem 1rem 5rem}.card{padding:1.2rem}}
+</style>
+</head>
+<body>
+<header>
+  <div class="h-left">
+    <span>Prüfungsvorbereitung · 350 Übungen</span>
+    <h1>Deutsches B2 — Komplettheft</h1>
+  </div>
+  <div class="score-wrap">
+    <div class="score-badge" id="scoreBadge">0 / 0 richtig</div>
+    <div class="pct-badge" id="pctBadge">—% Trefferquote</div>
+  </div>
+</header>
+<div class="tabs" id="tabBar"></div>
+<div class="container" id="mainContainer"></div>
+<div class="pbar-wrap"><div class="pbar" id="pbar"></div></div>
+<script>
+const SECTIONS=[
+{id:'grammatik',label:'Grammatik',num:'01',title:'Grammatik & Satzstrukturen',exercises:[
+{type:'mc',id:'g1',sub:'Relativsätze',q:'Wähle das richtige Relativpronomen:<br><strong>„Das ist der Mann, ___ ich gestern getroffen habe."</strong>',opts:['den','dem','der','dessen'],ans:0,exp:'Akkusativ, Maskulinum → <em>den</em>.'},
+{type:'mc',id:'g2',sub:'Relativsätze',q:'<strong>„Das ist die Frau, ___ Sohn Arzt ist."</strong>',opts:['die','deren','der','derer'],ans:1,exp:'Genitiv, Feminin → <em>deren</em>.'},
+{type:'mc',id:'g3',sub:'Relativsätze',q:'<strong>„Das Buch, ___ ich gelesen habe, war interessant."</strong>',opts:['das','dem','dessen','die'],ans:0,exp:'Akkusativ, Neutrum → <em>das</em>.'},
+{type:'mc',id:'g4',sub:'Relativsätze',q:'<strong>„Die Leute, ___ hier wohnen, sind freundlich."</strong>',opts:['die','denen','deren','das'],ans:0,exp:'Plural Nominativ → <em>die</em>.'},
+{type:'fill',id:'g5',sub:'Relativsätze',q:'Ergänze: <strong>„Der Kollege, ___ ich geholfen habe, bedankte sich."</strong>',inp:'blank',ans:['dem'],exp:'Dativ, Maskulinum → <em>dem</em>.'},
+{type:'fill',id:'g6',sub:'Relativsätze',q:'Ergänze: <strong>„Das Thema, über ___ wir diskutiert haben, war komplex."</strong>',inp:'blank',ans:['das'],exp:'Präposition <em>über</em> + Akkusativ, Neutrum → <em>das</em>.'},
+{type:'mc',id:'g7',sub:'Relativsätze',q:'<strong>„Die Studenten, ___ Prüfungen morgen sind, sind nervös."</strong>',opts:['die','deren','denen','das'],ans:1,exp:'Genitiv Plural → <em>deren</em>.'},
+{type:'mc',id:'g8',sub:'Relativsätze',q:'<strong>„Alles, ___ er sagte, war falsch."</strong>',opts:['das','was','die','dem'],ans:1,exp:'Nach <em>alles</em> steht <em>was</em> (nicht das).'},
+{type:'fill',id:'g9',sub:'Adjektivdeklination',q:'Ergänze die Endung (Nom. Mask., bestimmter Artikel):<br><strong>„Der alt___ Mann geht spazieren."</strong>',inp:'blank',ans:['e'],exp:'Nom. Mask., bestimmter Artikel → <em>-e</em>.'},
+{type:'fill',id:'g10',sub:'Adjektivdeklination',q:'Ergänze (Akk. Mask., bestimmter Artikel):<br><strong>„Ich sehe den jung___ Mann."</strong>',inp:'blank',ans:['en'],exp:'Akk. Mask., bestimmter Artikel → <em>-en</em>.'},
+{type:'fill',id:'g11',sub:'Adjektivdeklination',q:'Ergänze (Nom. Fem., bestimmter Artikel):<br><strong>„Die neu___ Kollegin ist nett."</strong>',inp:'blank',ans:['e'],exp:'Nom. Fem., best. Artikel → <em>-e</em>.'},
+{type:'fill',id:'g12',sub:'Adjektivdeklination',q:'Ergänze (Nom. Mask., unbestimmter Artikel):<br><strong>„Ein alt___ Mann wohnt hier."</strong>',inp:'blank',ans:['er'],exp:'Nom. Mask., unbest. Artikel → <em>-er</em>.'},
+{type:'fill',id:'g13',sub:'Adjektivdeklination',q:'Ergänze (Akk. Fem., unbestimmter Artikel):<br><strong>„Ich suche eine günstig___ Wohnung."</strong>',inp:'blank',ans:['e'],exp:'Akk. Fem., unbest. Artikel → <em>-e</em>.'},
+{type:'mc',id:'g14',sub:'Adjektivdeklination',q:'<strong>„Mit freundlich___ Grüßen"</strong> (Dativ Pl., kein Artikel)',opts:['en','e','er','em'],ans:0,exp:'Dativ Plural, kein Artikel → <em>-en</em>.'},
+{type:'fill',id:'g15',sub:'Adjektivdeklination',q:'Ergänze (Gen. Neutr., bestimmter Artikel):<br><strong>„Das ist das Ergebnis des lang___ Experiments."</strong>',inp:'blank',ans:['en'],exp:'Gen. Neutr., best. Artikel → <em>-en</em>.'},
+{type:'mc',id:'g16',sub:'Adjektivdeklination',q:'<strong>„Kalter Kaffee"</strong> — Welche Deklination?',opts:['stark (kein Artikel)','schwach (best. Art.)','gemischt (unbest. Art.)','keine Deklination'],ans:0,exp:'Ohne Artikel → starke Deklination: <em>kalter Kaffee</em>.'},
+{type:'mc',id:'g17',sub:'Präpositionen',q:'Welche Präposition + Kasus ist korrekt?<br><strong>„Er wartet ___ seine Schwester."</strong>',opts:['für (Akk.)','auf (Akk.)','nach (Dat.)','bei (Dat.)'],ans:1,exp:'<em>warten auf</em> + Akkusativ.'},
+{type:'mc',id:'g18',sub:'Präpositionen',q:'<strong>„Sie interessiert sich ___ Musik."</strong>',opts:['an (Dat.)','über (Akk.)','für (Akk.)','bei (Dat.)'],ans:2,exp:'<em>sich interessieren für</em> + Akkusativ.'},
+{type:'fill',id:'g19',sub:'Präpositionen',q:'Ergänze mit korrekter Präposition:<br><strong>„Er denkt oft ___ seine Kindheit."</strong>',inp:'blank',ans:['an'],exp:'<em>denken an</em> + Akkusativ.'},
+{type:'fill',id:'g20',sub:'Präpositionen',q:'Ergänze: <strong>„Sie freut sich ___ das Geschenk."</strong>',inp:'blank',ans:['über','auf'],exp:'<em>sich freuen über</em> (Gegenwart) oder <em>auf</em> (Zukunft).'},
+{type:'mc',id:'g21',sub:'Präpositionen',q:'Lokal — wo?<br><strong>„Das Buch liegt ___ dem Tisch."</strong>',opts:['auf','über','an','in'],ans:0,exp:'Lage (Dat.) → <em>auf dem Tisch</em>.'},
+{type:'mc',id:'g22',sub:'Präpositionen',q:'Direktional — wohin?<br><strong>„Leg das Buch ___ den Tisch."</strong>',opts:['auf','an','in','über'],ans:0,exp:'Richtung (Akk.) → <em>auf den Tisch</em>.'},
+{type:'mc',id:'g23',sub:'Zeitformen',q:'Welche Zeitform drückt abgeschlossene Handlung mit Gegenwartsbezug aus?',opts:['Präteritum','Plusquamperfekt','Perfekt','Futur I'],ans:2,exp:'Das <em>Perfekt</em> verbindet Vergangenheit mit Gegenwartsbezug.'},
+{type:'fill',id:'g24',sub:'Zeitformen',q:'Bilde das Plusquamperfekt:<br><strong>„Als er ankam, ___ sie schon ___." (gehen)</strong>',inp:'blank',ans:['war','gegangen'],exp:'Plusquamperfekt: <em>war … gegangen</em>.'},
+{type:'mc',id:'g25',sub:'Zeitformen',q:'Futur II — welcher Satz ist richtig?',opts:['Morgen werde ich schlafen.','Bis morgen wird er es gemacht haben.','Er hat es morgen gemacht.','Bis morgen hat er es machen.'],ans:1,exp:'Futur II: <em>wird + Partizip II + haben/sein</em>.'},
+{type:'fill',id:'g26',sub:'Zeitformen',q:'Präteritum von <em>wissen</em> (1. Sg.):<br><strong>„Ich ___ es nicht."</strong>',inp:'blank',ans:['wusste'],exp:'<em>wissen</em> → Prät. → <em>wusste</em>.'},
+{type:'fill',id:'g27',sub:'Zeitformen',q:'Präteritum von <em>können</em> (3. Sg.):<br><strong>„Er ___ nicht kommen."</strong>',inp:'blank',ans:['konnte'],exp:'<em>können</em> → Prät. → <em>konnte</em>.'},
+{type:'mc',id:'g28',sub:'Zeitformen',q:'Welche Form ist das Futur I von <em>arbeiten</em> (wir)?',opts:['Wir arbeiten','Wir werden arbeiten','Wir haben gearbeitet','Wir arbeiteten'],ans:1,exp:'Futur I: <em>werden + Infinitiv</em>.'},
+{type:'fill',id:'g29',sub:'Zeitformen',q:'Perfekt von <em>einschlafen</em> (er):<br><strong>„Er ___ schnell ___."</strong>',inp:'blank',ans:['ist','eingeschlafen'],exp:'Zustandsveränderung → <em>sein</em> + Partizip II: <em>ist eingeschlafen</em>.'},
+{type:'mc',id:'g30',sub:'Zeitformen',q:'Welches Verb bildet das Perfekt mit <em>sein</em>?',opts:['kaufen','bauen','reisen','fragen'],ans:2,exp:'<em>reisen</em> = Bewegung → <em>ist gereist</em>.'},
+{type:'mc',id:'g31',sub:'Infinitivkonstruktionen',q:'<strong>„Er beschloss, früher ___ kommen."</strong>',opts:['zu','—','dass','um … zu'],ans:0,exp:'Infinitiv mit <em>zu</em> nach Verb des Entschlusses.'},
+{type:'mc',id:'g32',sub:'Infinitivkonstruktionen',q:'Finaler Infinitiv — welcher Satz ist richtig?',opts:['Er lernt Deutsch, um in Deutschland zu arbeiten.','Er lernt Deutsch, zu in Deutschland arbeiten.','Er lernt Deutsch, dass er zu arbeiten.','Er lernt Deutsch um arbeiten.'],ans:0,exp:'<em>um … zu + Infinitiv</em> für Zweck/Ziel.'},
+{type:'mc',id:'g33',sub:'Infinitivkonstruktionen',q:'<strong>„Anstatt ___ fernsehen, liest er."</strong>',opts:['zu','—','um','ohne'],ans:0,exp:'<em>anstatt zu</em> + Infinitiv.'},
+{type:'fill',id:'g34',sub:'Infinitivkonstruktionen',q:'Ergänze: <strong>„Sie vergaß, die Tür ___ schließen."</strong>',inp:'blank',ans:['zu'],exp:'Infinitiv mit <em>zu</em> nach Verben des Vergessens.'},
+{type:'fill',id:'g35',sub:'Infinitivkonstruktionen',q:'Ergänze: <strong>„Er trainiert täglich, ___ fitter ___ werden."</strong>',inp:'blank',ans:['um','zu'],exp:'<em>um … zu + Infinitiv</em>.'},
+{type:'mc',id:'g36',sub:'Satzstellung',q:'Welche Satzstellung ist korrekt bei Inversion?<br><strong>„Gestern ___ er ins Kino."</strong>',opts:['ging er','er ging','er ist gegangen','ging'],ans:0,exp:'Bei Inversion: Verb auf Pos. 2 → <em>Gestern ging er</em>.'},
+{type:'mc',id:'g37',sub:'Satzstellung',q:'Nebensatz — Verbstellung:<br><strong>„Ich weiß, dass er morgen ___."</strong>',opts:['kommt','er kommt','kommen wird','wird kommen'],ans:0,exp:'Im Nebensatz steht das Verb am Ende: <em>kommt</em>.'},
+{type:'mc',id:'g38',sub:'Satzstellung',q:'TE-KA-MO-LO — welche Reihenfolge ist korrekt?<br><strong>„Er fährt ___ nach Berlin."</strong>',opts:['morgen mit dem Zug','mit dem Zug morgen','morgen schnell','mit dem Zug gestern schnell'],ans:0,exp:'Te→Mo→Lo: <em>morgen (Te) mit dem Zug (Mo) nach Berlin (Lo)</em>.'},
+{type:'mc',id:'g39',sub:'Satzstellung',q:'Trennbares Verb im Nebensatz:<br><strong>„Er sagt, dass er früh ___."</strong>',opts:['aufsteht','steht auf','auf steht','aufgestanden'],ans:0,exp:'Trennbares Verb bleibt im Nebensatz zusammen: <em>aufsteht</em>.'},
+{type:'fill',id:'g40',sub:'Satzstellung',q:'Stelle um (Inversion):<br><strong>„Leider ___ sie keine Zeit."</strong>',inp:'blank',ans:['hat'],exp:'Inversion: <em>Leider hat sie …</em>'},
+{type:'mc',id:'g41',sub:'Satzstellung',q:'Modalverb im Nebensatz:<br><strong>„…, weil er nicht schlafen ___."</strong>',opts:['kann','könnte','kann nicht','nicht kann'],ans:0,exp:'Modalverb ans Ende: <em>…schlafen kann</em>.'},
+{type:'mc',id:'g42',sub:'Satzstellung',q:'Korrekter Satz mit Reflexivverb?',opts:['Er sich erinnert nicht.','Er erinnert sich nicht.','Sich er erinnert nicht.','Er nicht sich erinnert.'],ans:1,exp:'<em>Er erinnert sich nicht.</em>'},
+{type:'mc',id:'g43',sub:'Genitiv',q:'Welche Genitivkonstruktion ist korrekt?',opts:['das Haus von dem Lehrer','das Haus des Lehrers','dem Lehrer sein Haus','das Lehrer Haus'],ans:1,exp:'Genitiv maskulin: <em>des Lehrers</em>.'},
+{type:'fill',id:'g44',sub:'Genitiv',q:'Ergänze im Genitiv:<br><strong>„Das ist das Büro ___ Direktorin."</strong>',inp:'blank',ans:['der'],exp:'Genitiv feminin: <em>der Direktorin</em>.'},
+{type:'mc',id:'g45',sub:'Kasus',q:'Welches Verb regiert den Dativ?',opts:['besuchen','danken','kaufen','finden'],ans:1,exp:'<em>danken + Dativ</em>: Ich danke dir.'},
+{type:'mc',id:'g46',sub:'Kasus',q:'<strong>„Er hilft ___ alten Mann."</strong>',opts:['den','dem','der','des'],ans:1,exp:'<em>helfen + Dativ</em>, mask. → <em>dem</em>.'},
+{type:'fill',id:'g47',sub:'Kasus',q:'Ergänze (Dativ feminin nach <em>mit</em>):<br><strong>„Er kommt mit ___ Schwester."</strong>',inp:'blank',ans:['seiner','der'],exp:'<em>mit</em> + Dativ: <em>mit seiner Schwester</em>.'},
+{type:'mc',id:'g48',sub:'Kasus',q:'Welcher Kasus folgt auf <em>wegen</em>?',opts:['Akkusativ','Nominativ','Genitiv','Dativ'],ans:2,exp:'<em>wegen</em> + Genitiv: wegen des Regens.'},
+{type:'mc',id:'g49',sub:'Kasus',q:'<strong>„trotz"</strong> regiert welchen Kasus?',opts:['Akkusativ','Dativ','Genitiv','Nominativ'],ans:2,exp:'<em>trotz</em> + Genitiv: trotz des Regens.'},
+{type:'mc',id:'g50',sub:'Kasus',q:'Welches Verb verlangt Akkusativ?',opts:['helfen','danken','begegnen','kaufen'],ans:3,exp:'<em>kaufen</em> + Akkusativ: Ich kaufe das Buch.'},
+]},
+{id:'wortschatz',label:'Wortschatz',num:'02',title:'Wortschatz & Lexik',exercises:[
+{type:'mc',id:'w1',sub:'Synonyme',q:'Was bedeutet <strong>„behaupten"</strong>?',opts:['fragen','versichern / aussagen','verstehen','suchen'],ans:1,exp:'<em>behaupten</em> = etwas als wahr aussagen.'},
+{type:'mc',id:'w2',sub:'Synonyme',q:'Synonym für <strong>„erläutern"</strong>?',opts:['verbieten','erklären','kaufen','übertreiben'],ans:1,exp:'<em>erläutern</em> ≈ <em>erklären</em>.'},
+{type:'mc',id:'w3',sub:'Synonyme',q:'Synonym für <strong>„erlangen"</strong>?',opts:['verlieren','erwerben','vergessen','verkaufen'],ans:1,exp:'<em>erlangen</em> ≈ <em>erwerben / erreichen</em>.'},
+{type:'mc',id:'w4',sub:'Synonyme',q:'Synonym für <strong>„veranschaulichen"</strong>?',opts:['verstecken','illustrieren','abweisen','bestreiten'],ans:1,exp:'<em>veranschaulichen</em> ≈ <em>illustrieren</em>.'},
+{type:'mc',id:'w5',sub:'Synonyme',q:'Synonym für <strong>„benötigen"</strong>?',opts:['brauchen','geben','finden','vermeiden'],ans:0,exp:'<em>benötigen</em> = <em>brauchen</em>.'},
+{type:'mc',id:'w6',sub:'Synonyme',q:'Synonym für <strong>„aufschieben"</strong>?',opts:['anfangen','beschleunigen','verschieben','beenden'],ans:2,exp:'<em>aufschieben</em> = <em>verschieben</em>.'},
+{type:'mc',id:'w7',sub:'Synonyme',q:'Synonym für <strong>„gründlich"</strong>?',opts:['oberflächlich','sorgfältig','schnell','unwichtig'],ans:1,exp:'<em>gründlich</em> ≈ <em>sorgfältig</em>.'},
+{type:'mc',id:'w8',sub:'Synonyme',q:'Synonym für <strong>„angemessen"</strong>?',opts:['passend','übertrieben','falsch','unpraktisch'],ans:0,exp:'<em>angemessen</em> ≈ <em>passend</em>.'},
+{type:'mc',id:'w9',sub:'Synonyme',q:'Synonym für <strong>„vorschlagen"</strong>?',opts:['ablehnen','empfehlen','ignorieren','verbieten'],ans:1,exp:'<em>vorschlagen</em> ≈ <em>empfehlen</em>.'},
+{type:'mc',id:'w10',sub:'Synonyme',q:'Synonym für <strong>„offensichtlich"</strong>?',opts:['unklar','eindeutig','kompliziert','selten'],ans:1,exp:'<em>offensichtlich</em> ≈ <em>eindeutig</em>.'},
+{type:'mc',id:'w11',sub:'Antonyme',q:'Gegenteil von <strong>„zunehmen"</strong>?',opts:['anwachsen','abnehmen','steigen','vermehren'],ans:1,exp:'<em>zunehmen</em> ↔ <em>abnehmen</em>.'},
+{type:'mc',id:'w12',sub:'Antonyme',q:'Gegenteil von <strong>„pflichtbewusst"</strong>?',opts:['verantwortungslos','genau','fleißig','pünktlich'],ans:0,exp:'<em>pflichtbewusst</em> ↔ <em>verantwortungslos</em>.'},
+{type:'mc',id:'w13',sub:'Antonyme',q:'Gegenteil von <strong>„konstruktiv"</strong>?',opts:['effizient','destruktiv','positiv','hilfreich'],ans:1,exp:'<em>konstruktiv</em> ↔ <em>destruktiv</em>.'},
+{type:'mc',id:'w14',sub:'Antonyme',q:'Gegenteil von <strong>„fördern"</strong>?',opts:['unterstützen','hemmen','stärken','helfen'],ans:1,exp:'<em>fördern</em> ↔ <em>hemmen</em>.'},
+{type:'mc',id:'w15',sub:'Antonyme',q:'Gegenteil von <strong>„freiwillig"</strong>?',opts:['spontan','verpflichtend','gerne','optional'],ans:1,exp:'<em>freiwillig</em> ↔ <em>verpflichtend</em>.'},
+{type:'mc',id:'w16',sub:'Antonyme',q:'Gegenteil von <strong>„nachhaltig"</strong>?',opts:['dauerhaft','kurzfristig','ökologisch','effizient'],ans:1,exp:'<em>nachhaltig</em> ↔ <em>kurzfristig</em>.'},
+{type:'mc',id:'w17',sub:'Antonyme',q:'Gegenteil von <strong>„einheitlich"</strong>?',opts:['gleich','einheitlich','verschieden','simpel'],ans:2,exp:'<em>einheitlich</em> ↔ <em>verschieden / heterogen</em>.'},
+{type:'fill',id:'w18',sub:'Wortbildung',q:'Bilde das Nomen vom Verb <strong>„entscheiden"</strong> (mit Artikel):',inp:'medium',ans:['die entscheidung'],exp:'<em>entscheiden</em> → <em>die Entscheidung</em>.'},
+{type:'fill',id:'w19',sub:'Wortbildung',q:'Bilde das Nomen vom Verb <strong>„entwickeln"</strong> (mit Artikel):',inp:'medium',ans:['die entwicklung'],exp:'<em>entwickeln</em> → <em>die Entwicklung</em>.'},
+{type:'fill',id:'w20',sub:'Wortbildung',q:'Bilde das Adjektiv vom Nomen <strong>„Freude"</strong>:',inp:'blank',ans:['freudig','erfreulich'],exp:'<em>Freude</em> → <em>freudig</em> oder <em>erfreulich</em>.'},
+{type:'mc',id:'w21',sub:'Wortbildung',q:'Welches Präfix ergibt das Gegenteil von <strong>„möglich"</strong>?',opts:['un-','miss-','ver-','ent-'],ans:0,exp:'<em>un-</em> + möglich = <em>unmöglich</em>.'},
+{type:'mc',id:'w22',sub:'Wortbildung',q:'Was bedeutet das Suffix <strong>„-heit"</strong> in Nomen?',opts:['Tätigkeit','Eigenschaft/Zustand','Ergebnis','Person'],ans:1,exp:'<em>-heit</em> bildet abstrakte Nomen: Freiheit, Gesundheit.'},
+{type:'fill',id:'w23',sub:'Wortbildung',q:'Bilde ein Nomen aus <strong>„beobachten"</strong> mit Suffix <em>-ung</em>:',inp:'medium',ans:['die beobachtung'],exp:'<em>beobachten</em> → <em>die Beobachtung</em>.'},
+{type:'mc',id:'w24',sub:'Wortbildung',q:'Welches Adjektiv mit <em>-bar</em>-Suffix?<br><strong>„Das Problem ist lös___."</strong>',opts:['lich','bar','sam','ig'],ans:1,exp:'<em>lös-</em> + <em>-bar</em> = <em>lösbar</em>.'},
+{type:'fill',id:'w25',sub:'Wortbildung',q:'Bilde das Nomen (Person) vom Verb <strong>„forschen"</strong>:',inp:'medium',ans:['der forscher','die forscherin'],exp:'<em>forschen</em> → <em>der Forscher</em>.'},
+{type:'mc',id:'w26',sub:'Wortbildung',q:'Welches Kompositum ist korrekt?',opts:['Umweltproblem','Umweltsproblem','Umwelteproblem','Umweltisproblem'],ans:0,exp:'<em>Umweltproblem</em> (kein Fugen-s).'},
+{type:'fill',id:'w27',sub:'Wortbildung',q:'Bilde das Nomen (Abstraktum) von <strong>„frei"</strong> mit Suffix <em>-heit</em>:',inp:'medium',ans:['die freiheit'],exp:'<em>frei</em> + <em>-heit</em> → <em>die Freiheit</em>.'},
+{type:'mc',id:'w28',sub:'Kollokationen',q:'Welches Verb passt?<br><strong>„eine Entscheidung ___"</strong>',opts:['machen','treffen','tun','führen'],ans:1,exp:'<em>eine Entscheidung treffen</em>.'},
+{type:'mc',id:'w29',sub:'Kollokationen',q:'<strong>„Verantwortung ___"</strong>',opts:['machen','treffen','tragen','nehmen'],ans:2,exp:'<em>Verantwortung tragen</em>.'},
+{type:'mc',id:'w30',sub:'Kollokationen',q:'<strong>„einen Vortrag ___"</strong>',opts:['machen','halten','sagen','zeigen'],ans:1,exp:'<em>einen Vortrag halten</em>.'},
+{type:'mc',id:'w31',sub:'Kollokationen',q:'<strong>„Fortschritte ___"</strong>',opts:['haben','machen','tun','sein'],ans:1,exp:'<em>Fortschritte machen</em>.'},
+{type:'mc',id:'w32',sub:'Kollokationen',q:'<strong>„eine Rolle ___"</strong>',opts:['spielen','machen','halten','treiben'],ans:0,exp:'<em>eine Rolle spielen</em>.'},
+{type:'mc',id:'w33',sub:'Kollokationen',q:'<strong>„Schluss ___"</strong>',opts:['machen','tun','sagen','geben'],ans:0,exp:'<em>Schluss machen</em>.'},
+{type:'mc',id:'w34',sub:'Kollokationen',q:'<strong>„in Frage ___"</strong>',opts:['kommen','stellen','machen','haben'],ans:0,exp:'<em>in Frage kommen</em>.'},
+{type:'mc',id:'w35',sub:'Kollokationen',q:'<strong>„Bezug ___ auf"</strong>',opts:['nehmen','machen','haben','sein'],ans:0,exp:'<em>Bezug nehmen auf</em>.'},
+{type:'mc',id:'w36',sub:'Kollokationen',q:'<strong>„eine Lösung ___"</strong>',opts:['finden','machen','haben','sein'],ans:0,exp:'<em>eine Lösung finden</em>.'},
+{type:'mc',id:'w37',sub:'Kollokationen',q:'<strong>„Rücksicht nehmen ___ jmdn."</strong>',opts:['auf','für','mit','von'],ans:0,exp:'<em>Rücksicht nehmen auf + Akk.</em>'},
+{type:'mc',id:'w38',sub:'Register',q:'Welche Formulierung ist formell?',opts:['Ich wollte mal kurz fragen …','Ich erlaube mir, Sie zu kontaktieren …','Hey, kannst du mir helfen?','Schreib mir schnell zurück!'],ans:1,exp:'<em>Ich erlaube mir …</em> = höflich-formell.'},
+{type:'mc',id:'w39',sub:'Register',q:'Informelles Äquivalent von <strong>„ich bin der Ansicht, dass"</strong>?',opts:['Ich denke, dass','Es scheint mir','Es ist meine Überzeugung','Meines Erachtens'],ans:0,exp:'<em>Ich denke, dass</em> ist neutral/informell.'},
+{type:'mc',id:'w40',sub:'Register',q:'Welches Wort passt in einen wissenschaftlichen Text?',opts:['mega wichtig','super','signifikant','echt toll'],ans:2,exp:'<em>signifikant</em> = neutral-wissenschaftlich.'},
+{type:'mc',id:'w41',sub:'Register',q:'Formales Äquivalent von „kriegen"?',opts:['bekommen / erhalten','holen','nehmen','sich holen'],ans:0,exp:'<em>kriegen</em> (umgsp.) → <em>erhalten / bekommen</em> (formell).'},
+{type:'mc',id:'w42',sub:'Register',q:'Welcher Ausdruck ist für eine Bewerbung geeignet?',opts:['Ich bin total gut in …','Ich verfüge über ausgeprägte Kenntnisse in …','Ich kann super gut …','Ich habe echt viel Erfahrung in …'],ans:1,exp:'<em>Ich verfüge über …</em> = professionell.'},
+{type:'mc',id:'w43',sub:'Register',q:'Formelle Absage — welcher Satz ist korrekt?',opts:['Tut mir leid, geht nicht.','Wir müssen Ihnen leider mitteilen, dass wir Ihren Antrag ablehnen müssen.','Dein Antrag ist abgelehnt.','Nope, geht leider nicht.'],ans:1,exp:'Formelle Absage mit <em>Wir müssen Ihnen leider mitteilen …</em>'},
+{type:'mc',id:'w44',sub:'Register',q:'Was bedeutet <strong>„in Bezug auf"</strong>?',opts:['wegen','hinsichtlich','trotz','obwohl'],ans:1,exp:'<em>in Bezug auf</em> = <em>hinsichtlich</em>.'},
+{type:'mc',id:'w45',sub:'Redemittel',q:'Wie leitet man eine Schlussfolgerung ein?',opts:['Erstens','Infolgedessen / Daher','Außerdem','Einerseits'],ans:1,exp:'<em>Infolgedessen / Daher</em> leiten Schlussfolgerungen ein.'},
+{type:'mc',id:'w46',sub:'Redemittel',q:'Wie drückt man einen Einwand aus?',opts:['Außerdem','Zwar … aber','Deshalb','Zum Beispiel'],ans:1,exp:'<em>Zwar … aber</em> drückt Einschränkung aus.'},
+{type:'mc',id:'w47',sub:'Redemittel',q:'Wie widerspricht man höflich?',opts:['Das stimmt überhaupt nicht!','Das sehe ich etwas anders, da …','Nein!','Das ist falsch.'],ans:1,exp:'<em>Das sehe ich etwas anders</em> = höflicher Widerspruch.'},
+{type:'mc',id:'w48',sub:'Redemittel',q:'Wie bittet man um Klärung?',opts:['Was?','Könnten Sie das näher erläutern?','Ich verstehe nichts.','Erklär nochmal.'],ans:1,exp:'<em>Könnten Sie das näher erläutern?</em> = formelle Nachfrage.'},
+{type:'mc',id:'w49',sub:'Redemittel',q:'Wie beginnt man eine Argumentation?',opts:['Zum Schluss','Zunächst möchte ich …','Außerdem','Hingegen'],ans:1,exp:'<em>Zunächst möchte ich …</em> leitet Argumentation ein.'},
+{type:'mc',id:'w50',sub:'Redemittel',q:'Welcher Ausdruck gibt ein Beispiel an?',opts:['Infolgedessen','Zum Beispiel / Etwa','Zwar … aber','Schließlich'],ans:1,exp:'<em>Zum Beispiel / Beispielsweise</em>.'},
+]},
+{id:'konjunktiv',label:'Konjunktiv II',num:'03',title:'Konjunktiv II & Indirekte Rede',exercises:[
+{type:'mc',id:'k1',sub:'KII Formen',q:'Konjunktiv II von <strong>„haben"</strong> (1. Sg.)?',opts:['hatte','hätte','haben würde','gehabt'],ans:1,exp:'<em>haben</em> → KII: <em>hätte</em>.'},
+{type:'mc',id:'k2',sub:'KII Formen',q:'Konjunktiv II von <strong>„sein"</strong> (3. Sg.)?',opts:['war','wäre','sein würde','ist'],ans:1,exp:'<em>sein</em> → KII: <em>wäre</em>.'},
+{type:'mc',id:'k3',sub:'KII Formen',q:'Konjunktiv II von <strong>„können"</strong> (2. Sg.)?',opts:['konntest','könntest','du kannst','kanntest'],ans:1,exp:'<em>können</em> → KII: <em>könntest</em>.'},
+{type:'fill',id:'k4',sub:'KII Formen',q:'KII von <strong>„werden"</strong> (1. Sg.):',inp:'blank',ans:['würde'],exp:'<em>werden</em> → KII: <em>würde</em>.'},
+{type:'fill',id:'k5',sub:'KII Formen',q:'KII von <strong>„müssen"</strong> (3. Sg.):',inp:'blank',ans:['müsste'],exp:'<em>müssen</em> → KII: <em>müsste</em>.'},
+{type:'fill',id:'k6',sub:'KII Formen',q:'KII von <strong>„dürfen"</strong> (1. Pl.):',inp:'blank',ans:['dürften'],exp:'<em>dürfen</em> → KII: <em>dürften</em>.'},
+{type:'mc',id:'k7',sub:'KII Formen',q:'KII Vergangenheit — welche Konstruktion?',opts:['hätte + Infinitiv','wäre + Infinitiv','hätte/wäre + Partizip II','wurde + Partizip II'],ans:2,exp:'KII Vergangenheit: <em>hätte/wäre + Partizip II</em>.'},
+{type:'mc',id:'k8',sub:'KII Formen',q:'<strong>„Wenn er früher aufgestanden ___, hätte er den Zug nicht verpasst."</strong>',opts:['war','wurde','wäre','ist'],ans:2,exp:'KII Vergangenheit mit <em>sein</em>: <em>wäre … aufgestanden</em>.'},
+{type:'mc',id:'k9',sub:'KII Formen',q:'KII von <strong>„sollen"</strong> (2. Sg.)?',opts:['sollst','solltest','solltest du','solltest haben'],ans:1,exp:'<em>sollen</em> → KII: <em>solltest</em>.'},
+{type:'mc',id:'k10',sub:'KII Formen',q:'KII von <strong>„wissen"</strong> (er)?',opts:['wusste','wüsste','weißt','gewusst'],ans:1,exp:'<em>wissen</em> → KII: <em>wüsste</em>.'},
+{type:'fill',id:'k11',sub:'KII Formen',q:'KII von <strong>„gehen"</strong> (wir):',inp:'blank',ans:['gingen','würden gehen'],exp:'<em>gehen</em> → KII: <em>gingen</em>.'},
+{type:'mc',id:'k12',sub:'KII Formen',q:'KII von <strong>„lassen"</strong> (er)?',opts:['ließ','ließe','lässt','gelassen'],ans:1,exp:'<em>lassen</em> → KII: <em>ließe</em>.'},
+{type:'mc',id:'k13',sub:'Irreale Bedingungen',q:'<strong>„Wenn ich Zeit ___, würde ich mehr lesen."</strong>',opts:['habe','hätte','hatte','gehabt habe'],ans:1,exp:'Irrealer Bedingungssatz Gegenwart: <em>hätte</em>.'},
+{type:'mc',id:'k14',sub:'Irreale Bedingungen',q:'<strong>„Wenn ich mehr Geld ___, ___ ich eine Reise machen."</strong>',opts:['hätte / würde','habe / werde','hatte / machte','gehabt / gemacht'],ans:0,exp:'KII: <em>hätte … würde … machen</em>.'},
+{type:'transform',id:'k15',sub:'Irreale Bedingungen',q:'Forme um in irrealen Konditionalsatz:<br><strong>„Sie lernt mehr. Sie besteht die Prüfung."</strong>',hint:'Wenn sie mehr lernte / lernen würde, würde sie die Prüfung bestehen.',keys:['wenn','lernte','würde','bestehen']},
+{type:'mc',id:'k16',sub:'Irreale Bedingungen',q:'Konditionalsatz ohne <em>wenn</em>:<br><strong>„___ ich mehr Zeit, würde ich helfen."</strong>',opts:['Hätte','Wenn hätte','Wenn ich hätte','Falls hätte'],ans:0,exp:'Ohne <em>wenn</em>: Inversion → <em>Hätte ich …</em>'},
+{type:'mc',id:'k17',sub:'Irreale Bedingungen',q:'<strong>„Er tut so, als ob er alles wissen ___."</strong>',opts:['wird','würde','weiß','wissen'],ans:1,exp:'<em>als ob</em> + KII: <em>als ob er wissen würde</em>.'},
+{type:'transform',id:'k18',sub:'Irreale Bedingungen',q:'Bilde einen irrealen Wunschsatz:<br><strong>„Ich kann nicht fliegen."</strong>',hint:'Wenn ich doch fliegen könnte! / Ich wünschte, ich könnte fliegen.',keys:['könnte','wenn','wünschte']},
+{type:'mc',id:'k19',sub:'Irreale Bedingungen',q:'Irrealer Vergangenheitssatz:<br><strong>„Wenn er das gewusst ___, ___ er anders gehandelt."</strong>',opts:['hatte / hätte','hätte / hätte','wäre / hätte','hätte / wäre'],ans:1,exp:'KII Verg.: <em>hätte … gewusst / hätte … gehandelt</em>.'},
+{type:'mc',id:'k20',sub:'Irreale Bedingungen',q:'<strong>„An deiner Stelle ___ ich das annehmen."</strong>',opts:['werde','würde','habe','bin'],ans:1,exp:'Ratschlag mit KII: <em>An deiner Stelle würde ich …</em>'},
+{type:'fill',id:'k21',sub:'Irreale Bedingungen',q:'Ergänze: <strong>„Ohne ihn ___ ich das nie geschafft."</strong>',inp:'blank',ans:['hätte'],exp:'KII Vergangenheit: <em>hätte … geschafft</em>.'},
+{type:'mc',id:'k22',sub:'Irreale Bedingungen',q:'Welcher Satz drückt eine irreale Bedingung aus?',opts:['Wenn ich Hunger habe, esse ich.','Wenn ich Hunger hätte, würde ich essen.','Ich esse, weil ich Hunger habe.','Wenn ich gegessen habe, bin ich satt.'],ans:1,exp:'Irreale Bedingung: KII in beiden Satzteilen.'},
+{type:'mc',id:'k23',sub:'Konjunktiv I',q:'KI von <strong>„haben"</strong> (er)?',opts:['hat','hatte','habe','hätte'],ans:2,exp:'KI: <em>er habe</em>.'},
+{type:'mc',id:'k24',sub:'Konjunktiv I',q:'KI von <strong>„sein"</strong> (sie, Pl.)?',opts:['sind','waren','seien','wären'],ans:2,exp:'KI Pl.: <em>sie seien</em>.'},
+{type:'mc',id:'k25',sub:'Konjunktiv I',q:'Indirekte Rede:<br><strong>Er sagte: „Ich komme morgen." → Er sagte, er ___ morgen.</strong>',opts:['kommt','käme','komme','würde kommen'],ans:2,exp:'KI 3. Sg.: <em>komme</em>.'},
+{type:'transform',id:'k26',sub:'Konjunktiv I',q:'Forme in indirekte Rede um:<br><strong>Sie sagte: „Ich bin sehr müde."</strong>',hint:'Sie sagte, sie sei sehr müde.',keys:['sei','müde']},
+{type:'transform',id:'k27',sub:'Konjunktiv I',q:'Forme in indirekte Rede um:<br><strong>Er berichtete: „Wir haben das Problem gelöst."</strong>',hint:'Er berichtete, sie hätten das Problem gelöst.',keys:['hätten','gelöst']},
+{type:'mc',id:'k28',sub:'Konjunktiv I',q:'Wann verwendet man KII statt KI in indirekter Rede?',opts:['Immer','Wenn KI mit Indikativ identisch ist','Nur bei Bewegungsverben','Nur in Zeitungsartikeln'],ans:1,exp:'KII als Ersatz, wenn KI = Indikativ.'},
+{type:'fill',id:'k29',sub:'Konjunktiv I',q:'KI von <strong>„werden"</strong> (er):',inp:'blank',ans:['werde'],exp:'KI: <em>er werde</em>.'},
+{type:'mc',id:'k30',sub:'Konjunktiv I',q:'Indirekte Frage:<br><strong>Sie fragte, ___ er komme.</strong>',opts:['ob','wenn','dass','weil'],ans:0,exp:'Indirekte Ja/Nein-Fragen mit <em>ob</em>.'},
+{type:'transform',id:'k31',sub:'Konjunktiv I',q:'Forme um:<br><strong>Die Politikerin erklärte: „Die Maßnahmen sind notwendig."</strong>',hint:'Die Politikerin erklärte, die Maßnahmen seien notwendig.',keys:['seien','notwendig']},
+{type:'mc',id:'k32',sub:'Konjunktiv I',q:'KI von <strong>„können"</strong> (er)?',opts:['kann','könne','könnte','gekonnt'],ans:1,exp:'KI von <em>können</em>: <em>er könne</em>.'},
+{type:'fill',id:'k33',sub:'Konjunktiv I',q:'Ergänze KI:<br><strong>„Der Arzt sagte, der Patient ___ sich erholen."</strong>',inp:'blank',ans:['müsse','solle'],exp:'KI von <em>müssen</em>: <em>müsse</em>.'},
+{type:'mc',id:'k34',sub:'Konjunktiv I',q:'Welcher Satz steht korrekt in indirekter Rede?',opts:['Sie sagt, dass sie schläft.','Sie sagt, sie schlafe.','Sie sagt, sie schlafen.','Sie sagt, dass sie schläfen.'],ans:1,exp:'Ind. Rede ohne <em>dass</em>: KI → <em>sie schlafe</em>.'},
+{type:'mc',id:'k35',sub:'Konjunktiv I',q:'Indirekte Rede Vergangenheit:<br><strong>Er sagte: „Ich habe das gemacht." → Er sagte, er ___ das gemacht.</strong>',opts:['habe','hätte','hatte','hat'],ans:0,exp:'KI Perfekt: <em>er habe … gemacht</em>.'},
+{type:'mc',id:'k36',sub:'Höfliche Bitten',q:'Höfliche Bitte mit KII:<br><strong>„___ Sie mir helfen?"</strong>',opts:['Können','Könnten','Dürfen','Sollen'],ans:1,exp:'<em>Könnten Sie …?</em> = höflicher als Können.'},
+{type:'mc',id:'k37',sub:'Höfliche Bitten',q:'Noch höflicher als Können Sie?',opts:['Dürfte ich Sie bitten, …?','Willst du …?','Mach bitte!','Du sollst …'],ans:0,exp:'<em>Dürfte ich Sie bitten, …?</em> = sehr höflich.'},
+{type:'mc',id:'k38',sub:'Höfliche Bitten',q:'<strong>„___ es möglich, morgen früher anzufangen?"</strong>',opts:['War','Wäre','Ist','Kann'],ans:1,exp:'KII für Anfragen: <em>Wäre es möglich …?</em>'},
+{type:'fill',id:'k39',sub:'Höfliche Bitten',q:'Formuliere höflich:<br><strong>„___ du mir bitte das Salz geben?"</strong>',inp:'blank',ans:['könntest','würdest'],exp:'<em>Könntest / Würdest du …?</em>'},
+{type:'mc',id:'k40',sub:'Höfliche Bitten',q:'Welcher Satz drückt einen Wunsch aus?',opts:['Wenn ich doch mehr Zeit hätte!','Ich habe keine Zeit.','Ich hätte Zeit gehabt.','Ich hatte Zeit.'],ans:0,exp:'Wunschsatz: <em>Wenn … doch … KII!</em>'},
+{type:'mc',id:'k41',sub:'Vermutungen',q:'<strong>„Er ist nicht da. Er ___ krank sein."</strong> (Vermutung)',opts:['muss','dürfte','soll','will'],ans:1,exp:'<em>dürfte</em> = vorsichtige Vermutung im KII.'},
+{type:'mc',id:'k42',sub:'Vermutungen',q:'<strong>„Das ___ stimmen."</strong> (hohe Wahrscheinlichkeit)',opts:['dürfte','müsste','könnte','würde'],ans:1,exp:'<em>müsste</em> = hohe Wahrscheinlichkeit im KII.'},
+{type:'mc',id:'k43',sub:'Vermutungen',q:'Was drückt <strong>„Das könnte sein"</strong> aus?',opts:['Sicherheit','Möglichkeit','Unmöglichkeit','Ablehnung'],ans:1,exp:'<em>könnte</em> = Möglichkeit.'},
+{type:'mc',id:'k44',sub:'Vermutungen',q:'Was ist <strong>„Sie sollte mehr schlafen"</strong>?',opts:['Vermutung','Ratschlag / Empfehlung','Bedingung','Wunsch'],ans:1,exp:'<em>sollte</em> als Ratschlag.'},
+{type:'transform',id:'k45',sub:'Gemischt KII',q:'Schreibe als irrealen Konditionalsatz:<br><strong>„Ich habe kein Auto. Ich kann nicht fahren."</strong>',hint:'Wenn ich ein Auto hätte, könnte ich fahren.',keys:['wenn','hätte','könnte']},
+{type:'mc',id:'k46',sub:'Gemischt KII',q:'<strong>„Er tat so, ___ er uns nicht gehört hätte."</strong>',opts:['als ob','obwohl','dass','damit'],ans:0,exp:'<em>als ob / als wenn</em> + KII.'},
+{type:'mc',id:'k47',sub:'Gemischt KII',q:'Wunsch in der Vergangenheit:<br><strong>„Ich wünschte, ich ___ mehr gelernt."</strong>',opts:['hätte','wäre','würde','hatte'],ans:0,exp:'KII Vergangenheit: <em>hätte mehr gelernt</em>.'},
+{type:'mc',id:'k48',sub:'Gemischt KII',q:'<strong>„Falls das stimmen ___, wäre ich überrascht."</strong>',opts:['sollte','wird','ist','hat'],ans:0,exp:'<em>falls … sollte</em> = konditionale Einschränkung.'},
+{type:'fill',id:'k49',sub:'Gemischt KII',q:'Ergänze: <strong>„Ich ___ lieber zu Hause geblieben."</strong>',inp:'blank',ans:['wäre'],exp:'KII Vergangenheit: <em>wäre … geblieben</em>.'},
+{type:'mc',id:'k50',sub:'Gemischt KII',q:'Welcher Satz ist kein KII?',opts:['Er würde kommen.','Er käme gern.','Er wäre da.','Er kommt morgen.'],ans:3,exp:'<em>Er kommt morgen</em> = Indikativ Präsens.'},
+]},
+{id:'passiv',label:'Passiv',num:'04',title:'Passiv',exercises:[
+{type:'mc',id:'p1',sub:'Vorgangspassiv',q:'Passiv Präsens von <strong>„reparieren"</strong> (das Auto):',opts:['Das Auto ist repariert.','Das Auto wird repariert.','Das Auto wurde repariert.','Das Auto worden ist repariert.'],ans:1,exp:'Passiv Präsens: <em>wird + Partizip II</em>.'},
+{type:'mc',id:'p2',sub:'Vorgangspassiv',q:'Passiv Präteritum:',opts:['Das Gebäude wird gebaut.','Das Gebäude ist gebaut worden.','Das Gebäude wurde gebaut.','Das Gebäude war gebaut.'],ans:2,exp:'Passiv Prät.: <em>wurde + Partizip II</em>.'},
+{type:'mc',id:'p3',sub:'Vorgangspassiv',q:'Passiv Perfekt:',opts:['Das Buch wurde gelesen.','Das Buch ist gelesen worden.','Das Buch ist gelesen.','Das Buch wird gelesen werden.'],ans:1,exp:'Passiv Perfekt: <em>ist + Partizip II + worden</em>.'},
+{type:'mc',id:'p4',sub:'Vorgangspassiv',q:'Passiv Plusquamperfekt:',opts:['Das Fenster war geöffnet worden.','Das Fenster wurde geöffnet.','Das Fenster ist geöffnet worden.','Das Fenster wird geöffnet worden sein.'],ans:0,exp:'Passiv Plusqpf.: <em>war + Partizip II + worden</em>.'},
+{type:'mc',id:'p5',sub:'Vorgangspassiv',q:'Passiv Futur I:',opts:['Das Haus wird gebaut.','Das Haus wird gebaut werden.','Das Haus ist gebaut worden.','Das Haus wurde gebaut worden.'],ans:1,exp:'Passiv Futur I: <em>wird + Partizip II + werden</em>.'},
+{type:'transform',id:'p6',sub:'Vorgangspassiv',q:'Forme in Passiv Präteritum um:<br><strong>„Der Arzt untersuchte den Patienten."</strong>',hint:'Der Patient wurde vom Arzt untersucht.',keys:['wurde','untersucht']},
+{type:'transform',id:'p7',sub:'Vorgangspassiv',q:'Forme in Passiv Perfekt um:<br><strong>„Die Schüler haben das Lied gesungen."</strong>',hint:'Das Lied ist von den Schülern gesungen worden.',keys:['ist','gesungen worden']},
+{type:'fill',id:'p8',sub:'Vorgangspassiv',q:'Ergänze Passiv Präsens:<br><strong>„Die E-Mail ___ gerade ___."</strong> (schreiben)',inp:'blank',ans:['wird','geschrieben'],exp:'Passiv Präs.: <em>wird geschrieben</em>.'},
+{type:'fill',id:'p9',sub:'Vorgangspassiv',q:'Ergänze Passiv Prät.:<br><strong>„Das Haus ___ letztes Jahr ___."</strong> (bauen)',inp:'blank',ans:['wurde','gebaut'],exp:'Passiv Prät.: <em>wurde gebaut</em>.'},
+{type:'mc',id:'p10',sub:'Vorgangspassiv',q:'Passiv Futur II:',opts:['Das Projekt ist abgeschlossen worden.','Das Projekt wird abgeschlossen worden sein.','Das Projekt wurde abgeschlossen.','Das Projekt wird abgeschlossen.'],ans:1,exp:'Passiv Futur II: <em>wird + PII + worden sein</em>.'},
+{type:'transform',id:'p11',sub:'Vorgangspassiv',q:'Aktiv → Passiv Präsens:<br><strong>„Die Lehrerin erklärt die Aufgabe."</strong>',hint:'Die Aufgabe wird von der Lehrerin erklärt.',keys:['wird','erklärt']},
+{type:'transform',id:'p12',sub:'Vorgangspassiv',q:'Aktiv → Passiv Plusquamperfekt:<br><strong>„Man hatte die Straße gesperrt."</strong>',hint:'Die Straße war gesperrt worden.',keys:['war','gesperrt worden']},
+{type:'mc',id:'p13',sub:'Agens',q:'Wie wird das Agens (Person) angegeben?',opts:['mit + Dativ','durch + Akkusativ','von + Dativ','für + Akkusativ'],ans:2,exp:'Agens mit Personen: <em>von + Dativ</em>.'},
+{type:'mc',id:'p14',sub:'Agens',q:'Agens mit Sache/Mittel:',opts:['von + Dativ','durch + Akkusativ','mit + Dativ','über + Akkusativ'],ans:1,exp:'Agens mit Mitteln: <em>durch + Akkusativ</em>.'},
+{type:'mc',id:'p15',sub:'Zustandspassiv',q:'Was beschreibt das Zustandspassiv?',opts:['Laufenden Vorgang','Resultierenden Zustand','Eine Absicht','Eine Vermutung'],ans:1,exp:'Zustandspassiv = <em>sein + PII</em> → Ergebnis.'},
+{type:'mc',id:'p16',sub:'Zustandspassiv',q:'Zustandspassiv von <strong>„öffnen"</strong> (Das Fenster):',opts:['Das Fenster wird geöffnet.','Das Fenster ist geöffnet.','Das Fenster wurde geöffnet.','Das Fenster ist geöffnet worden.'],ans:1,exp:'Zustandspassiv: <em>sein + Partizip II</em>.'},
+{type:'fill',id:'p17',sub:'Zustandspassiv',q:'Ergänze Zustandspassiv:<br><strong>„Der Laden ___ schon ___."</strong> (schließen)',inp:'blank',ans:['ist','geschlossen'],exp:'<em>ist geschlossen</em>.'},
+{type:'mc',id:'p18',sub:'Zustandspassiv',q:'Welcher Satz ist Vorgangspassiv?',opts:['Die Tür ist geöffnet.','Die Tür wird geöffnet.','Die Tür ist offen.','Die Tür bleibt geöffnet.'],ans:1,exp:'Vorgangspassiv: <em>wird geöffnet</em>.'},
+{type:'mc',id:'p19',sub:'Zustandspassiv',q:'<strong>„Der Brief ___ bereits geschrieben."</strong> (Zustand)',opts:['wird','wurde','ist','hat'],ans:2,exp:'Zustandspassiv Präsens: <em>ist … geschrieben</em>.'},
+{type:'fill',id:'p20',sub:'Zustandspassiv',q:'Zustandspassiv Prät.:<br><strong>„Als ich ankam, ___ die Tür noch ___."</strong> (schließen)',inp:'blank',ans:['war','geschlossen'],exp:'Zustandspassiv Prät.: <em>war geschlossen</em>.'},
+{type:'mc',id:'p21',sub:'Zustandspassiv',q:'Was ist KEIN Zustandspassiv?',opts:['Die Aufgabe ist erledigt.','Das Buch ist übersetzt.','Das Kind ist eingeschlafen.','Die Lampe ist kaputt.'],ans:2,exp:'<em>eingeschlafen</em> = Perfekt Aktiv, kein Passiv.'},
+{type:'mc',id:'p22',sub:'Passiv mit Modalverben',q:'Passiv mit Modalverb Präsens:<br><strong>„Das muss sofort erledigt ___."</strong>',opts:['werden','worden','sein','werden sein'],ans:0,exp:'Modalverb + Passiv: <em>muss erledigt werden</em>.'},
+{type:'mc',id:'p23',sub:'Passiv mit Modalverben',q:'<strong>„Das Problem soll gelöst ___."</strong>',opts:['werden','worden','sein','wurden'],ans:0,exp:'<em>soll gelöst werden</em>.'},
+{type:'fill',id:'p24',sub:'Passiv mit Modalverben',q:'Ergänze:<br><strong>„Der Text kann noch verbessert ___."</strong>',inp:'blank',ans:['werden'],exp:'<em>kann … verbessert werden</em>.'},
+{type:'mc',id:'p25',sub:'Passiv mit Modalverben',q:'Passiv mit Modalverb Präteritum:<br><strong>„Das durfte nicht gemacht ___."</strong>',opts:['werden','worden','sein','wurde'],ans:0,exp:'Modal Prät. + Passiv: <em>durfte … gemacht werden</em>.'},
+{type:'transform',id:'p26',sub:'Passiv mit Modalverben',q:'Forme in Passiv mit Modalverb um:<br><strong>„Man muss das Formular ausfüllen."</strong>',hint:'Das Formular muss ausgefüllt werden.',keys:['muss','ausgefüllt werden']},
+{type:'transform',id:'p27',sub:'Passiv mit Modalverben',q:'Forme um:<br><strong>„Man sollte den Bericht überprüfen."</strong>',hint:'Der Bericht sollte überprüft werden.',keys:['sollte','überprüft werden']},
+{type:'mc',id:'p28',sub:'Passiv mit Modalverben',q:'<strong>„Das kann nicht akzeptiert ___."</strong>',opts:['werden','worden sein','sein','worden'],ans:0,exp:'<em>kann … akzeptiert werden</em>.'},
+{type:'fill',id:'p29',sub:'Passiv mit Modalverben',q:'Ergänze:<br><strong>„Das darf hier nicht ___."</strong> (parken)',inp:'blank',ans:['geparkt werden'],exp:'<em>darf nicht geparkt werden</em>.'},
+{type:'mc',id:'p30',sub:'Unpersönliches Passiv',q:'Unpersönliches Passiv:',opts:['Das wird gemacht.','Hier wird viel gelacht.','Die Arbeit wird erledigt.','Das Auto wird gewaschen.'],ans:1,exp:'Unpersönl. Passiv: intransitives Verb → <em>Hier wird gelacht.</em>'},
+{type:'mc',id:'p31',sub:'Unpersönliches Passiv',q:'<strong>„___ wird hier nicht geraucht."</strong>',opts:['Man','Es','—','Sie'],ans:1,exp:'Platzhalter-<em>es</em> bei Satzanfang.'},
+{type:'transform',id:'p32',sub:'Unpersönliches Passiv',q:'Forme in unpersönliches Passiv:<br><strong>„Die Leute helfen einander."</strong>',hint:'Es wird einander geholfen.',keys:['geholfen','wird']},
+{type:'mc',id:'p33',sub:'Unpersönliches Passiv',q:'Welche Verben bilden KEIN persönliches Passiv?',opts:['transitive Verben','intransitive ohne Akkusativobjekt','reflexive Verben','trennbare Verben'],ans:1,exp:'Intransitive ohne Akkusativobjekt → nur unpersönl. Passiv.'},
+{type:'mc',id:'p34',sub:'Unpersönliches Passiv',q:'<strong>„Auf der Party ___ getanzt."</strong>',opts:['wurde','ist','hat','waren'],ans:0,exp:'Unpersönl. Passiv Prät.: <em>wurde getanzt</em>.'},
+{type:'fill',id:'p35',sub:'Unpersönliches Passiv',q:'Ergänze:<br><strong>„Heute ___ nicht gearbeitet."</strong>',inp:'blank',ans:['wird'],exp:'Unpersönl. Passiv Präs.: <em>wird nicht gearbeitet</em>.'},
+{type:'mc',id:'p36',sub:'Unpersönliches Passiv',q:'<strong>„Dem Kind ___ geholfen."</strong>',opts:['wurde','hat','ist','war'],ans:0,exp:'Dativpassiv: <em>Dem Kind wurde geholfen.</em>'},
+{type:'mc',id:'p37',sub:'Passiv-Alternativen',q:'Passivumschreibung mit <em>„man"</em>:<br><strong>„Das Formular muss ausgefüllt werden."</strong>',opts:['Man füllt das Formular aus.','Man muss das Formular ausfüllen.','Das Formular füllt man.','Man hat das Formular ausgefüllt.'],ans:1,exp:'<em>Man muss das Formular ausfüllen.</em>'},
+{type:'mc',id:'p38',sub:'Passiv-Alternativen',q:'Passivumschreibung mit <em>„lassen + sich"</em>:<br><strong>„Das Problem kann gelöst werden."</strong>',opts:['Das Problem lässt sich lösen.','Das Problem löst sich.','Das Problem lässt lösen.','Das Problem kann sich lösen.'],ans:0,exp:'<em>lassen + sich + Infinitiv</em>.'},
+{type:'mc',id:'p39',sub:'Passiv-Alternativen',q:'Passivumschreibung mit <em>„sein + zu + Inf."</em>:<br><strong>„Das muss beachtet werden."</strong>',opts:['Das ist zu beachten.','Das beachtet zu werden.','Das ist beachtet.','Das bleibt zu beachten.'],ans:0,exp:'<em>sein + zu + Infinitiv</em> = Notwendigkeit.'},
+{type:'mc',id:'p40',sub:'Passiv-Alternativen',q:'<strong>„Das lässt sich nicht erklären."</strong> Bedeutung?',opts:['Jemand erklärt es nicht.','Es kann nicht erklärt werden.','Jemand lässt erklären.','Es hat sich erklärt.'],ans:1,exp:'<em>lässt sich + Infinitiv</em>.'},
+{type:'transform',id:'p41',sub:'Passiv-Alternativen',q:'Forme um mit <em>sein … zu</em>:<br><strong>„Die Aufgaben müssen bis Freitag abgegeben werden."</strong>',hint:'Die Aufgaben sind bis Freitag abzugeben.',keys:['sind','abzugeben']},
+{type:'mc',id:'p42',sub:'Passiv-Alternativen',q:'<strong>„Die Hausaufgaben sind noch zu machen."</strong> bedeutet:',opts:['Wurden gemacht.','Müssen noch gemacht werden.','Werden gemacht.','Man macht sie.'],ans:1,exp:'<em>sein zu</em> = müssen (Notwendigkeit).'},
+{type:'mc',id:'p43',sub:'Passiv-Alternativen',q:'Welche Konstruktion ersetzt kein Passiv?',opts:['lassen + sich','sein + zu + Inf.','haben + zu + Inf.','werden + Infinitiv'],ans:3,exp:'<em>werden + Infinitiv</em> = Futur I Aktiv.'},
+{type:'mc',id:'p44',sub:'Passiv-Alternativen',q:'<strong>„haben + zu + Infinitiv"</strong> drückt aus:',opts:['Passiv Perfekt','Notwendigkeit / Verpflichtung','Zustand','Vermutung'],ans:1,exp:'<em>haben + zu + Inf.</em> = Verpflichtung.'},
+{type:'mc',id:'p45',sub:'Passiv global',q:'Passiv betont:',opts:['Den Handelnden','Die Handlung / das Geschehen','Das Ergebnis','Die Zeit'],ans:1,exp:'Passiv legt Fokus auf die Handlung, nicht den Handelnden.'},
+{type:'fill',id:'p46',sub:'Passiv-Alternativen',q:'Ergänze:<br><strong>„Die Frage ___ nicht ___ beantworten."</strong> (lassen + sich)',inp:'blank',ans:['lässt','sich'],exp:'<em>lässt sich nicht beantworten</em>.'},
+{type:'mc',id:'p47',sub:'Passiv global',q:'Was ist die Passiv-Infinitivgruppe?',opts:['PII + werden','PII + worden','Infinitiv + worden','werden + Infinitiv'],ans:0,exp:'Passiv-Infinitiv: <em>Partizip II + werden</em>.'},
+{type:'mc',id:'p48',sub:'Passiv global',q:'Kann <em>„schlafen"</em> im Passiv verwendet werden?',opts:['Ja, persönliches Passiv','Nur unpersönliches Passiv','Gar nicht','Nur mit Modalverb'],ans:1,exp:'<em>schlafen</em> intransitiv → nur unpersönl. Passiv.'},
+{type:'mc',id:'p49',sub:'Passiv global',q:'Welche Zeitform: <strong>„Das Buch war bereits gelesen worden."</strong>',opts:['Präteritum','Plusquamperfekt Passiv','Perfekt Passiv','Zustandspassiv'],ans:1,exp:'<em>war + PII + worden</em> = Passiv Plusquamperfekt.'},
+{type:'mc',id:'p50',sub:'Passiv global',q:'<strong>„Ich habe das zu erledigen."</strong> Umformung ins Passiv:',opts:['Ich erledige das.','Das muss von mir erledigt werden.','Das wurde erledigt.','Das ist erledigt.'],ans:1,exp:'<em>haben zu</em> ≈ <em>müssen … werden</em> (Passiv).'},
+]},
+{id:'konnektoren',label:'Konnektoren',num:'05',title:'Konnektoren & Satzbau',exercises:[
+{type:'mc',id:'kon1',sub:'Kausal',q:'Welcher Konnektor ist kausal (Nebensatz)?',opts:['obwohl','weil','während','damit'],ans:1,exp:'<em>weil</em> = kausal, Nebensatz.'},
+{type:'mc',id:'kon2',sub:'Kausal',q:'Kausaler Hauptsatz-Konnektor:',opts:['weil','da','deshalb','denn'],ans:2,exp:'<em>deshalb</em> = Konjunktionaladverb.'},
+{type:'fill',id:'kon3',sub:'Kausal',q:'Verbinde mit <em>denn</em>:<br><strong>„Er bleibt zu Hause. Er ist krank."</strong>',inp:'large',ans:['er bleibt zu hause, denn er ist krank'],exp:'<em>denn</em> = koordinierend.'},
+{type:'mc',id:'kon4',sub:'Kausal',q:'Unterschied <em>weil</em> vs. <em>denn</em>?',opts:['Kein Unterschied','weil → Nebensatz, denn → Hauptsatz','denn → Nebensatz','Beide leiten Nebensätze ein'],ans:1,exp:'<em>weil</em> → Nebensatz (Verb am Ende); <em>denn</em> → koordinierter Hauptsatz.'},
+{type:'mc',id:'kon5',sub:'Kausal',q:'<strong>„___ Erkältung konnte er nicht kommen."</strong> (Präp.)',opts:['Wegen','Weil','Da','Deshalb'],ans:0,exp:'<em>wegen</em> + Genitiv.'},
+{type:'mc',id:'kon6',sub:'Kausal',q:'<strong>„Da er krank war, ___ er nicht kommen."</strong>',opts:['konnte','kann','könnte','hat konnte'],ans:0,exp:'<em>da</em> = kausal (Nebensatz).'},
+{type:'fill',id:'kon7',sub:'Kausal',q:'Verbinde mit <em>daher</em>:<br><strong>„Es hat geregnet. Die Straßen sind nass."</strong>',inp:'large',ans:['es hat geregnet, daher sind die straßen nass'],exp:'<em>daher</em> = Konjunktionaladverb, Inversion.'},
+{type:'mc',id:'kon8',sub:'Kausal',q:'Welcher Satz ist kausal FALSCH?',opts:['Er kam nicht, weil er krank war.','Weil krank er war, kam er nicht.','Da er krank war, kam er nicht.','Er kam nicht, denn er war krank.'],ans:1,exp:'Nach <em>weil</em>: Verb ans Ende.'},
+{type:'mc',id:'kon9',sub:'Konzessiv',q:'Konzessiver Nebensatz-Konnektor:',opts:['weil','obwohl','damit','falls'],ans:1,exp:'<em>obwohl</em> = konzessiv.'},
+{type:'mc',id:'kon10',sub:'Konzessiv',q:'Konzessives Konjunktionaladverb:',opts:['obwohl','trotzdem','damit','weil'],ans:1,exp:'<em>trotzdem</em> = konzessives Konjunktionaladverb.'},
+{type:'fill',id:'kon11',sub:'Konzessiv',q:'Verbinde mit <em>obwohl</em>:<br><strong>„Er ist krank. Er kommt zur Arbeit."</strong>',inp:'large',ans:['obwohl er krank ist, kommt er zur arbeit','er kommt zur arbeit, obwohl er krank ist'],exp:'<em>obwohl</em> = Nebensatz, Verb am Ende.'},
+{type:'mc',id:'kon12',sub:'Konzessiv',q:'<strong>„___ aller Schwierigkeiten hat er es geschafft."</strong> (Präp.)',opts:['Trotz','Obwohl','Wegen','Trotzdem'],ans:0,exp:'<em>trotz</em> + Genitiv.'},
+{type:'mc',id:'kon13',sub:'Konzessiv',q:'<strong>„Auch wenn"</strong> gehört zu:',opts:['Kausal','Konzessiv','Temporal','Final'],ans:1,exp:'<em>auch wenn</em> = konzessiv.'},
+{type:'fill',id:'kon14',sub:'Konzessiv',q:'Verbinde mit <em>trotzdem</em>:<br><strong>„Er hat wenig geschlafen. Er ist fit."</strong>',inp:'large',ans:['er hat wenig geschlafen, trotzdem ist er fit'],exp:'<em>trotzdem</em>: Inversion.'},
+{type:'mc',id:'kon15',sub:'Konzessiv',q:'Was ist <em>obgleich</em>?',opts:['Formellere Variante von obwohl','Kausales Synonym','Temporalkonnektor','Synonym für trotzdem'],ans:0,exp:'<em>obgleich</em> = formelles <em>obwohl</em>.'},
+{type:'mc',id:'kon16',sub:'Konzessiv',q:'<strong>„Obwohl er müde war, ___ er weiter."</strong>',opts:['arbeiten','arbeitete','arbeitet','gearbeitet'],ans:1,exp:'Hauptsatz nach obwohl-Nebensatz: normales Verb.'},
+{type:'mc',id:'kon17',sub:'Temporal',q:'Temporaler Konnektor für Gleichzeitigkeit:',opts:['nachdem','während','bevor','seitdem'],ans:1,exp:'<em>während</em> = Gleichzeitigkeit.'},
+{type:'mc',id:'kon18',sub:'Temporal',q:'<strong>„___ er gegessen hatte, ging er schlafen."</strong>',opts:['Während','Nachdem','Bevor','Als'],ans:1,exp:'<em>nachdem</em> + Plusquamperfekt = Vorzeitigkeit.'},
+{type:'mc',id:'kon19',sub:'Temporal',q:'Einmalige Handlung in der Vergangenheit:',opts:['wenn','als','bevor','seit'],ans:1,exp:'<em>als</em> = einmalige Vergangenheit.'},
+{type:'mc',id:'kon20',sub:'Temporal',q:'Wiederholte Handlung in der Vergangenheit:',opts:['als','wenn','seit','bis'],ans:1,exp:'<em>wenn</em> = wiederholt oder konditional.'},
+{type:'fill',id:'kon21',sub:'Temporal',q:'Ergänze: <strong>„___ er ankam, hatten wir schon gegessen."</strong>',inp:'blank',ans:['als','bevor'],exp:'<em>Als</em> (einmalig Verg.) + Plusquamperfekt.'},
+{type:'mc',id:'kon22',sub:'Temporal',q:'<strong>„Seitdem"</strong> beschreibt:',opts:['Ziel','Startpunkt bis zur Gegenwart','Einmalige Handlung','Gleichzeitigkeit'],ans:1,exp:'<em>seitdem</em> = ab einem Zeitpunkt bis jetzt.'},
+{type:'fill',id:'kon23',sub:'Temporal',q:'Ergänze: <strong>„Ich warte, ___ du fertig bist."</strong>',inp:'blank',ans:['bis'],exp:'<em>bis</em> = temporal.'},
+{type:'mc',id:'kon24',sub:'Temporal',q:'<strong>„___ er aufwächst, möchte er Arzt werden."</strong>',opts:['Bis','Seitdem','Sobald','Während'],ans:2,exp:'<em>sobald</em> = sofort wenn.'},
+{type:'mc',id:'kon25',sub:'Final',q:'Finaler Nebensatz-Konnektor (verschiedenes Subj.):',opts:['weil','obwohl','damit','als'],ans:2,exp:'<em>damit</em> = final, verschiedene Subjekte.'},
+{type:'mc',id:'kon26',sub:'Final',q:'<strong>„Er erklärt langsam, ___ alle verstehen."</strong>',opts:['weil','damit','obwohl','seitdem'],ans:1,exp:'<em>damit</em> = Ziel/Zweck.'},
+{type:'mc',id:'kon27',sub:'Final',q:'Gleiches Subjekt:<br><strong>„Er lernt, ___ die Prüfung zu bestehen."</strong>',opts:['damit','um','weil','dass'],ans:1,exp:'Gleiches Subjekt → <em>um … zu + Infinitiv</em>.'},
+{type:'fill',id:'kon28',sub:'Final',q:'Ergänze: <strong>„Sie spart, ___ sie ein Auto ___ kaufen."</strong>',inp:'blank',ans:['um','zu'],exp:'<em>um … zu kaufen</em>.'},
+{type:'mc',id:'kon29',sub:'Final',q:'<strong>„damit vs. um … zu"</strong>:',opts:['Kein Unterschied','damit = versch. Subj., um…zu = gleiches','um…zu = versch. Subj.','Beide nur mit Infinitiv'],ans:1,exp:'<em>damit</em> = andere Person; <em>um…zu</em> = gleiches Subjekt.'},
+{type:'mc',id:'kon30',sub:'Final',q:'<strong>„Er ruft an, damit sie ___ Bescheid ___."</strong>',opts:['weiß','wissen','gewusst','wissen würde'],ans:0,exp:'<em>damit</em>-Satz: Verb am Ende → <em>Bescheid weiß</em>.'},
+{type:'mc',id:'kon31',sub:'Adversativ',q:'Adversativer Konnektor:',opts:['weil','jedoch','damit','als'],ans:1,exp:'<em>jedoch / aber / hingegen</em> = adversativ.'},
+{type:'mc',id:'kon32',sub:'Adversativ',q:'<strong>„Einerseits … ___"</strong>',opts:['andererseits','hingegen','trotzdem','deshalb'],ans:0,exp:'<em>einerseits … andererseits</em>.'},
+{type:'mc',id:'kon33',sub:'Adversativ',q:'<strong>„Er mag Kaffee, ___ sie trinkt lieber Tee."</strong>',opts:['weil','obwohl','wohingegen','seitdem'],ans:2,exp:'<em>wohingegen</em> = adversativer Nebensatzkonnektor.'},
+{type:'fill',id:'kon34',sub:'Adversativ',q:'Verbinde mit <em>dagegen</em>:<br><strong>„Er arbeitet viel. Sie macht Pause."</strong>',inp:'large',ans:['er arbeitet viel, dagegen macht sie pause'],exp:'<em>dagegen</em> = adversatives Konjunktionaladverb.'},
+{type:'mc',id:'kon35',sub:'Adversativ',q:'Welcher drückt Einschränkung aus?',opts:['jedoch','zwar … aber','entweder … oder','sowohl … als auch'],ans:1,exp:'<em>zwar … aber</em>.'},
+{type:'mc',id:'kon36',sub:'Adversativ',q:'<strong>„___ er intelligent ist, hat er keine Geduld."</strong>',opts:['Obwohl','Weil','Damit','Während'],ans:0,exp:'<em>obwohl</em>.'},
+{type:'mc',id:'kon37',sub:'Zweiteilige Konnektoren',q:'<strong>„___ Klaus ___ Maria kam."</strong> (keiner)',opts:['Entweder … oder','Weder … noch','Sowohl … als auch','Nicht nur … sondern auch'],ans:1,exp:'<em>Weder … noch</em>.'},
+{type:'mc',id:'kon38',sub:'Zweiteilige Konnektoren',q:'<strong>„___ er ___ seine Frau sind Ärzte."</strong> (beide)',opts:['Weder … noch','Entweder … oder','Sowohl … als auch','Nicht nur … sondern'],ans:2,exp:'<em>Sowohl … als auch</em>.'},
+{type:'mc',id:'kon39',sub:'Zweiteilige Konnektoren',q:'Alternative:<br><strong>„___ du kommst, ___ er bleibt."</strong>',opts:['Sowohl … als auch','Entweder … oder','Weder … noch','Zwar … aber'],ans:1,exp:'<em>Entweder … oder</em>.'},
+{type:'fill',id:'kon40',sub:'Zweiteilige Konnektoren',q:'Ergänze: <strong>„Sie ist ___ müde ___ krank."</strong> (keines)',inp:'blank',ans:['weder','noch'],exp:'<em>weder … noch</em>.'},
+{type:'mc',id:'kon41',sub:'Zweiteilige Konnektoren',q:'<strong>„Nicht nur sie, ___ auch er war dabei."</strong>',opts:['aber','sondern','jedoch','obwohl'],ans:1,exp:'<em>nicht nur … sondern auch</em>.'},
+{type:'mc',id:'kon42',sub:'Zweiteilige Konnektoren',q:'Wortstellung nach <em>„entweder"</em> am Satzanfang?',opts:['Normal (SVO)','Inversion','Verb am Ende','Verb auf Pos. 1'],ans:1,exp:'<em>Entweder kommt er …</em> = Inversion.'},
+{type:'mc',id:'kon43',sub:'Zweiteilige Konnektoren',q:'<strong>„Je mehr er lernt, ___ besser wird er."</strong>',opts:['desto','umso','je','als'],ans:0,exp:'<em>je … desto</em> = Proportionalsatz.'},
+{type:'fill',id:'kon44',sub:'Zweiteilige Konnektoren',q:'Ergänze: <strong>„___ früher du anfängst, desto länger hast du Zeit."</strong>',inp:'blank',ans:['je'],exp:'<em>je … desto</em>.'},
+{type:'mc',id:'kon45',sub:'Gemischt',q:'Konsekutivsatz-Konnektor:',opts:['obwohl','sodass','damit','weil'],ans:1,exp:'<em>sodass</em> = konsekutiv.'},
+{type:'mc',id:'kon46',sub:'Gemischt',q:'<strong>„Er arbeitete so schnell, ___ er früh fertig war."</strong>',opts:['obwohl','sodass','weil','damit'],ans:1,exp:'<em>sodass</em> = Folge.'},
+{type:'mc',id:'kon47',sub:'Gemischt',q:'Konditionaler Konnektor:',opts:['weil','obwohl','falls / wenn','damit'],ans:2,exp:'<em>falls / wenn</em> = konditional.'},
+{type:'fill',id:'kon48',sub:'Gemischt',q:'Verbinde mit <em>falls</em>:<br><strong>„Du hast Fragen. Ruf mich an."</strong>',inp:'large',ans:['falls du fragen hast, ruf mich an','ruf mich an, falls du fragen hast'],exp:'<em>falls</em> = konditional.'},
+{type:'mc',id:'kon49',sub:'Gemischt',q:'Instrumentaler Konnektor:',opts:['indem','obwohl','seitdem','damit'],ans:0,exp:'<em>indem</em> = instrumental.'},
+{type:'mc',id:'kon50',sub:'Gemischt',q:'<strong>„Er lernte Deutsch, ___ er täglich Podcasts hörte."</strong>',opts:['damit','sodass','indem','obwohl'],ans:2,exp:'<em>indem</em> = Mittel/Methode.'},
+]},
+{id:'leseverstehen',label:'Leseverstehen',num:'06',title:'Leseverstehen',exercises:[
+{type:'mc',id:'lv1',sub:'Text A — Digitalisierung',q:'<em>„Die Digitalisierung verändert unsere Gesellschaft. Schulen setzen auf Lernplattformen. Befürworter: digitale Medien gestalten Unterricht individueller. Kritiker: Bildschirmzeit schwächt soziale Kompetenzen. Ohne Lehrerfortbildungen bleiben Geräte wirkungslos."</em><br><br>Vorteile laut Befürwortern?',opts:['Günstigere Schulen','Individualisierterer Unterricht','Keine Lehrer nötig','Schnelleres Internet'],ans:1,exp:'Befürworter sehen <em>individuelleren Unterricht</em>.'},
+{type:'mc',id:'lv2',sub:'Text A — Digitalisierung',q:'Voraussetzung für wirksame Digitalisierung?',opts:['Neue Schulgebäude','Abschaffung von Büchern','Lehrerfortbildungen','Günstige Tablets'],ans:2,exp:'<em>Ohne Fortbildungen bleiben Geräte wirkungslos.</em>'},
+{type:'mc',id:'lv3',sub:'Text A — Digitalisierung',q:'Was bedeutet <strong>„wirkungslos"</strong>?',opts:['sehr teuer','ohne Wirkung','kompliziert','modern'],ans:1,exp:'<em>wirkungslos</em> = ohne Wirkung.'},
+{type:'mc',id:'lv4',sub:'Text A — Digitalisierung',q:'Welche Aussage ist NICHT im Text?',opts:['Kritiker fürchten Verlust sozialer Kompetenzen.','Befürworter sehen Vorteile.','Alle Länder haben Digitalisierung umgesetzt.','Lernplattformen werden mehr genutzt.'],ans:2,exp:'Über vollständige Umsetzung wird nicht gesprochen.'},
+{type:'mc',id:'lv5',sub:'Text A — Digitalisierung',q:'Was impliziert der letzte Satz?',opts:['Geräte sind unwichtig.','Schulung ist entscheidend für Wirkung.','Schulen sollen keine Geräte kaufen.','Fortbildungen sind unnötig.'],ans:1,exp:'Ohne Fortbildungen sind Geräte nutzlos.'},
+{type:'mc',id:'lv6',sub:'Text B — Arbeitsmarkt',q:'<em>„Automatisierung und KI werden den Arbeitsmarkt umgestalten. Routinetätigkeiten werden von Maschinen übernommen. Neue Berufsfelder erfordern kreative und soziale Kompetenzen. Lebenslanges Lernen wird Notwendigkeit."</em><br><br>Was übernehmen Maschinen?',opts:['Kreative Aufgaben','Soziale Tätigkeiten','Routinetätigkeiten','Führungsaufgaben'],ans:2,exp:'<em>Routinetätigkeiten</em>.'},
+{type:'mc',id:'lv7',sub:'Text B — Arbeitsmarkt',q:'Welche Kompetenzen werden wichtiger?',opts:['Handwerkliche','Kreative und soziale','Körperliche Stärke','Gedächtnis'],ans:1,exp:'<em>kreative und soziale Kompetenzen</em>.'},
+{type:'mc',id:'lv8',sub:'Text B — Arbeitsmarkt',q:'Was bedeutet „lebenslanges Lernen"?',opts:['Bis Schulabschluss','Kontinuierliche Weiterbildung im Berufsleben','Nur in jungen Jahren','Als Hobby'],ans:1,exp:'Weiterbildung über das gesamte Berufsleben.'},
+{type:'mc',id:'lv9',sub:'Text B — Arbeitsmarkt',q:'Synonym für <strong>„umgestalten"</strong>?',opts:['zerstören','transformieren / verändern','ignorieren','beschleunigen'],ans:1,exp:'<em>umgestalten</em> = verändern.'},
+{type:'mc',id:'lv10',sub:'Text B — Arbeitsmarkt',q:'Ton des Textes?',opts:['Alarmierend','Sachlich-informierend','Humorvoll','Stark kritisch'],ans:1,exp:'Sachlich-informierend.'},
+{type:'mc',id:'lv11',sub:'Text C — Klimawandel',q:'<em>„Der Klimawandel zählt zu den größten Herausforderungen. Steigende Temperaturen, Extremwetter und Meeresspiegel-Anstieg bedrohen Ökosysteme. Wissenschaftler fordern dringende Maßnahmen. Einzelne Länder haben ehrgeizige Klimaziele gesetzt."</em><br><br>Folgen des Klimawandels?',opts:['Sinkende Temperaturen','Steigende Temperaturen, Extremwetter, Meeresspiegel','Wirtschaftlicher Aufschwung','Mehr Biodiversität'],ans:1,exp:'<em>steigende Temperaturen, Extremwetter, Meeresspiegel-Anstieg</em>.'},
+{type:'mc',id:'lv12',sub:'Text C — Klimawandel',q:'Was fordern Wissenschaftler?',opts:['Mehr Forschung ohne Maßnahmen','Dringende Reduzierung von Treibhausgasemissionen','Verlagerung von Industrie','Abschaffung aller Autos'],ans:1,exp:'<em>dringende Maßnahmen zur Reduzierung</em>.'},
+{type:'mc',id:'lv13',sub:'Text C — Klimawandel',q:'Was bedeutet <strong>„ehrgeizig"</strong>?',opts:['unrealistisch','ambitioniert','einfach','umstritten'],ans:1,exp:'<em>ehrgeizig</em> = ambitioniert.'},
+{type:'mc',id:'lv14',sub:'Text C — Klimawandel',q:'Welche Aussage entspricht NICHT dem Text?',opts:['Ökosysteme sind bedroht.','Alle Länder haben Klimaziele bereits erreicht.','Klimawandel = große Herausforderung.','Menschliche Siedlungen betroffen.'],ans:1,exp:'Nur <em>einzelne Länder haben gesetzt</em>, nicht erreicht.'},
+{type:'mc',id:'lv15',sub:'Text C — Klimawandel',q:'Synonym für <strong>„Treibhausgas"</strong>?',opts:['Sauerstoff','klimaschädliches Abgas (CO₂)','Stickstoff','Ozon'],ans:1,exp:'<em>Treibhausgase</em> = z.B. CO₂.'},
+{type:'mc',id:'lv16',sub:'Text D — Gesundheit',q:'<em>„Studien zeigen: Obst, Gemüse, Hülsenfrüchte senken Krankheitsrisiko. Verarbeitete Lebensmittel stehen im Verdacht, Herz-Kreislauf-Erkrankungen zu begünstigen. Experten empfehlen Mittelmeerdiät."</em><br><br>Was senkt das Krankheitsrisiko?',opts:['Verarbeitete Lebensmittel','Obst, Gemüse und Hülsenfrüchte','Fleischkonsum','Fastfood'],ans:1,exp:'<em>Obst, Gemüse und Hülsenfrüchte</em>.'},
+{type:'mc',id:'lv17',sub:'Text D — Gesundheit',q:'Was wird mit Herz-Kreislauf-Erkrankungen verbunden?',opts:['Mittelmeerdiät','Obst','Stark verarbeitete Lebensmittel','Hülsenfrüchte'],ans:2,exp:'<em>Stark verarbeitete Lebensmittel</em>.'},
+{type:'mc',id:'lv18',sub:'Text D — Gesundheit',q:'Was bedeutet <strong>„im Verdacht stehen"</strong>?',opts:['Als sicher bewiesen','Als möglicherweise schädlich angesehen','Als unbedenklich','Bekannt sein'],ans:1,exp:'<em>im Verdacht stehen</em> = möglicherweise schädlich (nicht bewiesen).'},
+{type:'mc',id:'lv19',sub:'Text D — Gesundheit',q:'Welche Diät empfehlen Experten?',opts:['Veganismus','Low-Carb','Mittelmeerdiät','Intervallfasten'],ans:2,exp:'<em>Mittelmeerdiät</em>.'},
+{type:'mc',id:'lv20',sub:'Text D — Gesundheit',q:'Was bedeutet <strong>„ausgewogen"</strong>?',opts:['sehr teuer','gleichgewichtig / verschiedene Nährstoffe','schnell zubereitet','sehr lecker'],ans:1,exp:'<em>ausgewogen</em> = verschiedene Nährstoffe.'},
+{type:'mc',id:'lv21',sub:'Wortschatz im Kontext',q:'<em>„Der Redner sprach stockend."</em> Was bedeutet <strong>„stockend"</strong>?',opts:['fließend','mit Unterbrechungen','sehr laut','überzeugend'],ans:1,exp:'<em>stockend</em> = nicht flüssig.'},
+{type:'mc',id:'lv22',sub:'Wortschatz im Kontext',q:'<em>„Das Projekt scheiterte."</em> Was bedeutet <strong>„scheitern"</strong>?',opts:['erfolgreich sein','stocken','misslingen','verzögert werden'],ans:2,exp:'<em>scheitern</em> = misslingen.'},
+{type:'mc',id:'lv23',sub:'Wortschatz im Kontext',q:'<em>„Die Verhandlungen wurden vertagt."</em> Was bedeutet <strong>„vertagen"</strong>?',opts:['abgebrochen','auf später verschoben','beschleunigt','beendet'],ans:1,exp:'<em>vertagen</em> = auf späteren Termin verschieben.'},
+{type:'mc',id:'lv24',sub:'Wortschatz im Kontext',q:'<em>„Er gab eine ausweichende Antwort."</em>',opts:['direkt','präzise','die Frage vermeidend','detailliert'],ans:2,exp:'<em>ausweichend</em> = direkte Antwort vermeidend.'},
+{type:'mc',id:'lv25',sub:'Wortschatz im Kontext',q:'<em>„Die Maßnahmen erwiesen sich als kontraproduktiv."</em>',opts:['sehr effizient','Gegenteil des Gewünschten','neutral','teuer'],ans:1,exp:'<em>kontraproduktiv</em> = Gegenteil des Ziels.'},
+{type:'mc',id:'lv26',sub:'Wortschatz im Kontext',q:'<em>„Die Kritik fiel vernichtend aus."</em>',opts:['positiv','mild','extrem negativ','konstruktiv'],ans:2,exp:'<em>vernichtend</em> = extrem negativ.'},
+{type:'mc',id:'lv27',sub:'Wortschatz im Kontext',q:'<em>„Seine Argumente überzeugten restlos."</em>',opts:['teilweise','kaum','vollständig','nicht'],ans:2,exp:'<em>restlos</em> = vollständig.'},
+{type:'mc',id:'lv28',sub:'Wortschatz im Kontext',q:'<em>„Der Aufwand hielt sich in Grenzen."</em>',opts:['enorm','sehr gering','übertrieben','unbekannt'],ans:1,exp:'<em>sich in Grenzen halten</em> = nicht groß sein.'},
+{type:'mc',id:'lv29',sub:'Wortschatz im Kontext',q:'<em>„Das steht noch zur Debatte."</em>',opts:['entschieden','noch diskutiert','unmöglich','klar'],ans:1,exp:'<em>zur Debatte stehen</em> = noch diskutiert.'},
+{type:'mc',id:'lv30',sub:'Wortschatz im Kontext',q:'<em>„Er blieb seiner Linie treu."</em>',opts:['Änderte Kurs','Handelte konsequent','Folgte jemandem','War unsicher'],ans:1,exp:'<em>seiner Linie treu bleiben</em> = konsequent handeln.'},
+{type:'mc',id:'lv31',sub:'Textstruktur',q:'Hauptfunktion einer Einleitung?',opts:['Argumente widerlegen','Thema vorstellen und Interesse wecken','Schluss vorwegnehmen','Statistiken vorstellen'],ans:1,exp:'Einleitung = Thema einführen.'},
+{type:'mc',id:'lv32',sub:'Textstruktur',q:'Was macht einen guten Argumentationstext aus?',opts:['Meinungen ohne Belege','Klare Struktur, belegte Argumente, Schlussfolgerung','Emotionale Sprache','So kurz wie möglich'],ans:1,exp:'Struktur + Belege + Schluss.'},
+{type:'mc',id:'lv33',sub:'Textstruktur',q:'Was signalisiert <strong>„Im Gegensatz dazu"</strong>?',opts:['Ergänzung','Folge','Gegensatz','Beispiel'],ans:2,exp:'<em>Im Gegensatz dazu</em> = adversativer Übergang.'},
+{type:'mc',id:'lv34',sub:'Textstruktur',q:'Was bedeutet <strong>„ein Fazit ziehen"</strong>?',opts:['Neues Argument','Zusammenfassung / Schlussfolgerung','Beispiel geben','Frage stellen'],ans:1,exp:'<em>ein Fazit ziehen</em> = zusammenfassen.'},
+{type:'mc',id:'lv35',sub:'Textstruktur',q:'Was ist ein <strong>„Gegenargument"</strong>?',opts:['Stützt die These','Widerlegt oder schränkt die These ein','Schlussfolgerung','Beispiel'],ans:1,exp:'<em>Gegenargument</em> = widerlegt die These.'},
+{type:'mc',id:'lv36',sub:'Inferenz',q:'<em>„Die Zahlen sprechen für sich."</em>',opts:['Zahlen sind unklar.','So eindeutig, dass keine Erklärung nötig.','Zahlen sind falsch.','Brauchen Kontext.'],ans:1,exp:'<em>für sich sprechen</em> = so deutlich, keine Erläuterung nötig.'},
+{type:'mc',id:'lv37',sub:'Inferenz',q:'<em>„Die Studie lässt Raum für Interpretationen."</em>',opts:['Eindeutig.','Erlaubt verschiedene Deutungen.','Falsch.','Keine Ergebnisse.'],ans:1,exp:'<em>Raum lassen</em> = verschiedene Deutungen möglich.'},
+{type:'mc',id:'lv38',sub:'Inferenz',q:'<em>„Er ließ durchblicken, dass er unzufrieden war."</em>',opts:['Direkt gesagt','Indirekt angedeutet','Verborgen','Gelogen'],ans:1,exp:'<em>durchblicken lassen</em> = indirekt andeuten.'},
+{type:'mc',id:'lv39',sub:'Inferenz',q:'<em>„Das Thema polarisiert."</em>',opts:['Langweilig.','Spaltet die Meinungen.','Gelöst.','Neu.'],ans:1,exp:'<em>polarisieren</em> = stark spalten.'},
+{type:'mc',id:'lv40',sub:'Inferenz',q:'<em>„Die Lösung liegt auf der Hand."</em>',opts:['Sehr kompliziert.','Offensichtlich.','Unbekannt.','Kostet viel.'],ans:1,exp:'<em>auf der Hand liegen</em> = offensichtlich.'},
+{type:'mc',id:'lv41',sub:'Text E — Stadtentwicklung',q:'<em>„Der private PKW dominiert, obwohl viele Bürger umsteigen würden, wenn ÖPNV verlässlicher und günstiger wäre."</em><br><br>Was wäre nötig für mehr ÖPNV-Nutzung?',opts:['Mehr Parkplätze','Verlässlichere und günstigere Angebote','Höhere Benzinpreise','Breitere Straßen'],ans:1,exp:'<em>wenn diese verlässlicher und günstiger wären</em>.'},
+{type:'mc',id:'lv42',sub:'Text E — Stadtentwicklung',q:'Was dominiert das Stadtbild?',opts:['Fahrräder','Straßenbahnen','Der private PKW','Fußgänger'],ans:2,exp:'<em>Der private PKW</em>.'},
+{type:'mc',id:'lv43',sub:'Text E — Stadtentwicklung',q:'Was bedeutet <strong>„Mobilitätskonzept"</strong>?',opts:['Reiseplan','Gesamtstrategie für Fortbewegung','Fahrplan','E-Auto-Modell'],ans:1,exp:'Gesamtplan für Fortbewegung in einer Stadt.'},
+{type:'mc',id:'lv44',sub:'Text E — Stadtentwicklung',q:'Welcher Modus: <em>„würde / wäre"</em>?',opts:['Indikativ','Konjunktiv I','Konjunktiv II','Imperativ'],ans:2,exp:'<em>würde / wäre</em> = Konjunktiv II.'},
+{type:'mc',id:'lv45',sub:'Text E — Stadtentwicklung',q:'Was impliziert das <em>„obwohl"</em>?',opts:['Widerspruch: PKW dominiert trotz Umstiegsbereitschaft','Begründung für mehr Autos','Folge','Ergänzung zu Umfragen'],ans:0,exp:'<em>obwohl</em> = Widerspruch.'},
+{type:'mc',id:'lv46',sub:'Globales Verständnis',q:'Wie nennt man den Abschnitt, der das Thema einführt?',opts:['Fazit','Einleitung','Hauptteil','Übergang'],ans:1,exp:'<em>Einleitung</em>.'},
+{type:'mc',id:'lv47',sub:'Globales Verständnis',q:'Was bedeutet <strong>„implizit"</strong>?',opts:['direkt gesagt','indirekt, nicht ausdrücklich','falsch','eindeutig'],ans:1,exp:'<em>implizit</em> = nicht direkt gesagt.'},
+{type:'mc',id:'lv48',sub:'Globales Verständnis',q:'Welches Signal zeigt Schlussfolgerung an?',opts:['Erstens …','Folglich / Daher / Somit …','Zum Beispiel …','Andererseits …'],ans:1,exp:'<em>Folglich / Daher / Somit</em>.'},
+{type:'mc',id:'lv49',sub:'Globales Verständnis',q:'Unterschied Hauptaussage vs. Detail?',opts:['Kein Unterschied','Hauptaussage = These; Detail = Stützinformation','Detail = zentraler Gedanke','Hauptaussage immer am Anfang'],ans:1,exp:'Hauptaussage = Botschaft; Details stützen sie.'},
+{type:'mc',id:'lv50',sub:'Globales Verständnis',q:'Was ist ein <strong>„Textsignal"</strong>?',opts:['Ein Fehler','Sprachliches Mittel, das Textstruktur zeigt','Ein Eigenname','Ein Adjektiv'],ans:1,exp:'Textsignale zeigen Struktur und Logik.'},
+]},
+{id:'textsorten',label:'Textsorten',num:'07',title:'Textsorten & Schriftliches Ausdrücken',exercises:[
+{type:'mc',id:'ts1',sub:'Formeller Brief',q:'Welche Anrede ist für einen formellen Brief korrekt?',opts:['Hey du!','Hallo!','Sehr geehrte Damen und Herren,','Lieber Freund,'],ans:2,exp:'<em>Sehr geehrte Damen und Herren,</em>'},
+{type:'mc',id:'ts2',sub:'Formeller Brief',q:'Formelle Schlussformel:',opts:['Liebe Grüße','Tschüss','Mit freundlichen Grüßen','Alles Gute'],ans:2,exp:'<em>Mit freundlichen Grüßen</em>.'},
+{type:'fill',id:'ts3',sub:'Formeller Brief',q:'Ergänze: <strong>„___ geehrter Herr Müller,"</strong>',inp:'blank',ans:['sehr'],exp:'<em>Sehr geehrter Herr Müller,</em>'},
+{type:'mc',id:'ts4',sub:'Formeller Brief',q:'Bezugnahme auf früheres Schreiben (formell):',opts:['Du hast geschrieben …','Bezüglich Ihres Schreibens vom …','Ich habe deinen Brief gelesen …','Ich wollte mal fragen …'],ans:1,exp:'<em>Bezüglich Ihres Schreibens vom …</em>'},
+{type:'mc',id:'ts5',sub:'Formeller Brief',q:'Formelle Bitte um Auskunft:',opts:['Sag mir mal …','Ich würde mich freuen, wenn Sie mir mitteilen könnten …','Ich will wissen …','Erkläre mir das.'],ans:1,exp:'<em>Ich würde mich freuen, wenn Sie mir mitteilen könnten …</em>'},
+{type:'transform',id:'ts6',sub:'Formeller Brief',q:'Schreibe formal um:<br><strong>„Ich will, dass du mir hilfst!"</strong>',hint:'Ich würde mich freuen, wenn Sie mir behilflich sein könnten.',keys:['würde','freuen','wenn','könnten']},
+{type:'mc',id:'ts7',sub:'Formeller Brief',q:'Absage formell:',opts:['Nee, geht nicht.','Wir müssen Ihnen leider mitteilen, dass wir Ihren Antrag ablehnen müssen.','Tut mir leid, aber nein.','Ich kann leider nicht.'],ans:1,exp:'<em>Wir müssen Ihnen leider mitteilen …</em>'},
+{type:'mc',id:'ts8',sub:'Formeller Brief',q:'Wofür steht <strong>„i. A."</strong>?',opts:['im Allgemeinen','im Auftrag','in Abwesenheit','in Arbeit'],ans:1,exp:'<em>i. A.</em> = im Auftrag.'},
+{type:'mc',id:'ts9',sub:'Formeller Brief',q:'Formeller Ausdruck des Bedauerns:',opts:['Das ist blöd.','Zu meinem Bedauern muss ich Ihnen mitteilen …','Leider, leider …','Das finde ich schade.'],ans:1,exp:'<em>Zu meinem Bedauern …</em>'},
+{type:'mc',id:'ts10',sub:'Formeller Brief',q:'Worauf kommt es bei einer Beschwerde-E-Mail an?',opts:['Emotionaler Ausdruck','Sachliche Schilderung + höfliche Bitte um Lösung','Kurze Formulierungen','So viele Forderungen wie möglich'],ans:1,exp:'Sachlich + höflich + konkrete Bitte.'},
+{type:'mc',id:'ts11',sub:'Formeller Brief',q:'Formelle Betreffzeile — was fehlt?<br><strong>„Betreff: ___ Ihrer Anfrage vom 01.05."</strong>',opts:['Hinsichtlich','Über','Zu','Wegen'],ans:0,exp:'<em>Hinsichtlich …</em>'},
+{type:'mc',id:'ts12',sub:'Formeller Brief',q:'Einleitung Beschwerdebrief:<br><strong>„Ich ___ mich an Sie."</strong>',opts:['gehe','wende','fahre','bewerbe'],ans:1,exp:'<em>sich wenden an</em>.'},
+{type:'mc',id:'ts13',sub:'Bewerbungsschreiben',q:'Welche Formulierung eignet sich für eine Bewerbung?',opts:['Ich kann super gut programmieren.','Ich verfüge über fundierte Kenntnisse in der Softwareentwicklung.','Programmieren ist mein Ding.','Ich hab viel Erfahrung.'],ans:1,exp:'<em>Ich verfüge über …</em>'},
+{type:'mc',id:'ts14',sub:'Bewerbungsschreiben',q:'Wie beginnt man ein Anschreiben?',opts:['„Ich heiße … und bewerbe mich."','„Sehr geehrte … mit großem Interesse habe ich Ihre Stellenanzeige gelesen …"','„Hey, ich will den Job!"','„Mein Name ist … ich bin gut."'],ans:1,exp:'Formell + Bezug auf Stellenanzeige.'},
+{type:'mc',id:'ts15',sub:'Bewerbungsschreiben',q:'Was gehört NICHT in ein Anschreiben?',opts:['Motivation','Relevante Qualifikationen','Geburtsort und Geburtstag','Verfügbarkeit'],ans:2,exp:'Geburtsort/-datum gehören in den Lebenslauf.'},
+{type:'mc',id:'ts16',sub:'Bewerbungsschreiben',q:'Wie schließt man ein Anschreiben?',opts:['„Bis bald!"','„Ich freue mich auf ein Gespräch. Mit freundlichen Grüßen …"','„Danke!"','„Ich erwarte Ihre Antwort."'],ans:1,exp:'Vorfreude auf Gespräch + <em>Mit freundlichen Grüßen</em>.'},
+{type:'transform',id:'ts17',sub:'Bewerbungsschreiben',q:'Schreibe professionell um:<br><strong>„Ich hab schon viel als Praktikant gemacht und bin gut in meinem Job."</strong>',hint:'Durch meine Tätigkeit als Praktikant konnte ich wertvolle Erfahrungen sammeln und verfüge über ausgeprägte Kompetenzen.',keys:['tätigkeit','erfahrungen','kompetenzen','konnte']},
+{type:'mc',id:'ts18',sub:'Bewerbungsschreiben',q:'Was bedeutet <strong>„Anlage"</strong>?',opts:['Unterschrift','Beigelegte Dokumente','Datum','Empfängeradresse'],ans:1,exp:'<em>Anlage</em> = beigefügte Dokumente.'},
+{type:'mc',id:'ts19',sub:'Bewerbungsschreiben',q:'Formelle Angabe einer Stärke:',opts:['Ich bin stressresistent und belastbar.','Ich halte Stress super aus.','Stress macht mir nix.','Ich stresse nicht.'],ans:0,exp:'<em>stressresistent / belastbar</em>.'},
+{type:'mc',id:'ts20',sub:'Bewerbungsschreiben',q:'Was ist der tabellarische Werdegang?',opts:['Anschreiben','Lebenslauf','Motivationsschreiben','Referenz'],ans:1,exp:'<em>Lebenslauf</em>.'},
+{type:'mc',id:'ts21',sub:'Erörterung',q:'Ziel einer Erörterung?',opts:['Geschichte erzählen','Thema diskutieren und Position vertreten','Ablauf beschreiben','Produkt empfehlen'],ans:1,exp:'Erörterung = Argumentation + Schlussfolgerung.'},
+{type:'mc',id:'ts22',sub:'Erörterung',q:'Struktur einer Erörterung:',opts:['Pro → Kontra → Fazit','Einleitung → Hauptteil (Pro+Kontra) → Schluss','Beschreibung → Erklärung → Zusammenfassung','These → Antithese → Synthese'],ans:1,exp:'Einl. → Hauptteil → Schluss.'},
+{type:'mc',id:'ts23',sub:'Erörterung',q:'Welche Einleitung eignet sich?',opts:['„Es war einmal …"','„In der heutigen Gesellschaft wird X viel diskutiert."','„Ich finde das toll."','„Heute werde ich über X schreiben."'],ans:1,exp:'Aktualitätsbezug + Themennennung.'},
+{type:'mc',id:'ts24',sub:'Erörterung',q:'Wie leitet man ein Gegenargument ein?',opts:['Deshalb','Zwar … aber / Allerdings','Außerdem','Zum Beispiel'],ans:1,exp:'<em>Zwar … aber / Allerdings</em>.'},
+{type:'mc',id:'ts25',sub:'Erörterung',q:'Was gehört in ein gutes Fazit?',opts:['Neue Argumente','Zusammenfassung + persönliche Stellungnahme','Beschreibung des Themas','Aufzählung aller Punkte'],ans:1,exp:'Fazit = Zusammenfassung + klare Position.'},
+{type:'transform',id:'ts26',sub:'Erörterung',q:'Schreibe eine Einleitung für:<br><strong>„Sollte das Mindestalter für Soziale Medien erhöht werden?"</strong>',hint:'In der heutigen digitalen Gesellschaft nutzen immer mehr Jugendliche soziale Medien. Die Frage, ob das Mindestalter erhöht werden sollte, wird kontrovers diskutiert.',keys:['diskutiert','soziale medien','frage']},
+{type:'mc',id:'ts27',sub:'Erörterung',q:'Was ist ein <strong>Beleg</strong>?',opts:['Persönliche Meinung ohne Beweis','Quelle oder Beispiel, das ein Argument stützt','Ein Gegenargument','Ein Romanzitat'],ans:1,exp:'<em>Beleg</em> = Beweis/Quelle.'},
+{type:'mc',id:'ts28',sub:'Erörterung',q:'Was bedeutet <strong>„Stellung nehmen"</strong>?',opts:['Beschreibung geben','Eigene Meinung formulieren und begründen','Fakten aufzählen','Text zusammenfassen'],ans:1,exp:'Meinung + Begründung.'},
+{type:'mc',id:'ts29',sub:'Erörterung',q:'Welche Formulierung drückt eigene Meinung aus?',opts:['Es wird behauptet …','Studien zeigen …','Meiner Ansicht nach …','Manche sagen …'],ans:2,exp:'<em>Meiner Ansicht / Meinung nach</em>.'},
+{type:'mc',id:'ts30',sub:'Erörterung',q:'Was ist ein <em>„Totschlagargument"</em>?',opts:['Sehr gutes Argument','Scheinargument, das Diskussion abwürgt','Statistisches Argument','Historisches Argument'],ans:1,exp:'Scheinargument — keine echte Diskussion.'},
+{type:'mc',id:'ts31',sub:'Zusammenfassung',q:'Ziel einer Zusammenfassung?',opts:['Text ausführlicher darstellen','Kernaussagen knapp wiedergeben','Text wörtlich abschreiben','Eigene Meinung'],ans:1,exp:'Kernaussagen knapp und neutral.'},
+{type:'mc',id:'ts32',sub:'Zusammenfassung',q:'In welchem Tempus schreibt man eine Inhaltsangabe?',opts:['Präteritum','Perfekt','Präsens','Futur I'],ans:2,exp:'Inhaltsangabe = Präsens.'},
+{type:'mc',id:'ts33',sub:'Zusammenfassung',q:'Was darf in einer Zusammenfassung NICHT stehen?',opts:['Hauptthemen','Eigene Meinung / Wertung','Kernaussagen','Schlüsselbegriffe'],ans:1,exp:'Zusammenfassung ist neutral.'},
+{type:'mc',id:'ts34',sub:'Zusammenfassung',q:'Wie gibt man Aussagen eines Textes wieder?',opts:['Wörtlich','Paraphrase in eigenen Worten','Als direkte Fragen','Als Listen'],ans:1,exp:'Paraphrase = eigene Wörter.'},
+{type:'mc',id:'ts35',sub:'Zusammenfassung',q:'Was ist der Einstiegsatz?',opts:['Einleitung','Kernsatz mit Textsorte, Titel, Autor, Thema','Schluss','These'],ans:1,exp:'<em>Der Text „…" von … handelt von …</em>'},
+{type:'transform',id:'ts36',sub:'Zusammenfassung',q:'Schreibe einen Einleitungssatz:<br><strong>Artikel „Klimawandel und Gesellschaft" von Anna Bauer</strong>',hint:'Der Artikel „Klimawandel und Gesellschaft" von Anna Bauer befasst sich mit den Folgen des Klimawandels.',keys:['artikel','befasst','klimawandel','bauer']},
+{type:'mc',id:'ts37',sub:'Zusammenfassung',q:'Was bedeutet <strong>„paraphrasieren"</strong>?',opts:['Wörtlich abschreiben','In eigenen Worten ausdrücken','Kürzen','Kritisieren'],ans:1,exp:'<em>Paraphrasieren</em> = eigene Wörter.'},
+{type:'mc',id:'ts38',sub:'Zusammenfassung',q:'Welche Redemittel passen in eine Zusammenfassung?',opts:['Ich finde, ich glaube …','Der Text behandelt … / Laut Text …','Es war einmal …','Ich will sagen …'],ans:1,exp:'<em>Der Text behandelt / Laut Text …</em>'},
+{type:'mc',id:'ts39',sub:'Redemittel Schreiben',q:'Wie leitet man ein Beispiel ein?',opts:['Deshalb','Zum Beispiel / Etwa','Außerdem','Obwohl'],ans:1,exp:'<em>Zum Beispiel / Beispielsweise</em>.'},
+{type:'mc',id:'ts40',sub:'Redemittel Schreiben',q:'Wie fügt man ein weiteres Argument hinzu?',opts:['Obwohl','Darüber hinaus / Zudem / Außerdem','Infolgedessen','Zwar … aber'],ans:1,exp:'<em>Darüber hinaus / Zudem / Außerdem</em>.'},
+{type:'mc',id:'ts41',sub:'Redemittel Schreiben',q:'Wie leitet man ein Fazit ein?',opts:['Erstens','Abschließend / Zusammenfassend','Einerseits','Zum Beispiel'],ans:1,exp:'<em>Abschließend / Zusammenfassend …</em>'},
+{type:'mc',id:'ts42',sub:'Redemittel Schreiben',q:'Wie drückt man Unsicherheit höflich aus?',opts:['Ich weiß es nicht.','Es scheint mir / Es könnte sein, dass','Das stimmt vielleicht.','Ich glaube irgendwie.'],ans:1,exp:'<em>Es scheint mir / Möglicherweise</em>.'},
+{type:'mc',id:'ts43',sub:'Redemittel Schreiben',q:'Wie zeigt man Zustimmung formell?',opts:['Ja, total!','Ich stimme dem zu / Ich teile diese Ansicht','Klar doch.','Genau das.'],ans:1,exp:'<em>Ich stimme dem zu</em>.'},
+{type:'mc',id:'ts44',sub:'Redemittel Schreiben',q:'Wie widerspricht man höflich?',opts:['Das ist falsch!','Dem muss ich widersprechen / Ich sehe das etwas anders','Nein!','Das stimmt nicht.'],ans:1,exp:'<em>Dem muss ich widersprechen …</em>'},
+{type:'mc',id:'ts45',sub:'Redemittel Schreiben',q:'Wie verweist man auf eine Quelle?',opts:['Jemand hat gesagt …','Laut … / Einer Studie zufolge …','Ich habe gehört …','Es heißt irgendwo …'],ans:1,exp:'<em>Laut / Einer Studie zufolge</em>.'},
+{type:'mc',id:'ts46',sub:'Redemittel Schreiben',q:'Wie drückt man Schlussfolgerung aus?',opts:['Außerdem','Folglich / Infolgedessen','Zum Beispiel','Einerseits'],ans:1,exp:'<em>Folglich / Infolgedessen</em>.'},
+{type:'mc',id:'ts47',sub:'Textsortenwissen',q:'Unterschied <em>Bericht</em> vs. <em>Kommentar</em>?',opts:['Kein Unterschied','Bericht = sachlich; Kommentar = meinungsbetont','Kommentar = sachlich; Bericht = meinungsbetont','Bericht ist kürzer'],ans:1,exp:'<em>Bericht</em> = sachlich; <em>Kommentar</em> = meinungsbetont.'},
+{type:'mc',id:'ts48',sub:'Textsortenwissen',q:'Was ist ein <strong>Leserbrief</strong>?',opts:['Brief an Freund','Reaktion auf Zeitungsartikel mit Meinung','Formeller Behördenbrief','Bewerbung'],ans:1,exp:'<em>Leserbrief</em> = Reaktion auf Zeitungsartikel.'},
+{type:'mc',id:'ts49',sub:'Textsortenwissen',q:'Was charakterisiert einen <strong>Leitartikel</strong>?',opts:['Neutrale Berichterstattung','Meinungsartikel des Chefredakteurs','Eine Anzeige','Interview'],ans:1,exp:'<em>Leitartikel</em> = Meinungsartikel des Chefredakteurs.'},
+{type:'mc',id:'ts50',sub:'Textsortenwissen',q:'Was zeichnet eine <strong>Sachverhaltsdarstellung</strong> aus?',opts:['Viele Meinungen','Objektive Darstellung ohne Wertung','Emotionale Sprache','Fiktive Handlung'],ans:1,exp:'<em>Sachverhaltsdarstellung</em> = objektiv und neutral.'},
+]},
+];
+const state={total:0,correct:0,answered:new Set()};
+let currentSection=0;
+const PAGE_SIZE=10;
+let currentPage={};
+function updateScore(){
+  document.getElementById('scoreBadge').textContent=`${state.correct} / ${state.total} richtig`;
+  const pct=state.total===0?0:Math.round(state.correct/state.total*100);
+  document.getElementById('pctBadge').textContent=`${pct}% Trefferquote`;
+  document.getElementById('pbar').style.width=(state.answered.size===0?0:Math.min(100,Math.round(state.answered.size/350*100)))+'%';
+}
+function buildTabs(){
+  const bar=document.getElementById('tabBar');
+  SECTIONS.forEach((sec,i)=>{
+    const b=document.createElement('button');
+    b.className='tab-btn'+(i===0?' active':'');
+    b.innerHTML=`${sec.label} <span class="cnt">${sec.exercises.length}</span>`;
+    b.onclick=()=>showSection(i);
+    bar.appendChild(b);
+  });
+}
+function showSection(idx){
+  currentSection=idx;
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  renderSection(idx);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderSection(idx){
+  const sec=SECTIONS[idx];
+  const mc=document.getElementById('mainContainer');
+  if(!currentPage[idx])currentPage[idx]=0;
+  const page=currentPage[idx];
+  const exercises=sec.exercises;
+  const totalPages=Math.ceil(exercises.length/PAGE_SIZE);
+  const start=page*PAGE_SIZE;
+  const slice=exercises.slice(start,start+PAGE_SIZE);
+  const grouped={};
+  slice.forEach(ex=>{if(!grouped[ex.sub])grouped[ex.sub]=[];grouped[ex.sub].push(ex);});
+  let html=`<div class="sec-hdr" data-num="${sec.num}"><h2>${sec.title}</h2></div>`;
+  html+=`<div class="pg-info">Seite ${page+1} von ${totalPages} · Übungen ${start+1}–${Math.min(start+PAGE_SIZE,exercises.length)} von ${exercises.length}</div>`;
+  html+=`<div class="pg-btns">`;
+  for(let p=0;p<totalPages;p++)html+=`<button class="pg-btn${p===page?' active-pg':''}" onclick="changePage(${idx},${p})">${p+1}</button>`;
+  html+=`</div>`;
+  Object.entries(grouped).forEach(([sub,exs])=>{
+    html+=`<div class="subsec">${sub}</div>`;
+    exs.forEach(ex=>{html+=renderExercise(ex);});
+  });
+  html+=`<div class="pg-btns" style="margin-top:2rem">`;
+  if(page>0)html+=`<button class="pg-btn" onclick="changePage(${idx},${page-1})">← Zurück</button>`;
+  if(page<totalPages-1)html+=`<button class="pg-btn" onclick="changePage(${idx},${page+1})">Weiter →</button>`;
+  html+=`</div>`;
+  mc.innerHTML=html;
+}
+function changePage(secIdx,page){
+  currentPage[secIdx]=page;
+  renderSection(secIdx);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderExercise(ex){
+  const num=ex.id;
+  const isDone=state.answered.has(num);
+  let html=`<div class="card${isDone?' ok':''}" id="card-${num}"><span class="card-num">#${num.toUpperCase()}</span>`;
+  html+=`<div class="prompt">${ex.q}</div>`;
+  if(ex.type==='mc'){
+    const letters=['A','B','C','D'];
+    html+=`<div class="choices">`;
+    ex.opts.forEach((opt,i)=>{
+      let cls='';
+      if(isDone&&i===ex.ans)cls='ok';
+      html+=`<button class="opt${cls?' '+cls:''}" onclick="checkMC('${num}',${i},${ex.ans},'${(ex.exp||'').replace(/'/g,"\\'")}')"`+(isDone?' disabled':'')+`><span class="ltr">${letters[i]}</span>${opt}</button>`;
+    });
+    html+=`</div>`;
+    if(isDone&&ex.exp)html+=`<div class="fb ok show"><i class="bi-check-circle-fill"></i> ${ex.exp}</div>`;
+    else html+=`<div class="fb" id="fb-${num}"></div>`;
+  } else if(ex.type==='fill'){
+    const w=ex.inp==='blank'?'inp-sm':ex.inp==='medium'?'inp-md':'inp-lg';
+    html+=`<div class="fill-row"><input class="inp ${w}" id="inp-${num}" placeholder="…"${isDone?' disabled':''}></div>`;
+    if(!isDone)html+=`<button class="btn" onclick="checkFill('${num}')">Prüfen</button>`;
+    html+=`<div class="fb" id="fb-${num}">${isDone?'<span style="color:var(--p)">Beantwortet.</span>':''}</div>`;
+  } else if(ex.type==='transform'){
+    html+=`<textarea class="inp" id="inp-${num}" placeholder="Antwort …"${isDone?' disabled':''}></textarea>`;
+    if(ex.hint)html+=`<span class="hint-lnk" onclick="toggleHint('hint-${num}')"><i class="bi-search"></i> Tipp anzeigen</span><div class="hint-box" id="hint-${num}">${ex.hint}</div>`;
+    if(!isDone)html+=`<button class="btn" onclick="checkTransform('${num}')">Prüfen</button>`;
+    html+=`<div class="fb" id="fb-${num}">${isDone?'<span style="color:var(--p)">Beantwortet.</span>':''}</div>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+function checkMC(id,chosen,correct,exp){
+  if(state.answered.has(id))return;
+  state.answered.add(id);state.total++;
+  const card=document.getElementById('card-'+id);
+  card.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('ok');else if(i===chosen)b.classList.add('err');});
+  const ok=chosen===correct;
+  if(ok)state.correct++;
+  const fb=document.getElementById('fb-'+id);
+  if(fb){fb.innerHTML=ok?`<i class="bi-check-circle-fill"></i> Richtig! ${exp}`:`<i class="bi-x-circle-fill"></i> Falsch. Richtig: Option ${['A','B','C','D'][correct]}. ${exp}`;fb.className='fb '+(ok?'ok':'err')+' show';}
+  card.classList.add(ok?'ok':'err');
+  updateScore();
+}
+function findEx(id){for(const sec of SECTIONS)for(const ex of sec.exercises)if(ex.id===id)return ex;return null;}
+function checkFill(id){
+  if(state.answered.has(id))return;
+  const ex=findEx(id);if(!ex)return;
+  const inp=document.getElementById('inp-'+id);
+  const val=inp.value.trim().toLowerCase();
+  const ok=ex.ans.some(a=>val===a.toLowerCase()||val.replace(/\s+/g,' ')===a.toLowerCase());
+  state.answered.add(id);state.total++;
+  if(ok)state.correct++;
+  inp.disabled=true;inp.classList.add(ok?'ok':'err');
+  const card=document.getElementById('card-'+id);card.classList.add(ok?'ok':'err');
+  const fb=document.getElementById('fb-'+id);
+  fb.innerHTML=ok?`<i class="bi-check-circle-fill"></i> Richtig! ${ex.exp||''}`:`<i class="bi-x-circle-fill"></i> Falsch. Richtig: <strong>${ex.ans[0]}</strong>. ${ex.exp||''}`;
+  fb.className='fb '+(ok?'ok':'err')+' show';
+  updateScore();
+}
+function checkTransform(id){
+  if(state.answered.has(id))return;
+  const ex=findEx(id);if(!ex)return;
+  const ta=document.getElementById('inp-'+id);
+  const val=ta.value.trim().toLowerCase();
+  if(!val){const fb=document.getElementById('fb-'+id);fb.innerHTML='<i class="bi-exclamation-triangle-fill"></i> Bitte einen Satz eingeben.';fb.className='fb err show';return;}
+  const ok=ex.keys.every(k=>val.includes(k.toLowerCase()));
+  state.answered.add(id);state.total++;
+  if(ok)state.correct++;
+  ta.disabled=true;ta.classList.add(ok?'ok':'err');
+  const card=document.getElementById('card-'+id);card.classList.add(ok?'ok':'err');
+  const fb=document.getElementById('fb-'+id);
+  fb.innerHTML=ok?`<i class="bi-check-circle-fill"></i> Gut! Enthält die wesentlichen Elemente.`:`<i class="bi-x-circle-fill"></i> Überprüfe deine Antwort. Tipp: ${ex.hint||''}`;
+  fb.className='fb '+(ok?'ok':'err')+' show';
+  updateScore();
+}
+function toggleHint(id){const h=document.getElementById(id);if(h)h.classList.toggle('show');}
+buildTabs();
+renderSection(0);
+</script>
+</body>
+</html>

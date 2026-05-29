@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B2 Hören & Sprechen — 50 Übungen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+/* Tiya Golf Club inspired palette */
+:root{
+  --white:#ffffff;
+  --primary:#81B29A;
+  --secondary:#3D405B;
+  --section-bg:#F4F1DE;
+  --btn-bg:#F2CC8F;
+  --btn-hover:#E07A5F;
+  --p:#717275;
+  --ok:#5aab8a;
+  --err:#c96060;
+  --warn:#E07A5F;
+  --brd:#e8e3d0;
+  --font:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--white);color:var(--secondary);font-family:var(--font);font-weight:400;min-height:100vh;line-height:1.6;}
+.header{padding:1.6rem 2.5rem 1.3rem;border-bottom:1px solid var(--brd);display:flex;align-items:flex-end;justify-content:space-between;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);position:sticky;top:0;z-index:200;}
+.hl .eyebrow{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--primary);margin-bottom:.3rem;font-weight:500;}
+.hl h1{font-family:var(--font);font-size:1.9rem;font-weight:700;letter-spacing:-1px;line-height:1;color:var(--secondary);}
+.hl h1 em{color:var(--primary);font-style:normal;}
+.hl h1 span{color:var(--btn-bg);}
+.scores{display:flex;gap:.6rem;align-items:flex-end;flex-wrap:wrap;}
+.sp{font-family:var(--font);font-size:.75rem;padding:.4rem 1rem;border-radius:100px;border:1px solid;letter-spacing:.03em;font-weight:500;}
+.sp.h{border-color:var(--primary);color:var(--white);background:var(--primary);}
+.sp.s{border-color:var(--btn-bg);color:var(--secondary);background:var(--btn-bg);}
+.sp.acc{border-color:var(--btn-hover);color:var(--white);background:var(--btn-hover);}
+.mode-nav{display:flex;border-bottom:1px solid var(--brd);background:var(--section-bg);}
+.mnb{flex:1;padding:.95rem 1rem;border:none;background:transparent;font-family:var(--font);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--p);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;font-weight:500;}
+.mnb:hover{color:var(--secondary);}
+.mnb.ah{color:var(--secondary);border-bottom-color:var(--primary);background:rgba(129,178,154,.12);font-weight:700;}
+.mnb.as{color:var(--secondary);border-bottom-color:var(--btn-hover);background:rgba(224,122,95,.1);font-weight:700;}
+.ex-tabs{display:flex;gap:.5rem;padding:1rem 2rem .9rem;border-bottom:1px solid var(--brd);background:var(--section-bg);flex-wrap:wrap;}
+.etb{font-family:var(--font);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:.4rem .95rem;border:1px solid var(--brd);background:var(--white);color:var(--secondary);cursor:pointer;border-radius:100px;transition:all .15s;font-weight:500;}
+.etb:hover{border-color:var(--primary);color:var(--primary);}
+.etb.act{background:var(--btn-bg);color:var(--secondary);border-color:var(--btn-bg);font-weight:700;}
+.main{max-width:800px;margin:0 auto;padding:2rem 1.5rem 6rem;}
+.panel{display:none;}
+.panel.vis{display:block;}
+.card{background:var(--white);border:1px solid var(--brd);padding:1.8rem;margin-bottom:1.2rem;position:relative;border-radius:20px;box-shadow:0 2px 8px rgba(61,64,91,.05);}
+.card-lbl{font-family:var(--font);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;font-weight:500;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--brd);}
+.aw{background:var(--section-bg);border:1px solid var(--brd);padding:1rem 1.3rem;margin-bottom:1.3rem;display:flex;align-items:center;gap:.9rem;border-radius:14px;}
+.pb{width:46px;height:46px;border-radius:50%;background:var(--primary);border:none;color:#fff;font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;box-shadow:0 3px 10px rgba(129,178,154,.35);}
+.pb:hover{background:#6ea389;transform:scale(1.05);}
+.pb.playing{background:var(--btn-hover);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(224,122,95,.45)}50%{box-shadow:0 0 0 10px rgba(224,122,95,0)}}
+.ai{flex:1;min-width:0;}
+.at{font-family:var(--font);font-size:.95rem;color:var(--secondary);line-height:1.55;margin-bottom:.3rem;font-weight:500;}
+.am{font-size:.7rem;color:var(--p);letter-spacing:.03em;}
+.rbtn{font-family:var(--font);font-size:.7rem;letter-spacing:.05em;color:var(--secondary);background:var(--white);border:1px solid var(--brd);padding:.35rem .75rem;cursor:pointer;border-radius:100px;flex-shrink:0;transition:all .15s;font-weight:500;}
+.rbtn:hover{background:var(--primary);color:#fff;border-color:var(--primary);}
+.q{font-size:.95rem;color:var(--secondary);line-height:1.7;margin-bottom:1rem;}
+.rfo{display:flex;gap:.7rem;margin-bottom:.9rem;}
+.rfb{flex:1;padding:.8rem;border:2px solid var(--brd);background:var(--white);font-family:var(--font);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:100px;transition:all .15s;font-weight:700;}
+.rfb.r{color:var(--ok);}
+.rfb.r:hover:not(:disabled){background:rgba(129,178,154,.12);border-color:var(--ok);}
+.rfb.f{color:var(--err);}
+.rfb.f:hover:not(:disabled){background:rgba(224,122,95,.1);border-color:var(--err);}
+.rfb.sok{background:rgba(129,178,154,.15);border-color:var(--ok);color:#2d6a4f;}
+.rfb.serr{background:rgba(224,122,95,.12);border-color:var(--err);color:#a04545;}
+.rfb:disabled{cursor:default;opacity:.85;}
+.mco{display:grid;gap:.5rem;margin-bottom:.9rem;}
+.mcb{text-align:left;padding:.7rem 1rem;border:1px solid var(--brd);background:var(--section-bg);font-family:var(--font);font-size:.9rem;color:var(--secondary);cursor:pointer;border-radius:10px;display:flex;gap:.7rem;align-items:flex-start;transition:all .15s;line-height:1.45;}
+.mcb:hover:not(:disabled){background:var(--white);border-color:var(--primary);}
+.mcb .ltr{font-family:var(--font);font-size:.78rem;color:var(--primary);min-width:1rem;flex-shrink:0;margin-top:.1rem;font-weight:700;}
+.mcb.ok{background:rgba(129,178,154,.15);border-color:var(--ok);color:#2d6a4f;}
+.mcb.ok .ltr{color:#2d6a4f;}
+.mcb.er{background:rgba(224,122,95,.12);border-color:var(--err);color:#a04545;}
+.mcb:disabled{cursor:default;}
+.ir{display:flex;gap:.6rem;margin-bottom:.75rem;}
+.ti{flex:1;background:var(--white);border:1px solid var(--brd);color:var(--secondary);font-family:var(--font);font-size:.9rem;padding:.6rem .9rem;outline:none;border-radius:10px;transition:border-color .2s;}
+.ti:focus{border-color:var(--primary);}
+.ti.ok{border-color:var(--ok);color:#2d6a4f;}
+.ti.er{border-color:var(--err);color:#a04545;}
+textarea.ti{min-height:70px;resize:vertical;font-family:var(--font);line-height:1.6;}
+.btn{background:var(--btn-bg);color:var(--secondary);border:none;font-family:var(--font);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1.1rem;cursor:pointer;border-radius:100px;transition:all .2s;white-space:nowrap;font-weight:700;}
+.btn:hover{background:var(--btn-hover);color:var(--white);}
+.btn.sec{background:var(--white);border:1px solid var(--brd);color:var(--secondary);}
+.btn.sec:hover{border-color:var(--primary);color:var(--primary);background:var(--white);}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.fb{display:none;padding:.7rem 1rem;border-radius:10px;font-size:.87rem;line-height:1.55;margin-top:.6rem;border-left:3px solid;}
+.fb.vis{display:block;}
+.fb.ok{background:rgba(129,178,154,.12);border-color:var(--ok);color:#2d6a4f;}
+.fb.er{background:rgba(224,122,95,.1);border-color:var(--err);color:#a04545;}
+.fb.wn{background:rgba(242,204,143,.18);border-color:var(--warn);color:#9c5a30;}
+/* Mic area */
+.ma{display:flex;flex-direction:column;align-items:center;gap:1rem;padding:1.8rem;background:var(--section-bg);border:1px dashed var(--brd);border-radius:14px;margin-bottom:.9rem;text-align:center;}
+.mb{width:72px;height:72px;border-radius:50%;background:var(--btn-hover);border:none;color:#fff;font-size:1.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 4px 18px rgba(224,122,95,.35);}
+.mb:hover{background:#cf6749;transform:scale(1.05);}
+.mb.rec{background:var(--err);animation:mp 1s infinite;}
+@keyframes mp{0%,100%{box-shadow:0 0 0 0 rgba(201,96,96,.5)}50%{box-shadow:0 0 0 16px rgba(201,96,96,0)}}
+.ms{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--p);font-weight:500;}
+.tb{width:100%;background:var(--white);border:1px solid var(--brd);padding:.85rem 1rem;font-family:var(--font);font-size:.95rem;color:var(--secondary);min-height:50px;line-height:1.6;border-radius:10px;}
+.tb.em{color:var(--p);font-size:.78rem;}
+/* Pronunciation word display */
+.pron-target{background:var(--section-bg);border:1px solid var(--brd);padding:1rem 1.2rem;margin-bottom:1rem;border-radius:14px;}
+.pron-target-lbl{font-family:var(--font);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:.55rem;font-weight:500;}
+.pron-words{display:flex;flex-wrap:wrap;gap:.4rem;line-height:1;}
+.pw{font-family:var(--font);font-size:1.05rem;padding:.2rem .5rem;border-radius:6px;border-bottom:3px solid transparent;transition:all .3s;position:relative;font-weight:500;}
+/* Accuracy gradient colors */
+.pw.g100{color:#1a5c35;border-bottom-color:#1a5c35;background:rgba(26,92,53,.1);}
+.pw.g90{color:#2d6a4f;border-bottom-color:#2d6a4f;background:rgba(45,106,79,.1);}
+.pw.g75{color:#52a675;border-bottom-color:#52a675;background:rgba(82,166,117,.1);}
+.pw.g60{color:#7ab648;border-bottom-color:#7ab648;background:rgba(122,182,72,.1);}
+.pw.g50{color:#c8a020;border-bottom-color:#c8a020;background:rgba(200,160,32,.1);}
+.pw.g35{color:#d4731a;border-bottom-color:#d4731a;background:rgba(212,115,26,.1);}
+.pw.g20{color:#c4512a;border-bottom-color:#c4512a;background:rgba(196,81,42,.1);}
+.pw.g0{color:#9b2335;border-bottom-color:#9b2335;background:rgba(155,35,53,.12);}
+.pw.pend{color:var(--p);border-bottom-color:var(--brd);background:transparent;}
+/* Accuracy score bar */
+.acc-bar-wrap{margin:1rem 0 .5rem;}
+.acc-bar-lbl{display:flex;justify-content:space-between;margin-bottom:.4rem;}
+.acc-bar-lbl span{font-size:.72rem;letter-spacing:.05em;color:var(--p);text-transform:uppercase;font-weight:500;}
+.acc-bar-lbl strong{font-size:.8rem;color:var(--secondary);font-weight:700;}
+.acc-bar-track{height:10px;background:var(--section-bg);border:1px solid var(--brd);border-radius:100px;overflow:hidden;}
+.acc-bar-fill{height:100%;border-radius:100px;transition:width .6s ease;background:linear-gradient(to right,#9b2335,#d4731a,#c8a020,#7ab648,#2d6a4f);}
+/* Score cards */
+.score-cards{display:flex;gap:.7rem;flex-wrap:wrap;margin:1rem 0;}
+.sc-card{flex:1;min-width:90px;background:var(--section-bg);border:1px solid var(--brd);padding:.9rem;text-align:center;border-radius:14px;}
+.sc-num{font-family:var(--font);font-size:1.6rem;line-height:1;margin-bottom:.25rem;font-weight:700;color:var(--secondary);}
+.sc-num.gd{color:var(--ok);}
+.sc-num.md{color:var(--warn);}
+.sc-num.bd{color:var(--err);}
+.sc-lbl{font-size:.6rem;color:var(--p);letter-spacing:.08em;text-transform:uppercase;font-weight:500;}
+/* Recommendations */
+.recs{margin-top:1rem;}
+.recs-hdr{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:.7rem;font-weight:500;}
+.rec-item{display:flex;gap:.7rem;align-items:flex-start;padding:.6rem .85rem;background:var(--section-bg);border:1px solid var(--brd);border-radius:10px;margin-bottom:.4rem;font-size:.86rem;line-height:1.5;}
+.rec-icon{font-size:.95rem;flex-shrink:0;margin-top:.05rem;}
+.rec-text{color:var(--secondary);}
+.rec-text strong{font-weight:700;color:var(--btn-hover);}
+/* Situation card */
+.situ-card{background:linear-gradient(135deg,rgba(129,178,154,.1),rgba(242,204,143,.12));border:1px solid var(--brd);border-left:4px solid var(--primary);padding:1.2rem 1.4rem;margin-bottom:1rem;border-radius:14px;}
+.situ-lbl{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:.5rem;font-weight:500;}
+.situ-txt{font-family:var(--font);font-size:1rem;line-height:1.65;color:var(--secondary);font-weight:500;}
+/* Nav row */
+.nr{display:flex;gap:.6rem;margin-top:1.1rem;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+.nr-r{display:flex;gap:.55rem;}
+.ctr{font-size:.72rem;color:var(--p);letter-spacing:.03em;font-weight:500;}
+/* Hint */
+.ht{display:none;font-size:.85rem;color:var(--secondary);background:rgba(129,178,154,.08);border-left:3px solid var(--primary);padding:.55rem .85rem;margin-top:.5rem;font-style:italic;line-height:1.55;border-radius:0 10px 10px 0;}
+.ht.vis{display:block;}
+.htg{font-size:.75rem;color:var(--primary);cursor:pointer;margin-top:.4rem;display:inline-block;letter-spacing:.03em;font-weight:500;}
+.htg:hover{color:var(--btn-hover);}
+/* Progress bar */
+.pgw{position:fixed;bottom:0;left:0;right:0;height:4px;background:var(--section-bg);z-index:100;}
+.pg{height:100%;transition:width .4s;}
+.pg.h{background:linear-gradient(to right,var(--primary),#a8cdb8);}
+.pg.s{background:linear-gradient(to right,var(--btn-hover),var(--btn-bg));}
+/* Warn */
+.bwarn{background:rgba(224,122,95,.08);border:1px solid var(--warn);border-radius:10px;padding:.8rem 1.1rem;font-size:.82rem;color:#9c5a30;margin-bottom:1.3rem;display:none;line-height:1.55;font-weight:500;}
+.bwarn.vis{display:block;}
+/* Cumulative accuracy panel */
+.cum-panel{background:var(--white);border:1px solid var(--brd);padding:1.2rem 1.5rem;margin-bottom:1.2rem;border-radius:14px;box-shadow:0 2px 8px rgba(61,64,91,.05);}
+.cum-lbl{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:.8rem;font-weight:500;}
+.cum-bar-wrap{margin-bottom:.5rem;}
+.cum-bar-track{height:22px;background:var(--section-bg);border:1px solid var(--brd);border-radius:100px;overflow:hidden;position:relative;}
+.cum-bar-fill{height:100%;border-radius:100px;transition:width .6s;}
+.cum-bar-label{position:absolute;right:.7rem;top:50%;transform:translateY(-50%);font-size:.75rem;font-weight:700;color:var(--secondary);}
+@media(max-width:600px){.header{padding:1rem;flex-direction:column;align-items:flex-start;gap:.8rem}.main{padding:1.2rem .8rem 5rem}.card{padding:1.2rem .9rem}.ex-tabs{padding:.8rem 1rem}}
+/* Icon helpers */
+.mnb i[class^="bi-"],.rfb i[class^="bi-"],.htg i[class^="bi-"],.bwarn i[class^="bi-"],.rbtn i[class^="bi-"],.btn i[class^="bi-"]{margin-right:.35rem;vertical-align:-.05em}
+.fb i[class^="bi-"]{margin-right:.35rem;vertical-align:-.05em}
+.rec-icon i[class^="bi-"]{font-size:1.05em;color:var(--btn-hover)}
+.pb i[class^="bi-"],.mb i[class^="bi-"]{margin:0;font-size:1em;line-height:1}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="hl">
+    <div class="eyebrow">B2 · Prüfungstraining · 50 Übungen je Modul</div>
+    <h1><em>Hören</em> <span>&</span> Sprechen</h1>
+  </div>
+  <div class="scores">
+    <div class="sp h" id="sc_h">Hören: 0/0</div>
+    <div class="sp s" id="sc_s">Sprechen: —</div>
+    <div class="sp acc" id="sc_a">Accuracy: —%</div>
+  </div>
+</header>
+<nav class="mode-nav">
+  <button class="mnb ah" onclick="setMode('h')"><i class="bi-headphones"></i>Hören</button>
+  <button class="mnb" onclick="setMode('s')"><i class="bi-mic-fill"></i>Sprechen</button>
+</nav>
+<!-- HÖREN -->
+<div id="mh" class="panel vis">
+  <div class="ex-tabs" id="htabs">
+    <button class="etb act" onclick="setHEx(0)">Richtig/Falsch</button>
+    <button class="etb" onclick="setHEx(1)">Diktat</button>
+    <button class="etb" onclick="setHEx(2)">Textverstehen</button>
+  </div>
+  <div class="main">
+    <div class="bwarn" id="synthW"><i class="bi-exclamation-triangle-fill"></i>Sprachsynthese nicht verfügbar. Empfehlung: Chrome oder Edge nutzen.</div>
+    <!-- RF -->
+    <div id="hx0" class="panel vis">
+      <div class="card">
+        <div class="card-lbl">Richtig oder Falsch · <span id="rf_idx">1</span>/<span id="rf_tot">50</span></div>
+        <div class="aw">
+          <button class="pb" id="rfpb" onclick="playRF()"><i class="bi-play-fill"></i></button>
+          <div class="ai"><div class="at" id="rf_atxt">Drücke <i class="bi-play-fill"></i> um die Aussage zu hören.</div><div class="am">Aussage · Hören und urteilen</div></div>
+          <button class="rbtn" onclick="playRF()"><i class="bi-arrow-counterclockwise"></i>Nochmal</button>
+        </div>
+        <div class="q" id="rf_q">Höre dir die Aussage an und entscheide: richtig oder falsch?</div>
+        <div class="rfo">
+          <button class="rfb r" onclick="checkRF(true)"><i class="bi-check-circle-fill"></i>Richtig</button>
+          <button class="rfb f" onclick="checkRF(false)"><i class="bi-x-circle-fill"></i>Falsch</button>
+        </div>
+        <div class="fb" id="rf_fb"></div>
+        <div class="nr"><span class="ctr" id="rf_ctr">0/0 richtig</span><div class="nr-r"><button class="btn sec" onclick="navRF(-1)"><i class="bi-arrow-left"></i>Zurück</button><button class="btn" onclick="navRF(1)">Nächste<i class="bi-arrow-right" style="margin-left:.35rem;margin-right:0"></i></button></div></div>
+      </div>
+    </div>
+    <!-- DIKTAT -->
+    <div id="hx1" class="panel">
+      <div class="card">
+        <div class="card-lbl">Diktat — Schreibe was du hörst · <span id="dk_idx">1</span>/<span id="dk_tot">50</span></div>
+        <div class="aw">
+          <button class="pb" id="dkpb" onclick="playDK()"><i class="bi-play-fill"></i></button>
+          <div class="ai"><div class="at">Höre und schreibe den Satz vollständig.</div><div class="am">Mehrmaliges Anhören erlaubt · Rate: langsam</div></div>
+          <button class="rbtn" onclick="playDK()"><i class="bi-arrow-counterclockwise"></i>Nochmal</button>
+        </div>
+        <div class="ir"><input class="ti" id="dk_inp" placeholder="Schreibe den gehörten Satz…" onkeydown="if(event.key==='Enter')checkDK()"><button class="btn" onclick="checkDK()">Prüfen</button></div>
+        <div class="fb" id="dk_fb"></div>
+        <span class="htg" onclick="tog('dk_hint')"><i class="bi-search"></i>Tipp</span>
+        <div class="ht" id="dk_hint"></div>
+        <div class="nr"><span class="ctr" id="dk_ctr">0/0 richtig</span><div class="nr-r"><button class="btn sec" onclick="navDK(-1)"><i class="bi-arrow-left"></i>Zurück</button><button class="btn" onclick="navDK(1)">Nächste<i class="bi-arrow-right" style="margin-left:.35rem;margin-right:0"></i></button></div></div>
+      </div>
+    </div>
+    <!-- TV -->
+    <div id="hx2" class="panel">
+      <div class="card">
+        <div class="card-lbl">Textverstehen · Text <span id="tv_ti">1</span>/<span id="tv_tt">10</span> · Frage <span id="tv_qi">1</span>/<span id="tv_qt">5</span></div>
+        <div class="aw">
+          <button class="pb" id="tvpb" onclick="playTV()"><i class="bi-play-fill"></i></button>
+          <div class="ai"><div class="at" id="tv_al">—</div><div class="am">Höre den Text, dann beantworte die Fragen</div></div>
+          <button class="rbtn" onclick="playTV()"><i class="bi-arrow-counterclockwise"></i>Nochmal</button>
+        </div>
+        <div class="q" id="tv_q">—</div>
+        <div class="mco" id="tv_opts"></div>
+        <div class="fb" id="tv_fb"></div>
+        <div class="nr"><span class="ctr" id="tv_ctr">0/0 richtig</span><div class="nr-r"><button class="btn sec" onclick="navTV(-1)"><i class="bi-arrow-left"></i>Zurück</button><button class="btn" onclick="navTV(1)">Nächste<i class="bi-arrow-right" style="margin-left:.35rem;margin-right:0"></i></button></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- SPRECHEN -->
+<div id="ms" class="panel">
+  <div class="ex-tabs" id="stabs">
+    <button class="etb act" onclick="setSEx(0)">Aussprache</button>
+    <button class="etb" onclick="setSEx(1)">Freie Antwort</button>
+    <button class="etb" onclick="setSEx(2)">Situation</button>
+  </div>
+  <div class="main">
+    <div class="bwarn" id="asrW"><i class="bi-exclamation-triangle-fill"></i>Spracherkennung erfordert Chrome/Edge mit Mikrofon-Zugriff.</div>
+    <!-- AUSSPRACHE -->
+    <div id="sx0" class="panel vis">
+      <div class="card">
+        <div class="card-lbl">Aussprache · <span id="pr_idx">1</span>/<span id="pr_tot">50</span></div>
+        <div class="pron-target">
+          <div class="pron-target-lbl">Zu sprechen · <span id="pr_diff">—</span></div>
+          <div class="pron-words" id="pr_words"></div>
+        </div>
+        <div class="ma">
+          <button class="mb" id="pr_mb" onclick="togPron()"><i class="bi-mic-fill"></i></button>
+          <div class="ms" id="pr_ms">Drücke zum Aufnehmen</div>
+          <div class="tb em" id="pr_tb">Deine gesprochene Version erscheint hier…</div>
+        </div>
+        <div id="pr_accbar" style="display:none">
+          <div class="acc-bar-wrap">
+            <div class="acc-bar-lbl"><span>Wortgenauigkeit</span><strong id="pr_acc_pct">—%</strong></div>
+            <div class="acc-bar-track"><div class="acc-bar-fill" id="pr_acc_fill" style="width:0%"></div></div>
+          </div>
+          <div class="score-cards" id="pr_score_cards"></div>
+          <div class="recs" id="pr_recs"></div>
+        </div>
+        <div class="fb" id="pr_fb"></div>
+        <div class="nr"><span class="ctr" id="pr_ctr">0/0 bewertet · Ø —%</span><div class="nr-r"><button class="btn sec" onclick="navPR(-1)"><i class="bi-arrow-left"></i>Zurück</button><button class="btn" onclick="navPR(1)">Nächste<i class="bi-arrow-right" style="margin-left:.35rem;margin-right:0"></i></button></div></div>
+      </div>
+    </div>
+    <!-- FREIE ANTWORT -->
+    <div id="sx1" class="panel">
+      <div class="card">
+        <div class="card-lbl">Freie Antwort · <span id="fr_idx">1</span>/<span id="fr_tot">50</span></div>
+        <div class="situ-card"><div class="situ-lbl">Frage</div><div class="situ-txt" id="fr_q">—</div></div>
+        <div class="ht vis" id="fr_hint" style="margin-bottom:.9rem"></div>
+        <div class="ma">
+          <button class="mb" id="fr_mb" onclick="togFree()"><i class="bi-mic-fill"></i></button>
+          <div class="ms" id="fr_ms">Drücke und antworte auf Deutsch</div>
+          <div class="tb em" id="fr_tb">Deine Antwort erscheint hier…</div>
+        </div>
+        <div id="fr_result" style="display:none">
+          <div class="score-cards" id="fr_cards"></div>
+          <div class="recs" id="fr_recs"></div>
+        </div>
+        <div class="fb" id="fr_fb"></div>
+        <div class="nr"><span class="ctr" id="fr_ctr">Frage 1/50</span><div class="nr-r"><button class="btn sec" onclick="navFR(-1)"><i class="bi-arrow-left"></i>Zurück</button><button class="btn" onclick="evalFree()"><i class="bi-check-circle-fill"></i>Auswerten</button><button class="btn" onclick="navFR(1)">Nächste<i class="bi-arrow-right" style="margin-left:.35rem;margin-right:0"></i></button></div></div>
+      </div>
+    </div>
+    <!-- SITUATION -->
+    <div id="sx2" class="panel">
+      <div class="card">
+        <div class="card-lbl">Situation beschreiben · <span id="si_idx">1</span>/<span id="si_tot">50</span></div>
+        <div class="situ-card"><div class="situ-lbl">Situation</div><div class="situ-txt" id="si_txt">—</div></div>
+        <div class="q" id="si_prompt" style="font-size:.83rem;color:var(--p);margin-bottom:.9rem">—</div>
+        <div class="ma">
+          <button class="mb" id="si_mb" onclick="togSitu()"><i class="bi-mic-fill"></i></button>
+          <div class="ms" id="si_ms">Drücke · Sprich ≥ 30 Sekunden</div>
+          <div class="tb em" id="si_tb">Dein Text erscheint hier…</div>
+        </div>
+        <div id="si_result" style="display:none">
+          <div class="score-cards" id="si_cards"></div>
+          <div class="recs" id="si_recs"></div>
+        </div>
+        <div class="fb" id="si_fb"></div>
+        <div class="nr"><span class="ctr" id="si_ctr">Situation 1/50</span><div class="nr-r"><button class="btn sec" onclick="navSI(-1)"><i class="bi-arrow-left"></i>Zurück</button><button class="btn" onclick="evalSitu()"><i class="bi-check-circle-fill"></i>Auswerten</button><button class="btn" onclick="navSI(1)">Nächste<i class="bi-arrow-right" style="margin-left:.35rem;margin-right:0"></i></button></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pgw"><div class="pg h" id="pgbar" style="width:0%"></div></div>
+<script>
+// ═══════ DATA ═══════
+const RF=[
+{t:"In Deutschland beginnt die Schulpflicht mit sechs Jahren.",c:true,e:"Richtig. Die Schulpflicht beginnt mit sechs Jahren in allen Bundesländern."},
+{t:"Das Oktoberfest in München beginnt immer im September.",c:true,e:"Richtig. Es beginnt im September und endet Anfang Oktober."},
+{t:"Deutschland hat zwölf Bundesländer.",c:false,e:"Falsch. Deutschland hat 16 Bundesländer."},
+{t:"Der Bundestag ist die zweite Kammer des deutschen Parlaments.",c:false,e:"Falsch. Der Bundestag ist die erste Kammer; der Bundesrat ist die zweite."},
+{t:"Die Berliner Mauer fiel am neunten November neunzehnhundertneunundachtzig.",c:true,e:"Richtig. Der Mauerfall war am 9. November 1989."},
+{t:"Im Deutschen schreibt man alle Nomen klein.",c:false,e:"Falsch. Alle Nomen werden im Deutschen großgeschrieben."},
+{t:"Das Wort 'trotzdem' leitet einen Nebensatz ein.",c:false,e:"Falsch. 'trotzdem' ist ein Konjunktionaladverb, kein Nebensatzeinleiter."},
+{t:"Der Konjunktiv II wird für höfliche Bitten und irreale Aussagen verwendet.",c:true,e:"Richtig. Typische Verwendungen des KII."},
+{t:"Das Passiv Perfekt wird mit 'ist' plus Partizip II plus 'worden' gebildet.",c:true,e:"Richtig: 'ist … worden'."},
+{t:"'Wegen' verlangt immer den Akkusativ.",c:false,e:"Falsch. 'wegen' verlangt den Genitiv."},
+{t:"Das Wort 'obwohl' leitet einen konzessiven Nebensatz ein.",c:true,e:"Richtig. 'obwohl' = konzessiv, Verb ans Ende."},
+{t:"'Nachdem' wird immer mit dem Präsens verwendet.",c:false,e:"Falsch. 'nachdem' steht mit Perfekt oder Plusquamperfekt."},
+{t:"In Deutschland ist Krankenversicherung für alle Einwohner Pflicht.",c:true,e:"Richtig. Es besteht Krankenversicherungspflicht in Deutschland."},
+{t:"Das Futur I wird mit 'werden' plus Partizip II gebildet.",c:false,e:"Falsch. Futur I = 'werden' plus Infinitiv. Futur II = werden + PII + haben/sein."},
+{t:"Die Hauptstadt Deutschlands ist Berlin.",c:true,e:"Richtig. Berlin ist seit 1990 wieder Hauptstadt."},
+{t:"Das Wort 'deshalb' ist eine unterordnende Konjunktion.",c:false,e:"Falsch. 'deshalb' ist ein Konjunktionaladverb."},
+{t:"Im Deutschen steht das Verb im Nebensatz am Ende.",c:true,e:"Richtig. Nebensätze haben Verbendstellung."},
+{t:"'Sowohl … als auch' verbindet zwei negative Alternativen.",c:false,e:"Falsch. 'sowohl … als auch' verbindet zwei positive Elemente. Für negativ: 'weder … noch'."},
+{t:"Der Genitiv wird nach der Präposition 'wegen' verwendet.",c:true,e:"Richtig. 'wegen des Regens'."},
+{t:"Das Adjektiv 'gut' hat den Komparativ 'gut-er'.",c:false,e:"Falsch. Der Komparativ von 'gut' ist 'besser' (unregelmäßig)."},
+{t:"In Deutschland herrscht allgemeine Impfpflicht für alle Bürger.",c:false,e:"Falsch. Es gibt keine allgemeine Impfpflicht in Deutschland."},
+{t:"Der Konjunktiv I wird hauptsächlich in der indirekten Rede verwendet.",c:true,e:"Richtig. KI = indirekte Rede, besonders in Medien und Berichten."},
+{t:"Das Wort 'damit' kann sowohl final als auch instrumental verwendet werden.",c:true,e:"Richtig. Final: 'Er lernt, damit er besteht.' Instrumental: 'Er baute es damit.'"},
+{t:"'Je mehr … desto besser' ist eine Proportionalkonstruktion.",c:true,e:"Richtig. Je … desto/umso = Proportionalsatz."},
+{t:"Im Passiv Präteritum steht 'ist' plus Partizip II.",c:false,e:"Falsch. Passiv Prät. = 'wurde' + Partizip II."},
+{t:"Die Präposition 'mit' verlangt den Dativ.",c:true,e:"Richtig. 'mit' ist eine Dativpräposition: mit dem Auto."},
+{t:"'Obgleich' ist eine umgangssprachliche Variante von 'obwohl'.",c:false,e:"Falsch. 'obgleich' ist die formellere Variante."},
+{t:"Ein Leserbrief ist eine Reaktion auf einen veröffentlichten Zeitungsartikel.",c:true,e:"Richtig. Der Leserbrief reagiert auf einen Artikel mit eigener Meinung."},
+{t:"Das Zustandspassiv wird mit 'werden' plus Partizip II gebildet.",c:false,e:"Falsch. Zustandspassiv = 'sein' + PII. Vorgangspassiv = 'werden' + PII."},
+{t:"In Deutschland ist das Duzen im Berufsleben immer üblich.",c:false,e:"Falsch. Das Siezen ist im Berufsleben in Deutschland weit verbreitet."},
+{t:"Das Wort 'indem' leitet einen instrumentalen Nebensatz ein.",c:true,e:"Richtig. 'indem' = wie/durch welches Mittel etwas geschieht."},
+{t:"Der Plural von 'das Haus' ist 'die Häuse'.",c:false,e:"Falsch. Der korrekte Plural ist 'die Häuser'."},
+{t:"'Lebenslanges Lernen' bezeichnet kontinuierliche Weiterbildung im gesamten Berufsleben.",c:true,e:"Richtig. Lebenslanges Lernen = Weiterbildung über alle Lebensphasen."},
+{t:"Das Wort 'sodass' leitet einen konsekutiven Nebensatz ein.",c:true,e:"Richtig. 'sodass' = Folge/Konsequenz."},
+{t:"In einem Anschreiben gehören Geburtsort und -datum zu den Pflichtangaben.",c:false,e:"Falsch. Geburtsort und -datum gehören in den Lebenslauf, nicht ins Anschreiben."},
+{t:"Das Modalverb 'dürfen' im Konjunktiv II lautet 'dürfte'.",c:true,e:"Richtig. KII von 'dürfen' = dürfte."},
+{t:"Eine Erörterung hat immer die Struktur: Einleitung, Hauptteil, Schluss.",c:true,e:"Richtig. Das ist die Grundstruktur jeder Erörterung."},
+{t:"'Wohingegen' ist eine koordinierende Konjunktion.",c:false,e:"Falsch. 'wohingegen' leitet einen adversativen Nebensatz ein."},
+{t:"Der Dativ Singular des Artikels 'der' beim Maskulinum lautet 'dem'.",c:true,e:"Richtig. Dativ mask./neutr. = dem."},
+{t:"Das Futur II drückt eine Handlung aus, die in der Vergangenheit abgeschlossen sein wird.",c:true,e:"Richtig. Futur II = bis zu einem Zeitpunkt in der Zukunft abgeschlossen."},
+{t:"Im Deutschen ist die Verbstellung im Hauptsatz immer Verb-Subjekt-Objekt.",c:false,e:"Falsch. Im Hauptsatz steht das Verb an zweiter Position (Verb-zweit-Stellung)."},
+{t:"Die Schlussformel 'Mit freundlichen Grüßen' ist formell korrekt.",c:true,e:"Richtig. Standardformelle Schlussformel in Briefen und E-Mails."},
+{t:"Das Wort 'falls' leitet einen konditionalen Nebensatz ein.",c:true,e:"Richtig. 'falls' = Bedingung, ähnlich wie 'wenn'."},
+{t:"'Seitdem' kann sowohl temporal als auch kausal verwendet werden.",c:false,e:"Falsch. 'seitdem' ist ausschließlich temporal (seit einem Zeitpunkt)."},
+{t:"In Deutschland muss man sich innerhalb von zwei Wochen nach dem Umzug ummelden.",c:false,e:"Falsch. Die Frist beträgt zwei Wochen nach dem Einzug."},
+{t:"Der Komparativ von 'viel' ist 'mehr'.",c:true,e:"Richtig. viel → mehr → am meisten (unregelmäßig)."},
+{t:"'Nicht nur … sondern auch' verbindet zwei positive Elemente und betont die Ergänzung.",c:true,e:"Richtig. Nicht nur X, sondern auch Y = beide werden genannt, Y mit Betonung."},
+{t:"Im Deutschen können trennbare Verben im Nebensatz getrennt werden.",c:false,e:"Falsch. Im Nebensatz bleiben trennbare Verben zusammen: 'weil er aufsteht'."},
+{t:"Eine Inhaltsangabe wird im Präsens geschrieben.",c:true,e:"Richtig. Inhaltsangaben verwenden das Präsens (historisches Präsens)."},
+{t:"Das Wort 'zumal' ist ein kausal-konzessiver Konnektor.",c:true,e:"Richtig. 'zumal' = insbesondere weil, verstärkender Kausalkonnektor."},
+{t:"Der Superlativ von 'gut' ist 'am besten'.",c:true,e:"Richtig. gut → besser → am besten (unregelmäßig)."},
+];
+
+const DK=[
+{t:"Obwohl er sehr müde war, arbeitete er bis spät in die Nacht.",h:"Konzessiv + Präteritum"},
+{t:"Die Digitalisierung verändert unsere Gesellschaft grundlegend.",h:"Subjekt + Verb + Objekt + Adverb"},
+{t:"Hätte ich mehr Zeit gehabt, wäre ich früher fertig geworden.",h:"Konjunktiv II Vergangenheit"},
+{t:"Wegen des starken Regens fiel das Fußballspiel aus.",h:"wegen + Genitiv"},
+{t:"Nicht nur die Kosten, sondern auch die Qualität spielt eine wichtige Rolle.",h:"zweiteiliger Konnektor"},
+{t:"Das Formular muss bis Freitag ausgefüllt und abgegeben werden.",h:"Passiv mit Modalverb"},
+{t:"Je mehr Vokabeln man lernt, desto besser versteht man Texte.",h:"je … desto Konstruktion"},
+{t:"Nachdem sie das Studium abgeschlossen hatte, fand sie sofort eine Stelle.",h:"nachdem + Plusquamperfekt"},
+{t:"Ich würde mich freuen, wenn Sie mir Ihre Meinung mitteilen könnten.",h:"Konjunktiv II höfliche Bitte"},
+{t:"Trotz schlechter Wetterverhältnisse erreichten die Bergsteiger den Gipfel.",h:"trotz + Genitiv"},
+{t:"Das Problem lässt sich nur durch intensive Zusammenarbeit lösen.",h:"lassen + sich + Infinitiv"},
+{t:"Sowohl der Preis als auch die Qualität waren entscheidend für die Kaufentscheidung.",h:"sowohl … als auch"},
+{t:"Falls du Fragen hast, kannst du mich jederzeit anrufen.",h:"falls = konditional"},
+{t:"Der Bericht wurde gestern von der Kommission veröffentlicht.",h:"Passiv Präteritum + von"},
+{t:"Seitdem er in Deutschland lebt, spricht er fast kein Spanisch mehr.",h:"seitdem = temporal"},
+{t:"Die Maßnahmen erwiesen sich als kontraproduktiv und wurden deshalb eingestellt.",h:"kontraproduktiv + deshalb"},
+{t:"Anstatt mehr zu schlafen, trank er immer mehr Kaffee.",h:"anstatt zu + Infinitiv"},
+{t:"Es ist zu beachten, dass alle Unterlagen vollständig eingereicht werden müssen.",h:"sein + zu + Infinitiv"},
+{t:"Indem er täglich übte, verbesserte er seine Aussprache deutlich.",h:"indem = instrumental"},
+{t:"Weder die Kosten noch der Zeitaufwand spielten für ihn eine Rolle.",h:"weder … noch"},
+{t:"Das Gebäude ist seit letztem Jahr unter Denkmalschutz gestellt worden.",h:"Passiv Perfekt"},
+{t:"Obgleich die Lösung bekannt war, zögerte das Team mit der Umsetzung.",h:"obgleich = formelles obwohl"},
+{t:"Je früher man mit dem Lernen beginnt, desto leichter fällt die Sprache.",h:"Proportionalsatz"},
+{t:"Er behauptete, er habe das Dokument nie erhalten.",h:"Konjunktiv I indirekte Rede"},
+{t:"Die Verhandlungen wurden auf nächste Woche vertagt.",h:"wurden + Partizip II = Passiv Prät."},
+{t:"Sowohl die schriftliche als auch die mündliche Prüfung muss bestanden werden.",h:"sowohl … als auch + Passiv Modal"},
+{t:"Dürfte ich Sie bitten, mir das Formular zuzusenden?",h:"dürfte = KII höflich"},
+{t:"Da er keine Erfahrung hatte, wurde er trotzdem eingestellt.",h:"da = kausal + trotzdem"},
+{t:"Das Ergebnis hängt davon ab, wie viel Zeit man investiert.",h:"davon abhängen + indirekter Fragesatz"},
+{t:"Durch intensive Vorbereitung konnte er alle Herausforderungen meistern.",h:"durch + Akkusativ = Mittel"},
+{t:"Mir wurde gesagt, dass die Stelle bereits vergeben sei.",h:"Passiv + KI indirekte Rede"},
+{t:"Nachdem das Problem identifiziert worden war, begann man mit der Lösung.",h:"Passiv Plusquamperfekt"},
+{t:"Ich hätte lieber in einer kleineren Stadt gewohnt.",h:"KII Vergangenheit + Wunsch"},
+{t:"Man sollte bedenken, dass nicht alle Informationen zuverlässig sind.",h:"Modalverb + Infinitiv mit zu"},
+{t:"Die Ergebnisse der Studie sprechen für eine grundlegende Reform.",h:"sprechen für + Akkusativ"},
+{t:"Zumal er bereits Erfahrung hatte, fiel ihm die Einarbeitung leicht.",h:"zumal = verstärkend kausal"},
+{t:"Das lässt sich leider nicht so einfach ändern.",h:"lassen + sich = Passivumschreibung"},
+{t:"Er tat so, als ob er die Frage nicht gehört hätte.",h:"als ob + KII Vergangenheit"},
+{t:"Die Aufgabe ist bis spätestens Montag abzugeben.",h:"sein + zu + Infinitiv = Verpflichtung"},
+{t:"Wegen mangelnder Nachfrage wurde das Produkt vom Markt genommen.",h:"wegen + Genitiv + Passiv"},
+{t:"Abschließend lässt sich sagen, dass die Maßnahmen wirkungsvoll waren.",h:"Fazit-Einleitung"},
+{t:"Sie fragte, ob er pünktlich kommen könne.",h:"KI indirekte Frage mit ob"},
+{t:"Einerseits bietet die Stadt viele Möglichkeiten, andererseits ist sie sehr teuer.",h:"einerseits … andererseits"},
+{t:"Das Projekt wurde rechtzeitig fertiggestellt, obwohl es Schwierigkeiten gab.",h:"Passiv Prät. + obwohl"},
+{t:"Nicht nur die Dauer, sondern auch die Intensität des Trainings ist entscheidend.",h:"nicht nur … sondern auch"},
+{t:"Er musste zugeben, dass er einen Fehler gemacht hatte.",h:"zugeben + KI/KII Vergangenheit"},
+{t:"Der Antrag muss innerhalb von vierzehn Tagen gestellt werden.",h:"Frist + Passiv mit Modal"},
+{t:"Soweit ich informiert bin, findet die Veranstaltung statt.",h:"soweit = einschränkend kausal"},
+{t:"Die Qualität des Produktes überzeugte trotz des hohen Preises.",h:"trotz + Genitiv"},
+{t:"An seiner Stelle würde ich das Angebot sofort annehmen.",h:"KII Ratschlag: an seiner Stelle"},
+];
+
+const TV=[
+{title:"Homeoffice in Deutschland",
+text:"In den letzten Jahren hat sich das Homeoffice in Deutschland stark verbreitet. Laut einer aktuellen Studie arbeiten etwa 25 Prozent der Beschäftigten zumindest teilweise von zu Hause. Arbeitgeber berichten von gesteigerter Produktivität, während einige Arbeitnehmer unter mangelnder sozialer Interaktion leiden. Gewerkschaften fordern gesetzliche Regelungen für das Recht auf Homeoffice.",
+qs:[
+{q:"Wie viel Prozent der Beschäftigten arbeiten teilweise im Homeoffice?",o:["10 Prozent","25 Prozent","50 Prozent","75 Prozent"],a:1,e:"Laut Text 'etwa 25 Prozent'."},
+{q:"Was berichten Arbeitgeber?",o:["Höhere Kosten","Gesteigerte Produktivität","Mehr Konflikte","Weniger Effizienz"],a:1,e:"'Arbeitgeber berichten von gesteigerter Produktivität.'"},
+{q:"Was fordern Gewerkschaften?",o:["Abschaffung von Homeoffice","Mehr Gehalt","Gesetzliche Regelungen","Kürzere Arbeitszeiten"],a:2,e:"'Gewerkschaften fordern gesetzliche Regelungen.'"},
+{q:"Was leiden manche Arbeitnehmer laut Text?",o:["Unter zu viel Arbeit","Unter mangelnder sozialer Interaktion","Unter technischen Problemen","Unter fehlender Ausstattung"],a:1,e:"'einige Arbeitnehmer leiden unter mangelnder sozialer Interaktion.'"},
+{q:"Wie hat sich Homeoffice laut Text entwickelt?",o:["Es ist zurückgegangen","Es hat sich stark verbreitet","Es ist gleichgeblieben","Es wird abgelehnt"],a:1,e:"'hat sich … stark verbreitet.'"},
+]},
+{title:"Klimaschutz und Verkehr",
+text:"Der Verkehrssektor ist einer der größten Verursacher von CO₂-Emissionen in Deutschland. Die Bundesregierung plant, den öffentlichen Nahverkehr massiv auszubauen und gleichzeitig Anreize für Elektrofahrzeuge zu schaffen. Kritiker bemängeln jedoch, dass die Maßnahmen zu langsam umgesetzt werden. Experten sind sich einig, dass ohne einen grundlegenden Wandel im Mobilitätsverhalten die Klimaziele nicht erreicht werden können.",
+qs:[
+{q:"Was ist laut Text einer der größten CO₂-Verursacher?",o:["Die Industrie","Der Verkehrssektor","Die Landwirtschaft","Der Energiesektor"],a:1,e:"'Der Verkehrssektor ist einer der größten Verursacher.'"},
+{q:"Was plant die Bundesregierung?",o:["Autobahnen zu schließen","Anreize für E-Fahrzeuge","Benzin zu subventionieren","Flughäfen auszubauen"],a:1,e:"'Anreize für Elektrofahrzeuge zu schaffen.'"},
+{q:"Was kritisieren Kritiker?",o:["Die Kosten","Die zu langsame Umsetzung","Den falschen Fokus","Den Ausbau der Autobahnen"],a:1,e:"'Maßnahmen werden zu langsam umgesetzt.'"},
+{q:"Was sagen Experten zu Klimazielen?",o:["Sie werden sicher erreicht","Ohne Wandel unerreichbar","E-Autos reichen aus","Die Ziele sind falsch"],a:1,e:"'ohne grundlegenden Wandel … Klimaziele nicht erreichbar.'"},
+{q:"Welcher Bereich wird massiv ausgebaut laut Plan?",o:["Straßenbau","ÖPNV","Radwege","Flughäfen"],a:1,e:"'den öffentlichen Nahverkehr massiv auszubauen.'"},
+]},
+{title:"Sprachenlernen im Erwachsenenalter",
+text:"Lange Zeit glaubten Wissenschaftler, dass das Sprachenlernen nach der Pubertät deutlich schwieriger wird. Neuere Forschungen zeigen jedoch, dass Erwachsene in bestimmten Bereichen effektiver lernen können als Kinder. Während Kinder die Aussprache leichter erwerben, sind Erwachsene beim Verstehen grammatikalischer Strukturen im Vorteil. Entscheidend für den Erfolg sind regelmäßiges Üben und die Motivation.",
+qs:[
+{q:"Was dachten Wissenschaftler früher?",o:["Erwachsene lernen besser","Sprachenlernen wird nach Pubertät schwieriger","Grammatik ist für Kinder einfacher","Motivation spielt keine Rolle"],a:1,e:"'glaubten, dass Sprachenlernen nach der Pubertät schwieriger wird.'"},
+{q:"In welchem Bereich sind Kinder im Vorteil?",o:["Grammatik","Wortschatz","Aussprache","Lesen"],a:2,e:"'Kinder die Aussprache leichter erwerben.'"},
+{q:"In welchem Bereich sind Erwachsene im Vorteil?",o:["Aussprache","Wortschatz","Grammatikalische Strukturen","Hören"],a:2,e:"'Erwachsene beim Verstehen grammatikalischer Strukturen im Vorteil.'"},
+{q:"Was ist entscheidend für den Lernerfolg?",o:["Alter und Intelligenz","Regelmäßiges Üben und Motivation","Teure Kurse","Frühzeitiger Beginn"],a:1,e:"'Entscheidend: regelmäßiges Üben und Motivation.'"},
+{q:"Was zeigen neuere Forschungen?",o:["Erwachsene lernen schlechter","Erwachsene können in manchen Bereichen effektiver lernen","Kinder und Erwachsene sind gleich","Pubertät ist unwichtig"],a:1,e:"'Neuere Forschungen zeigen … Erwachsene … effektiver lernen können.'"},
+]},
+{title:"Ehrenamtliches Engagement",
+text:"In Deutschland engagieren sich rund 28 Millionen Menschen ehrenamtlich. Sie helfen in Vereinen, Schulen, Pflegeheimen oder bei der Flüchtlingshilfe. Studien belegen, dass freiwilliges Engagement nicht nur der Gesellschaft nützt, sondern auch das persönliche Wohlbefinden der Freiwilligen steigert. Die Bundesregierung fördert ehrenamtliche Tätigkeiten durch steuerliche Vergünstigungen.",
+qs:[
+{q:"Wie viele Menschen engagieren sich ehrenamtlich?",o:["5 Millionen","14 Millionen","28 Millionen","50 Millionen"],a:2,e:"'rund 28 Millionen Menschen.'"},
+{q:"Was belegen Studien?",o:["Ehrenamt kostet viel","Es steigert Wohlbefinden der Freiwilligen","Es ersetzt Profis","Es nimmt ab"],a:1,e:"'steigert das persönliche Wohlbefinden.'"},
+{q:"Wie fördert die Bundesregierung Ehrenamt?",o:["Direktzahlungen","Steuerliche Vergünstigungen","Pflichtdienst","Stipendien"],a:1,e:"'durch steuerliche Vergünstigungen.'"},
+{q:"Wo helfen Ehrenamtliche laut Text?",o:["Nur in Schulen","In Vereinen, Schulen, Pflegeheimen","Nur bei Flüchtlingen","In Unternehmen"],a:1,e:"'in Vereinen, Schulen, Pflegeheimen oder bei der Flüchtlingshilfe.'"},
+{q:"Was nützt freiwilliges Engagement laut Text?",o:["Nur der Wirtschaft","Nur den Freiwilligen","Der Gesellschaft und den Freiwilligen","Nur dem Staat"],a:2,e:"'nicht nur der Gesellschaft nützt, sondern auch das … Wohlbefinden steigert.'"},
+]},
+{title:"Digitale Medien und Jugendliche",
+text:"Jugendliche in Deutschland verbringen im Durchschnitt mehr als fünf Stunden täglich mit digitalen Medien. Eltern und Pädagogen zeigen sich besorgt über mögliche Auswirkungen auf Konzentration und Schlafqualität. Gleichzeitig betonen Medienwissenschaftler, dass digitale Kompetenzen für den Berufsalltag immer wichtiger werden. Ein ausgewogener Umgang mit Medien gilt als die beste Lösung.",
+qs:[
+{q:"Wie viele Stunden täglich digitale Medien?",o:["Mehr als 2 Stunden","Mehr als 3 Stunden","Mehr als 5 Stunden","Mehr als 8 Stunden"],a:2,e:"'mehr als fünf Stunden täglich.'"},
+{q:"Worüber sind Eltern und Pädagogen besorgt?",o:["Zu wenig Nutzung","Konzentration und Schlafqualität","Hohe Kosten","Fehlende Geräte"],a:1,e:"'Auswirkungen auf Konzentration und Schlafqualität.'"},
+{q:"Was betonen Medienwissenschaftler?",o:["Medien sind gefährlich","Digitale Kompetenzen werden wichtiger","Bildschirme schaden immer","Verbote sind nötig"],a:1,e:"'digitale Kompetenzen … immer wichtiger werden.'"},
+{q:"Was gilt als beste Lösung?",o:["Komplettes Verbot","Mehr Bildschirmzeit","Ausgewogener Umgang","Nur Lernplattformen"],a:2,e:"'Ein ausgewogener Umgang … gilt als beste Lösung.'"},
+{q:"Wer zeigt sich besorgt laut Text?",o:["Nur Eltern","Nur Pädagogen","Eltern und Pädagogen","Medienwissenschaftler"],a:2,e:"'Eltern und Pädagogen zeigen sich besorgt.'"},
+]},
+{title:"Migration und Integration",
+text:"Deutschland ist eines der wichtigsten Einwanderungsländer in Europa. Jährlich kommen Hunderttausende Menschen aus verschiedenen Ländern, um hier zu arbeiten, zu studieren oder Schutz zu suchen. Erfolgreiche Integration setzt Sprachkenntnisse, Bildungszugang und gesellschaftliche Teilhabe voraus. Kommunen stehen vor der Herausforderung, ausreichend Wohn- und Bildungsinfrastruktur bereitzustellen.",
+qs:[
+{q:"Was ist Deutschland laut Text?",o:["Kleines Land","Wichtiges Einwanderungsland","Kaum besuchtes Land","Land ohne Migration"],a:1,e:"'eines der wichtigsten Einwanderungsländer.'"},
+{q:"Warum kommen Menschen nach Deutschland?",o:["Nur wegen des Wetters","Arbeiten, Studieren, Schutz suchen","Nur für Urlaub","Wegen günstiger Preise"],a:1,e:"'arbeiten, studieren oder Schutz suchen.'"},
+{q:"Was setzt Integration voraus?",o:["Geld","Sprachkenntnisse, Bildungszugang, Teilhabe","Politische Einstellung","Langes Warten"],a:1,e:"'Sprachkenntnisse, Bildungszugang und gesellschaftliche Teilhabe.'"},
+{q:"Vor welcher Herausforderung stehen Kommunen?",o:["Zu wenige Einwanderer","Wohn- und Bildungsinfrastruktur","Mangelnde Motivation","Sprachbarrieren"],a:1,e:"'ausreichend Wohn- und Bildungsinfrastruktur bereitzustellen.'"},
+{q:"Wie viele Menschen kommen jährlich?",o:["Einige Tausende","Hunderttausende","Nur wenige","Millionen täglich"],a:1,e:"'Jährlich kommen Hunderttausende.'"},
+]},
+{title:"Erneuerbare Energien",
+text:"Der Anteil erneuerbarer Energien am deutschen Strommix ist in den letzten Jahren erheblich gestiegen. Wind- und Solarenergie stellen mittlerweile mehr als die Hälfte des produzierten Stroms. Die Bundesregierung hat das Ziel gesetzt, bis 2035 vollständig auf Kohle zu verzichten. Kritiker warnen jedoch vor möglichen Versorgungslücken bei Windstille oder bewölktem Himmel.",
+qs:[
+{q:"Was ist mit erneuerbaren Energien passiert?",o:["Sie sind gesunken","Sie sind erheblich gestiegen","Sie blieben gleich","Sie wurden abgebaut"],a:1,e:"'erheblich gestiegen.'"},
+{q:"Welchen Anteil haben Wind und Solar?",o:["Weniger als ein Viertel","Etwa ein Drittel","Mehr als die Hälfte","Fast 100 Prozent"],a:2,e:"'mehr als die Hälfte des produzierten Stroms.'"},
+{q:"Bis wann soll auf Kohle verzichtet werden?",o:["2025","2030","2035","2050"],a:2,e:"'bis 2035 vollständig auf Kohle zu verzichten.'"},
+{q:"Was warnen Kritiker?",o:["Zu viel Energie","Versorgungslücken bei Flaute","Zu hohe Kosten für Solar","Überschuss an Strom"],a:1,e:"'Versorgungslücken bei Windstille oder bewölktem Himmel.'"},
+{q:"Welche Energiequellen werden genannt?",o:["Nur Windenergie","Nur Solar","Wind und Solar","Wasser und Atom"],a:2,e:"'Wind- und Solarenergie.'"},
+]},
+{title:"Gesundheit und Ernährung",
+text:"Immer mehr Menschen achten auf eine ausgewogene Ernährung. Studien zeigen, dass regelmäßiger Konsum von Obst, Gemüse und Hülsenfrüchten das Krankheitsrisiko senkt. Stark verarbeitete Lebensmittel hingegen stehen im Verdacht, Herz-Kreislauf-Erkrankungen zu begünstigen. Ernährungsexperten empfehlen die Mittelmeerdiät als besonders gesundheitsfördernd.",
+qs:[
+{q:"Was senkt das Krankheitsrisiko?",o:["Verarbeitete Lebensmittel","Obst, Gemüse und Hülsenfrüchte","Fleisch","Fastfood"],a:1,e:"'Konsum von Obst, Gemüse und Hülsenfrüchten das Krankheitsrisiko senkt.'"},
+{q:"Was begünstigt Herz-Kreislauf-Erkrankungen?",o:["Mittelmeerdiät","Obst","Stark verarbeitete Lebensmittel","Wasser"],a:2,e:"'stark verarbeitete Lebensmittel … Herz-Kreislauf-Erkrankungen begünstigen.'"},
+{q:"Welche Diät empfehlen Experten?",o:["Veganismus","Low-Carb","Mittelmeerdiät","Intervallfasten"],a:2,e:"'empfehlen die Mittelmeerdiät.'"},
+{q:"Was bedeutet 'im Verdacht stehen'?",o:["Bewiesen schädlich sein","Möglicherweise schädlich sein","Unbedenklich sein","Unbekannt sein"],a:1,e:"Im Verdacht = möglicherweise schädlich, aber nicht bewiesen."},
+{q:"Was beschreibt den Trend laut Einleitung?",o:["Mehr Fastfood","Ausgewogenere Ernährung","Weniger Kochen","Mehr Fleischkonsum"],a:1,e:"'Immer mehr Menschen achten auf eine ausgewogene Ernährung.'"},
+]},
+{title:"Bildung und Chancengleichheit",
+text:"Bildungsgerechtigkeit bleibt in Deutschland ein wichtiges gesellschaftliches Thema. Studien belegen, dass der Bildungserfolg von Kindern stark vom sozialen Hintergrund der Eltern abhängt. Kinder aus Akademikerfamilien haben statistisch bessere Chancen auf höhere Bildungsabschlüsse. Bildungspolitiker fordern mehr Investitionen in frühkindliche Förderung und Ganztagsschulen.",
+qs:[
+{q:"Wovon hängt der Bildungserfolg ab?",o:["Nur von Intelligenz","Vom sozialen Hintergrund der Eltern","Von der Schulform","Von der Region"],a:1,e:"'hängt … vom sozialen Hintergrund der Eltern ab.'"},
+{q:"Welche Kinder haben bessere Chancen?",o:["Aus armen Familien","Aus Akademikerfamilien","Aus ländlichen Regionen","Alle gleich"],a:1,e:"'Kinder aus Akademikerfamilien … bessere Chancen.'"},
+{q:"Was fordern Bildungspolitiker?",o:["Mehr Prüfungen","Investitionen in frühkindliche Förderung","Längere Schulzeiten","Weniger Ausgaben"],a:1,e:"'mehr Investitionen in frühkindliche Förderung.'"},
+{q:"Was ist laut Text ein wichtiges gesellschaftliches Thema?",o:["Klimawandel","Bildungsgerechtigkeit","Digitalisierung","Migration"],a:1,e:"'Bildungsgerechtigkeit bleibt … wichtiges gesellschaftliches Thema.'"},
+{q:"Welche Schulform wird als Lösung genannt?",o:["Privatschulen","Förderschulen","Ganztagsschulen","Berufsschulen"],a:2,e:"'Ganztagsschulen' werden als Forderung genannt."},
+]},
+{title:"Stadtentwicklung und Mobilität",
+text:"Städte weltweit stehen vor der Herausforderung, nachhaltige Mobilitätskonzepte zu entwickeln. Der private PKW dominiert weiterhin das Stadtbild, obwohl Umfragen zeigen, dass viele Bürger bereit wären, auf öffentliche Verkehrsmittel umzusteigen, wenn diese verlässlicher und günstiger wären. Radwege und Fußgängerzonen werden ausgebaut. Experten fordern eine konsequente Verkehrswende.",
+qs:[
+{q:"Was dominiert das Stadtbild?",o:["Fahrräder","Straßenbahnen","Der private PKW","Fußgänger"],a:2,e:"'Der private PKW dominiert weiterhin.'"},
+{q:"Unter welcher Bedingung würden mehr Menschen ÖPNV nutzen?",o:["Wenn es teurer wäre","Wenn er verlässlicher und günstiger wäre","Wenn mehr Parkplätze vorhanden wären","Wenn die Stadt kleiner wäre"],a:1,e:"'wenn diese verlässlicher und günstiger wären.'"},
+{q:"Was wird laut Text ausgebaut?",o:["Autobahnen","Radwege und Fußgängerzonen","Parkhäuser","Flughäfen"],a:1,e:"'Radwege und Fußgängerzonen werden ausgebaut.'"},
+{q:"Was fordern Experten?",o:["Mehr Autos","Eine Verkehrswende","Günstigeres Benzin","Mehr Parkplätze"],a:1,e:"'Experten fordern eine konsequente Verkehrswende.'"},
+{q:"Was ist das Ziel laut Einleitung?",o:["Mehr Autobahnen","Nachhaltige Mobilitätskonzepte","Mehr Flughäfen","Weniger Städte"],a:1,e:"'nachhaltige Mobilitätskonzepte zu entwickeln.'"},
+]},
+];
+
+const PR=[
+{t:"Die Qualität des Produktes überzeugte die anwesenden Experten vollständig.",d:"B2"},
+{t:"Trotz schlechter Wetterverhältnisse erreichten die Bergsteiger den Gipfel.",d:"B2"},
+{t:"Ich würde mich freuen, wenn Sie mir Ihre Meinung mitteilen könnten.",d:"B1"},
+{t:"Die Digitalisierung stellt Unternehmen und Beschäftigte vor neue Herausforderungen.",d:"B2"},
+{t:"Nachdem er das Studium abgeschlossen hatte, bewarb er sich sofort um eine Stelle.",d:"B2"},
+{t:"Wegen der steigenden Lebenshaltungskosten müssen viele Familien ihren Alltag neu organisieren.",d:"C1"},
+{t:"Könnten Sie mir bitte erklären, wie man dieses Formular korrekt ausfüllt?",d:"B1"},
+{t:"Je mehr Vokabeln man täglich lernt, desto flüssiger spricht man die Fremdsprache.",d:"B2"},
+{t:"Obwohl das Problem bekannt war, wurde es lange Zeit nicht ernst genommen.",d:"B2"},
+{t:"Das lässt sich leider nicht so einfach durch eine einzige Maßnahme lösen.",d:"B2"},
+{t:"Nicht nur die Kosten, sondern auch die ökologischen Auswirkungen müssen berücksichtigt werden.",d:"C1"},
+{t:"Hätte er rechtzeitig eingegriffen, wäre der Schaden erheblich geringer ausgefallen.",d:"C1"},
+{t:"Der Bericht wurde gestern von der unabhängigen Kommission veröffentlicht.",d:"B2"},
+{t:"Indem man täglich ein bisschen übt, können erstaunliche Fortschritte erzielt werden.",d:"B2"},
+{t:"Seitdem sie in Deutschland lebt, hat sie ihre Sprachkenntnisse erheblich verbessert.",d:"B2"},
+{t:"Die Maßnahmen erwiesen sich letztendlich als kontraproduktiv für die gesamte Organisation.",d:"C1"},
+{t:"Dürfte ich Sie bitten, mir die Unterlagen bis Ende der Woche zuzusenden?",d:"B2"},
+{t:"Weder die Kosten noch der hohe Zeitaufwand konnten ihn von seinem Plan abbringen.",d:"C1"},
+{t:"Es ist zu beachten, dass alle erforderlichen Unterlagen vollständig eingereicht werden müssen.",d:"B2"},
+{t:"An seiner Stelle würde ich das Angebot ohne zu zögern sofort annehmen.",d:"B2"},
+{t:"Zumal er langjährige Erfahrung in diesem Bereich hatte, fiel ihm die Einarbeitung leicht.",d:"C1"},
+{t:"Die Verhandlungen wurden aufgrund unüberbrückbarer Differenzen auf unbestimmte Zeit vertagt.",d:"C1"},
+{t:"Sowohl die schriftliche als auch die mündliche Prüfung muss erfolgreich bestanden werden.",d:"B2"},
+{t:"Er behauptete, er habe das betreffende Dokument zu keinem Zeitpunkt erhalten.",d:"B2"},
+{t:"Durch intensive und regelmäßige Vorbereitung konnte er alle Herausforderungen meistern.",d:"B2"},
+{t:"Das Ergebnis hängt entscheidend davon ab, wie viel Zeit und Energie man investiert.",d:"B2"},
+{t:"Mir wurde ausdrücklich gesagt, dass die ausgeschriebene Stelle bereits vergeben sei.",d:"C1"},
+{t:"Ich hätte lieber in einer ruhigeren und überschaubareren Umgebung gewohnt.",d:"B2"},
+{t:"Man sollte grundsätzlich bedenken, dass nicht alle verfügbaren Informationen zuverlässig sind.",d:"B2"},
+{t:"Die Ergebnisse der aktuellen Studie sprechen eindeutig für eine grundlegende Reform.",d:"B2"},
+{t:"Das Projekt wurde trotz zahlreicher Rückschläge rechtzeitig und erfolgreich abgeschlossen.",d:"B2"},
+{t:"Obgleich die Lösung bereits bekannt war, zögerte das Team lange mit der Umsetzung.",d:"C1"},
+{t:"Die Aufgabe ist spätestens bis Montag Mittag vollständig und korrekt abzugeben.",d:"B2"},
+{t:"Sie fragte höflich, ob er eventuell pünktlich zur vereinbarten Zeit kommen könne.",d:"B2"},
+{t:"Einerseits bietet die Großstadt viele Möglichkeiten, andererseits ist sie sehr laut und teuer.",d:"B2"},
+{t:"Er musste schließlich zugeben, dass er bei dieser Gelegenheit einen schwerwiegenden Fehler gemacht hatte.",d:"C1"},
+{t:"Der Antrag muss innerhalb einer Frist von vierzehn Tagen schriftlich gestellt werden.",d:"B2"},
+{t:"Soweit ich persönlich informiert bin, findet die geplante Veranstaltung wie vorgesehen statt.",d:"B2"},
+{t:"Abschließend lässt sich festhalten, dass die ergriffenen Maßnahmen insgesamt wirkungsvoll waren.",d:"C1"},
+{t:"Nicht jede Lösung ist für jeden geeignet; der individuelle Kontext muss stets berücksichtigt werden.",d:"C1"},
+{t:"Wegen mangelnder finanzieller Nachfrage wurde das Produkt schließlich vom Markt genommen.",d:"B2"},
+{t:"Er tat so, als ob er die dringende Frage seiner Kollegin überhaupt nicht gehört hätte.",d:"C1"},
+{t:"Anstatt mehr zu schlafen, trank er täglich immer größere Mengen Kaffee.",d:"B1"},
+{t:"Falls du irgendwelche Fragen hast, kannst du mich natürlich jederzeit anrufen.",d:"B1"},
+{t:"Das Problem lässt sich nur durch intensive und konstruktive Zusammenarbeit aller Beteiligten lösen.",d:"C1"},
+{t:"Sowohl der Preis als auch die nachgewiesene Qualität waren ausschlaggebend für die Kaufentscheidung.",d:"B2"},
+{t:"Das Wort 'trotzdem' ist kein Nebensatzeinleiter, sondern ein Konjunktionaladverb.",d:"B2"},
+{t:"Im Deutschen steht das konjugierte Verb im Nebensatz immer an letzter Position.",d:"B2"},
+{t:"Bildungsgerechtigkeit bleibt eines der wichtigsten gesellschaftspolitischen Themen in Deutschland.",d:"C1"},
+{t:"Die Verkehrswende erfordert nicht nur neue Technologien, sondern auch ein verändertes Mobilitätsverhalten.",d:"C1"},
+];
+
+const FR=[
+{q:"Was sind Ihrer Meinung nach die größten Vorteile des Internets?",h:"Nenne 2–3 Vorteile. Benutze: 'Erstens … Außerdem … Darüber hinaus …'"},
+{q:"Beschreiben Sie, wie Sie Ihren typischen Arbeitstag verbringen.",h:"Temporale Konnektoren: 'Zuerst … Danach … Anschließend … Abends …'"},
+{q:"Was würden Sie tun, wenn Sie ein Jahr lang nicht arbeiten müssten?",h:"KII: 'Wenn ich … hätte, würde ich …'"},
+{q:"Warum ist es Ihrer Meinung nach wichtig, eine Fremdsprache zu lernen?",h:"Argumente: Beruf, Reisen, interkulturelle Kompetenz …"},
+{q:"Welche Eigenschaften sollte eine gute Führungskraft haben?",h:"'Eine gute Führungskraft sollte … sein, weil …'"},
+{q:"Wie hat sich die Arbeitswelt in den letzten zehn Jahren verändert?",h:"'Im Vergleich zu früher … Heutzutage … Außerdem hat sich … verändert.'"},
+{q:"Was sind die Vor- und Nachteile des Lebens in einer Großstadt?",h:"'Einerseits … andererseits … Zwar … aber …'"},
+{q:"Beschreiben Sie eine Person, die Sie besonders beeindruckt hat.",h:"Wer? Was hat sie getan? Warum beeindruckt sie dich?"},
+{q:"Was denken Sie über soziale Medien? Helfen oder schaden sie der Gesellschaft?",h:"Pro und Kontra. Benutze 'obwohl', 'trotzdem', 'jedoch'"},
+{q:"Wie stellen Sie sich Ihr Leben in zehn Jahren vor?",h:"KII + Futur: 'Ich werde … / Ich würde gerne …'"},
+{q:"Was sind für Sie die wichtigsten Kriterien bei der Jobsuche?",h:"Nenne und begründe 2–3 Kriterien"},
+{q:"Beschreiben Sie ein Land oder eine Stadt, die Sie einmal besuchen möchten.",h:"Warum diese Stadt? Was würden Sie dort machen?"},
+{q:"Was denken Sie: Sollte der öffentliche Nahverkehr kostenlos sein?",h:"These + Begründung + Gegenargument + Fazit"},
+{q:"Wie wichtig ist Sport und Bewegung für die Gesundheit?",h:"Argumentiere mit Beispielen und Studien"},
+{q:"Beschreiben Sie eine Situation, in der Sie eine schwierige Entscheidung treffen mussten.",h:"Was war die Situation? Was haben Sie entschieden? Was waren die Folgen?"},
+{q:"Was sind die Vor- und Nachteile von Homeoffice?",h:"Arbeitgeber- und Arbeitnehmerperspektive"},
+{q:"Wie wichtig ist Ihrer Meinung nach formale Bildung für den beruflichen Erfolg?",h:"Formale Bildung vs. Berufserfahrung"},
+{q:"Sollte das Wahlalter auf 16 Jahre gesenkt werden? Was denken Sie?",h:"Pro: Partizipation, Zukunft. Kontra: Reife, Erfahrung"},
+{q:"Beschreiben Sie Ihre Heimatstadt oder Ihr Heimatland.",h:"Geographie, Kultur, Besonderheiten, persönliche Verbindung"},
+{q:"Was bedeutet 'Nachhaltigkeit' für Sie im Alltag?",h:"Konkrete Beispiele aus Konsum, Energie, Ernährung"},
+{q:"Wie sehen Sie die Zukunft der Arbeit angesichts von KI und Automatisierung?",h:"Chancen und Risiken, welche Berufe betroffen?"},
+{q:"Was sind die wichtigsten Faktoren für ein glückliches Leben?",h:"Familie, Gesundheit, Beruf, Freiheit? Begründe."},
+{q:"Beschreiben Sie eine Herausforderung, der Sie sich in letzter Zeit gestellt haben.",h:"Was war schwierig? Wie haben Sie reagiert? Was haben Sie gelernt?"},
+{q:"Sollten Plastiktüten verboten werden? Argumentieren Sie.",h:"Umwelt, Wirtschaft, Alternativen, internationale Beispiele"},
+{q:"Was denken Sie über das Bildungssystem in Deutschland?",h:"Vergleich mit anderen Systemen, Stärken, Schwächen"},
+{q:"Wie wirkt sich der Klimawandel auf unser tägliches Leben aus?",h:"Konkrete Beispiele: Wetter, Ernährung, Energie, Mobilität"},
+{q:"Was sind Ihrer Meinung nach die Ursachen von Armut in reichen Ländern?",h:"Strukturelle, individuelle und politische Faktoren"},
+{q:"Beschreiben Sie Ihre Erfahrungen mit dem Deutschlernen.",h:"Methoden, Schwierigkeiten, Fortschritte, Motivation"},
+{q:"Sollte Fleischkonsum besteuert werden? Was denken Sie?",h:"Umwelt, Gesundheit, Wirtschaft, Freiheit der Wahl"},
+{q:"Was ist Ihrer Meinung nach die beste Art, eine neue Sprache zu lernen?",h:"Methoden: Kurse, Immersion, Apps, Gespräche …"},
+{q:"Beschreiben Sie einen typischen deutschen Feiertag oder eine deutsche Tradition.",h:"Was ist der Hintergrund? Was macht man? Was bedeutet er dir?"},
+{q:"Was denken Sie: Ist Ehrenamt wichtig für die Gesellschaft?",h:"Definition, Beispiele, persönliche Erfahrung"},
+{q:"Welche Rolle spielt Technologie in Ihrem Alltag?",h:"Positive und negative Aspekte, Abhängigkeit, Zukunft"},
+{q:"Was würden Sie ändern, wenn Sie Bürgermeister Ihrer Stadt wären?",h:"KII: 'Ich würde … einführen / abschaffen / investieren …'"},
+{q:"Wie wichtig ist Ihrer Meinung nach der Schutz der Privatsphäre im digitalen Zeitalter?",h:"Datenschutz, soziale Medien, Überwachung"},
+{q:"Beschreiben Sie Ihre beruflichen Ziele für die nächsten fünf Jahre.",h:"Konkret, mit Begründung und Strategie"},
+{q:"Was denken Sie über die Legalisierung von Cannabis? Argumentieren Sie.",h:"Gesundheit, Kriminalität, Wirtschaft, internationale Vergleiche"},
+{q:"Wie beeinflusst die Globalisierung unser tägliches Leben?",h:"Konsum, Arbeit, Kultur, Sprache"},
+{q:"Sollte die Woche standardmäßig auf 4 Arbeitstage verkürzt werden?",h:"Pro: Wohlbefinden. Kontra: Produktivität, Wirtschaft"},
+{q:"Was sind die Herausforderungen beim Leben in einem fremden Land?",h:"Sprache, Kultur, soziale Netzwerke, Bürokratie"},
+{q:"Wie kann man Vorurteile und Diskriminierung in der Gesellschaft bekämpfen?",h:"Bildung, Gesetze, Dialog, persönliches Handeln"},
+{q:"Was denken Sie über die Nutzung von Kernenergie zur Stromerzeugung?",h:"Sicherheit, Klima, Kosten, internationale Positionen"},
+{q:"Beschreiben Sie einen Film, ein Buch oder eine Serie, die Sie empfehlen würden.",h:"Inhalt, Gründe, Zielgruppe"},
+{q:"Wie wichtig ist Ihrer Meinung nach die Gleichstellung von Männern und Frauen im Beruf?",h:"Statistiken, Ursachen, Maßnahmen, persönliche Meinung"},
+{q:"Was sind die Vor- und Nachteile des Lebens auf dem Land im Vergleich zur Stadt?",h:"Infrastruktur, Natur, Gemeinschaft, Möglichkeiten"},
+{q:"Sollten Schuluniformen eingeführt werden? Was denken Sie?",h:"Identität, Gleichheit, Disziplin, Kosten"},
+{q:"Wie sehen Sie die Entwicklung der künstlichen Intelligenz?",h:"Chancen in Medizin, Wirtschaft; Risiken: Arbeit, Kontrolle"},
+{q:"Beschreiben Sie ein gesellschaftliches Problem in Ihrem Heimatland.",h:"Was ist es? Ursachen? Lösungsansätze?"},
+{q:"Was bedeutet 'Integration' für Sie persönlich?",h:"Definition, persönliche Erfahrung, gesellschaftliche Dimension"},
+{q:"Wie wichtig sind Ihrer Meinung nach internationale Reisen für die persönliche Entwicklung?",h:"Kultureller Horizont, Sprachen, Toleranz"},
+];
+
+const SI=[
+{s:"Sie sehen: 'Homeoffice soll gesetzlich auf max. 2 Tage/Woche begrenzt werden.'",p:"Beschreiben Sie Ihre Meinung. Argumente dafür und dagegen nennen.",k:["homeoffice","arbeit","zu hause","regel","vorteil","nachteil","gesetz"]},
+{s:"Ihr Freund überlegt: Studium oder Ausbildung?",p:"Beraten Sie ihn. Beschreiben Sie Vor- und Nachteile beider Optionen.",k:["studium","ausbildung","vorteil","nachteil","beruf","zukunft","gehalt"]},
+{s:"In Ihrer Stadt soll ein neuer Park auf dem Gelände eines Parkhauses gebaut werden.",p:"Sie nehmen an einer Bürgerversammlung teil. Beschreiben Sie Ihre Position.",k:["park","parkhaus","natur","auto","umwelt","bürger","grün"]},
+{s:"Eine Umfrage: Immer mehr Menschen lesen keine gedruckten Bücher mehr.",p:"Was denken Sie darüber? Welche Bedeutung hat Lesen für die Gesellschaft?",k:["buch","lesen","digital","gesellschaft","wissen","bildung","wichtig"]},
+{s:"Vorstellungsgespräch: 'Warum sollten wir gerade Sie einstellen?'",p:"Antworten Sie professionell. Stärken, Erfahrungen, Motivation nennen.",k:["erfahrung","stärke","team","arbeit","motiviert","ich","können"]},
+{s:"Ein Schulleiter sagt: 'Klimawandel gehört nicht in den Lehrplan.'",p:"Stimmen Sie zu oder widersprechen Sie? Begründen Sie ausführlich.",k:["klimawandel","schule","lernen","umwelt","zukunft","wichtig","bildung"]},
+{s:"Ihre Stadt plant, alle Innenstadtparkplätze zu streichen und Radwege auszubauen.",p:"Beschreiben Sie die Auswirkungen auf verschiedene Gruppen der Gesellschaft.",k:["parkplatz","rad","auto","händler","senioren","umwelt","mobilität"]},
+{s:"Die Regierung schlägt vor, soziale Medien für Kinder unter 14 Jahren zu verbieten.",p:"Beschreiben Sie Ihre Position. Welche Alternativen gibt es?",k:["soziale","medien","kinder","verbot","internet","eltern","schutz"]},
+{s:"Ihr Unternehmen überlegt, eine KI zur Beurteilung von Bewerbungen einzusetzen.",p:"Was sind die Chancen und Risiken? Beschreiben Sie beide Seiten.",k:["ki","bewerbung","fair","diskriminierung","effizienz","mensch","arbeit"]},
+{s:"Sie lesen: 'Fleischkonsum sollte mit einer Sondersteuer belegt werden.'",p:"Beschreiben Sie Ihre Meinung. Welche Folgen hätte das?",k:["fleisch","steuer","umwelt","gesundheit","preis","landwirtschaft","wahl"]},
+{s:"In Ihrer Schule/Universität sollen Handys während des Unterrichts verboten werden.",p:"Beschreiben Sie die Auswirkungen — positiv und negativ.",k:["handy","unterricht","verbot","ablenkung","lernen","schüler","digital"]},
+{s:"Die Stadt bietet kostenlosen ÖPNV für alle Bürger an, finanziert durch höhere Steuern.",p:"Beschreiben Sie die Vor- und Nachteile dieser Maßnahme.",k:["öpnv","kostenlos","steuer","auto","umwelt","mobilität","fair"]},
+{s:"Sie wurden gebeten, auf einer Konferenz über 'Sprachenlernen im digitalen Zeitalter' zu sprechen.",p:"Beschreiben Sie, wie Technologie das Sprachenlernen verändert hat.",k:["sprache","lernen","app","digital","kurs","effizienz","motivation"]},
+{s:"In Ihrem Land soll das Renteneintrittsalter auf 70 Jahre erhöht werden.",p:"Beschreiben Sie Ihre Position und nennen Sie Argumente.",k:["rente","alter","arbeit","gesundheit","wirtschaft","demographisch","reform"]},
+{s:"Ein Freund denkt darüber nach, aus der Großstadt in ein Dorf zu ziehen.",p:"Beraten Sie ihn. Was sollte er bedenken?",k:["dorf","stadt","natur","infrastruktur","gemeinschaft","arbeit","pendeln"]},
+{s:"Ihr Arbeitgeber möchte, dass alle Mitarbeiter am Wochenende erreichbar sind.",p:"Wie reagieren Sie? Beschreiben Sie Ihre Grenzen und Argumente.",k:["wochenende","erreichbar","arbeit","freizeit","balance","grenze","recht"]},
+{s:"In Deutschland soll ein bundesweites Tempolimit von 130 km/h eingeführt werden.",p:"Beschreiben Sie die Reaktionen verschiedener Gruppen auf diese Maßnahme.",k:["tempolimit","autobahn","geschwindigkeit","sicherheit","umwelt","freiheit","emissionen"]},
+{s:"Eine Studie zeigt: Kinder, die täglich lesen, sind in der Schule erfolgreicher.",p:"Was denken Sie? Was können Eltern, Schulen und die Gesellschaft tun?",k:["lesen","kinder","schule","erfolg","eltern","förderung","bildung"]},
+{s:"Ihr Unternehmen überlegt, den 4-Tage-Arbeitstag einzuführen.",p:"Beschreiben Sie mögliche Auswirkungen für Mitarbeiter und das Unternehmen.",k:["vier","tage","arbeit","produktivität","freizeit","test","mitarbeiter"]},
+{s:"Die Stadtbibliothek soll geschlossen werden, um Kosten zu sparen.",p:"Beschreiben Sie, warum Bibliotheken wichtig sind und was man stattdessen tun könnte.",k:["bibliothek","bücher","wissen","gemeinschaft","digital","sparen","kultur"]},
+{s:"Junge Menschen interessieren sich immer weniger für Politik. Was sind die Ursachen?",p:"Beschreiben Sie mögliche Gründe und Lösungsansätze.",k:["politik","jugend","interesse","wahlbeteiligung","bildung","vertrauen","demokratie"]},
+{s:"Ein neues Gesetz soll Diskriminierung am Arbeitsplatz stärker bestrafen.",p:"Beschreiben Sie die Notwendigkeit und mögliche Auswirkungen.",k:["diskriminierung","gesetz","arbeit","strafe","gleich","recht","schutz"]},
+{s:"Sie sind Mitglied einer Kommission, die über den Bau eines neuen Kohlekraftwerks entscheidet.",p:"Beschreiben Sie Ihre Position und die Argumente der verschiedenen Seiten.",k:["kohle","kraftwerk","energie","klima","jobs","erneuerbarer","entscheidung"]},
+{s:"Ein Journalist fragt Sie: 'Was macht Deutschland aus Ihrer Sicht besonders?'",p:"Beschreiben Sie Ihre persönliche Perspektive auf Deutschland.",k:["deutschland","kultur","sprache","gesellschaft","arbeit","qualität","besonder"]},
+{s:"Ihr Kind möchte nach der Schule Musiker werden. Als Elternteil reagieren Sie.",p:"Beschreiben Sie Ihre Reaktion und die Argumente für beide Seiten.",k:["musik","beruf","zukunft","leidenschaft","geld","talent","eltern"]},
+{s:"Eine Gemeinde überlegt, Geflüchtete in einem Wohngebiet unterzubringen.",p:"Beschreiben Sie die verschiedenen Perspektiven der Beteiligten.",k:["flüchtlinge","integration","wohnen","gemeinschaft","hilfe","herausforderung","kultur"]},
+{s:"Sie arbeiten in einem internationalen Team mit Kollegen aus 5 verschiedenen Ländern.",p:"Beschreiben Sie die Herausforderungen und Vorteile interkultureller Zusammenarbeit.",k:["team","international","kultur","kommunikation","sprache","vorteil","herausforderung"]},
+{s:"Das Internet macht es möglich, von überall zu arbeiten. Sogenannte 'Digital Nomads'.",p:"Beschreiben Sie diesen Lebensstil: Vorteile, Nachteile, Zukunft.",k:["digital","nomad","arbeiten","reisen","freiheit","isolation","internet"]},
+{s:"In Ihrer Firma wird überlegt, ob ältere Mitarbeiter früher in Rente gehen sollen.",p:"Beschreiben Sie die Konsequenzen für das Unternehmen und die Betroffenen.",k:["rente","alt","erfahrung","kosten","wissen","diskriminierung","lösung"]},
+{s:"Sie bekommen die Gelegenheit, Ihren Traumjob zu übernehmen — aber in einer anderen Stadt.",p:"Beschreiben Sie Ihren Entscheidungsprozess. Was würden Sie abwägen?",k:["job","umzug","familie","karriere","abwägen","entscheidung","zukunft"]},
+{s:"Eine Studie zeigt: Menschen, die regelmäßig meditieren, sind stressresistenter.",p:"Beschreiben Sie Ihre Meinung zu Meditation und mentaler Gesundheit.",k:["meditation","stress","gesundheit","mental","entspannen","wissenschaft","alltag"]},
+{s:"Ihr Bürgermeister schlägt vor, alle Schulen auf digitalen Unterricht umzustellen.",p:"Beschreiben Sie Chancen und Risiken dieser Entscheidung.",k:["schule","digital","tablet","lehrer","internet","vorteil","nachteil"]},
+{s:"Debatte: Sollte die Todesstrafe in allen Ländern abgeschafft werden?",p:"Beschreiben Sie verschiedene Perspektiven und Ihre eigene Position.",k:["todesstrafe","abschaffen","gerechtigkeit","menschenrechte","argument","strafe","land"]},
+{s:"Sie lesen: Laut Studien sind glückliche Mitarbeiter produktiver.",p:"Was können Unternehmen tun, um die Zufriedenheit ihrer Mitarbeiter zu steigern?",k:["mitarbeiter","glücklich","produktiv","unternehmen","maßnahmen","gehalt","kultur"]},
+{s:"Ein Unternehmen will eine neue Fabrik in Ihrer Gemeinde bauen: Arbeitsplätze vs. Umweltbelastung.",p:"Beschreiben Sie den Konflikt und mögliche Lösungsansätze.",k:["fabrik","arbeitsplatz","umwelt","gemeinde","wirtschaft","verschmutzung","entscheidung"]},
+{s:"Sie nehmen an einer Diskussion teil: 'Hat die Schule Sie auf das Leben vorbereitet?'",p:"Beschreiben Sie Ihre persönliche Erfahrung und nehmen Sie Stellung.",k:["schule","leben","vorbereitung","praktisch","theoretisch","erfahrung","system"]},
+{s:"Debatte: Sollte der Besitz von Schusswaffen für Privatpersonen verboten werden?",p:"Beschreiben Sie die Argumente beider Seiten.",k:["waffe","verbot","sicherheit","recht","kriminalität","argument","freiheit"]},
+{s:"Sie können Ihre Lieblingsstadt weltweit wählen, um dort zu leben. Welche und warum?",p:"Beschreiben Sie Ihre Wahl ausführlich mit Gründen.",k:["stadt","leben","klima","kultur","arbeit","sicherheit","qualität"]},
+{s:"Ein Freund fragt: Welches Buch hat dein Leben verändert und warum?",p:"Beschreiben Sie das Buch und seinen Einfluss auf Sie.",k:["buch","lesen","einfluss","denken","verändern","empfehlen","inhalt"]},
+{s:"Ihr Land erwägt, aus internationalen Klimaabkommen auszutreten.",p:"Beschreiben Sie mögliche Folgen und Ihre persönliche Position.",k:["klima","abkommen","austritt","folgen","international","verantwortung","zukunft"]},
+{s:"Stellen Sie sich vor: Sie gründen Ihr eigenes Unternehmen.",p:"Beschreiben Sie Ihre Geschäftsidee, Zielgruppe und erste Schritte.",k:["unternehmen","gründen","idee","markt","investition","produkt","ziel"]},
+{s:"Eine Schule fragt: Sollen Kinder schon ab 5 Jahren eine Fremdsprache lernen?",p:"Beschreiben Sie Vor- und Nachteile des frühen Sprachenlernens.",k:["sprache","kind","früh","lernen","vorteil","nachteil","schule"]},
+{s:"In der Zeitung: 'Influencer haben mehr Einfluss auf Jugendliche als Lehrer.'",p:"Stimmen Sie zu oder widersprechen Sie? Begründen Sie ausführlich.",k:["influencer","jugendliche","einfluss","lehrer","social","media","vorbild"]},
+{s:"Ihr Arbeitsvertrag läuft aus. Der Arbeitgeber bietet 10% mehr Gehalt, aber 20% mehr Arbeit.",p:"Beschreiben Sie Ihren Entscheidungsprozess.",k:["gehalt","arbeit","verhandlung","balance","entscheidung","mehr","wert"]},
+{s:"Debatte: 'Universität sollte für alle kostenlos sein.' Was denken Sie?",p:"Beschreiben Sie Argumente und Alternativen.",k:["universität","kostenlos","bildung","steuer","chancen","zugang","reform"]},
+{s:"Sie hören: 'KI wird in 20 Jahren mehr als die Hälfte aller Jobs ersetzen.'",p:"Wie reagieren Sie darauf? Was bedeutet das für die Gesellschaft?",k:["ki","job","automatisierung","zukunft","arbeit","umschulung","gesellschaft"]},
+{s:"Ihr Nachbar beschwert sich: 'Zu viel Lärm durch eine nahe gelegene Baustelle.'",p:"Sie sind der Projektleiter. Wie reagieren Sie und was unternehmen Sie?",k:["lärm","baustelle","nachbar","lösung","kommunikation","kompromiss","projekt"]},
+{s:"Ein Bekannter fragt: 'Lohnt sich ein Masterstudium nach dem Bachelor?'",p:"Beraten Sie ihn ausführlich. Was sollte er bedenken?",k:["master","bachelor","studium","beruf","geld","zeit","karriere"]},
+{s:"In Ihrer Stadt gibt es Pläne, ein neues Einkaufszentrum in der Innenstadt zu bauen.",p:"Beschreiben Sie Auswirkungen auf lokale Geschäfte, Verkehr und Stadtbild.",k:["einkaufszentrum","innenstadt","handel","verkehr","stadtbild","lokal","konsum"]},
+{s:"Sie wurden gebeten, junge Berufseinsteiger zu beraten.",p:"Welche drei Ratschläge würden Sie geben? Beschreiben Sie jeden ausführlich.",k:["ratschlag","beruf","karriere","netzwerk","lernen","erfahrung","anfang"]},
+];
+// ═══════ STATE ═══════
+const st={
+  mode:'h', hEx:0, sEx:0,
+  rf:{i:0,ok:0,tot:0,done:new Set()},
+  dk:{i:0,ok:0,tot:0,done:new Set()},
+  tv:{ti:0,qi:0,ok:0,tot:0,done:new Set()},
+  pr:{i:0,scores:[],totalAcc:0,evaled:0},
+  fr:{i:0},
+  si:{i:0,secs:0},
+};
+
+// ═══════ HELPERS ═══════
+function $id(id){return document.getElementById(id);}
+function tog(id){const h=$id(id);if(h)h.classList.toggle('vis');}
+function setPlayBtn(id,playing){const b=$id(id);if(!b)return;b.innerHTML=playing?'<i class="bi-stop-fill"></i>':'<i class="bi-play-fill"></i>';b.classList.toggle('playing',playing);}
+function speak(txt,cb,rate=0.82){
+  if(!window.speechSynthesis){if(cb)cb();return;}
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='de-DE';u.rate=rate;u.pitch=1;
+  const vs=window.speechSynthesis.getVoices();
+  const v=vs.find(x=>x.lang.startsWith('de'));if(v)u.voice=v;
+  u.onend=()=>{if(cb)cb();};u.onerror=()=>{if(cb)cb();};
+  window.speechSynthesis.speak(u);
+}
+function normText(s){return s.toLowerCase().replace(/[.,!?;:„"–\-]/g,'').replace(/\s+/g,' ').trim();}
+function getWords(s){return normText(s).split(' ').filter(Boolean);}
+
+function colorClass(score){
+  if(score>=0.9)return 'g100';
+  if(score>=0.8)return 'g90';
+  if(score>=0.65)return 'g75';
+  if(score>=0.5)return 'g60';
+  if(score>=0.4)return 'g50';
+  if(score>=0.25)return 'g35';
+  if(score>=0.1)return 'g20';
+  return 'g0';
+}
+
+function colorLabel(score){
+  if(score>=0.85)return '<i class="bi-circle-fill" style="color:#5aab8a"></i> Ausgezeichnet';
+  if(score>=0.7)return '<i class="bi-circle-fill" style="color:#E0A828"></i> Gut';
+  if(score>=0.5)return '<i class="bi-circle-fill" style="color:#E07A5F"></i> Ausreichend';
+  return '<i class="bi-circle-fill" style="color:#c96060"></i> Zu überarbeiten';
+}
+
+function updateScores(){
+  const hOk=st.rf.ok+st.dk.ok+st.tv.ok;
+  const hTot=st.rf.tot+st.dk.tot+st.tv.tot;
+  $id('sc_h').textContent=`Hören: ${hOk}/${hTot}`;
+  const avg=st.pr.evaled>0?Math.round(st.pr.totalAcc/st.pr.evaled):0;
+  $id('sc_s').textContent=`Sprechen: ${st.pr.evaled} bew.`;
+  $id('sc_a').textContent=`Accuracy: ${avg||'—'}%`;
+  // progress
+  const done=st.rf.done.size+st.dk.done.size+st.tv.done.size;
+  const total=RF.length+DK.length+TV.reduce((a,t)=>a+t.qs.length,0);
+  $id('pgbar').style.width=Math.round(done/total*100)+'%';
+}
+
+// ═══════ MODE / TAB ═══════
+function setMode(m){
+  st.mode=m;
+  window.speechSynthesis&&window.speechSynthesis.cancel();
+  $id('mh').classList.toggle('vis',m==='h');
+  $id('ms').classList.toggle('vis',m==='s');
+  document.querySelectorAll('.mnb').forEach((b,i)=>{
+    b.className='mnb';
+    if(i===0&&m==='h')b.classList.add('ah');
+    if(i===1&&m==='s')b.classList.add('as');
+  });
+  $id('pgbar').className='pg '+(m==='h'?'h':'s');
+  updateScores();
+}
+function setHEx(i){
+  st.hEx=i;window.speechSynthesis&&window.speechSynthesis.cancel();
+  [0,1,2].forEach(j=>$id('hx'+j).classList.toggle('vis',j===i));
+  document.querySelectorAll('#htabs .etb').forEach((b,j)=>b.classList.toggle('act',j===i));
+}
+function setSEx(i){
+  st.sEx=i;stopAllRec();
+  [0,1,2].forEach(j=>$id('sx'+j).classList.toggle('vis',j===i));
+  document.querySelectorAll('#stabs .etb').forEach((b,j)=>b.classList.toggle('act',j===i));
+}
+
+// ═══════ HÖREN: RF ═══════
+function initRF(){$id('rf_tot').textContent=RF.length;renderRF();}
+function renderRF(){
+  const d=RF[st.rf.i];
+  $id('rf_idx').textContent=st.rf.i+1;
+  $id('rf_atxt').innerHTML='Drücke <i class="bi-play-fill"></i> um die Aussage zu hören.';
+  $id('rf_q').textContent='Höre dir die Aussage an und entscheide: richtig oder falsch?';
+  $id('rf_fb').className='fb';
+  document.querySelectorAll('.rfb').forEach(b=>{b.disabled=false;b.className='rfb '+(b.textContent.includes('Richtig')?'r':'f');});
+  $id('rf_ctr').textContent=`${st.rf.ok}/${st.rf.tot} richtig`;
+  setPlayBtn('rfpb',false);
+}
+function playRF(){const d=RF[st.rf.i];setPlayBtn('rfpb',true);speak(d.t,()=>setPlayBtn('rfpb',false));}
+function checkRF(ans){
+  const d=RF[st.rf.i];const key='rf'+st.rf.i;
+  if(st.rf.done.has(key))return;
+  st.rf.done.add(key);st.rf.tot++;
+  const ok=ans===d.c;if(ok)st.rf.ok++;
+  document.querySelectorAll('.rfb').forEach(b=>{
+    b.disabled=true;
+    const isR=b.textContent.includes('Richtig');
+    if(isR===d.c)b.classList.add('sok');
+    else if(isR===ans&&!ok)b.classList.add('serr');
+  });
+  const fb=$id('rf_fb');
+  fb.innerHTML=(ok?'<i class="bi-check-circle-fill"></i>Richtig! ':'<i class="bi-x-circle-fill"></i>Falsch. ')+d.e;
+  fb.className='fb '+(ok?'ok':'er')+' vis';
+  $id('rf_ctr').textContent=`${st.rf.ok}/${st.rf.tot} richtig`;
+  updateScores();
+}
+function navRF(d){const n=st.rf.i+d;if(n>=0&&n<RF.length){st.rf.i=n;renderRF();}}
+
+// ═══════ HÖREN: DIKTAT ═══════
+function initDK(){$id('dk_tot').textContent=DK.length;renderDK();}
+function renderDK(){
+  const d=DK[st.dk.i];
+  $id('dk_idx').textContent=st.dk.i+1;
+  const inp=$id('dk_inp');inp.value='';inp.className='ti';inp.disabled=false;
+  $id('dk_fb').className='fb';
+  $id('dk_hint').textContent='Tipp: '+d.h;$id('dk_hint').classList.remove('vis');
+  $id('dk_ctr').textContent=`${st.dk.ok}/${st.dk.tot} richtig`;
+  setPlayBtn('dkpb',false);
+}
+function playDK(){const d=DK[st.dk.i];setPlayBtn('dkpb',true);speak(d.t,()=>setPlayBtn('dkpb',false),0.68);}
+function checkDK(){
+  const d=DK[st.dk.i];const key='dk'+st.dk.i;
+  const inp=$id('dk_inp');const val=inp.value.trim();
+  if(!val||st.dk.done.has(key))return;
+  st.dk.done.add(key);st.dk.tot++;
+  const tW=getWords(d.t);const uW=getWords(val);
+  const matched=uW.filter(w=>tW.includes(w)).length;
+  const score=matched/tW.length;
+  const exact=normText(val)===normText(d.t);
+  if(exact||score>=0.95)st.dk.ok++;
+  inp.disabled=true;inp.classList.add(score>=0.7?'ok':'er');
+  const pct=Math.round(score*100);
+  const fb=$id('dk_fb');
+  fb.innerHTML=(exact?`<i class="bi-check-circle-fill"></i>Perfekt! Genau richtig.`:`${colorLabel(score)} · ${pct}% Wörter korrekt.<br>Richtig: <em style="font-family:var(--font);font-weight:500">${d.t}</em>`);
+  fb.className='fb '+(score>=0.7?'ok':score>=0.45?'wn':'er')+' vis';
+  $id('dk_ctr').textContent=`${st.dk.ok}/${st.dk.tot} richtig`;
+  updateScores();
+}
+function navDK(d){const n=st.dk.i+d;if(n>=0&&n<DK.length){st.dk.i=n;renderDK();}}
+
+// ═══════ HÖREN: TV ═══════
+function initTV(){$id('tv_tt').textContent=TV.length;renderTV();}
+function renderTV(){
+  const {ti,qi}=st.tv;const t=TV[ti];const q=t.qs[qi];
+  $id('tv_ti').textContent=ti+1;$id('tv_qi').textContent=qi+1;$id('tv_qt').textContent=t.qs.length;
+  $id('tv_al').textContent=`Text: „${t.title}"`;
+  $id('tv_q').textContent=q.q;
+  const opts=$id('tv_opts');opts.innerHTML='';
+  const L=['A','B','C','D'];
+  q.o.forEach((o,i)=>{
+    const b=document.createElement('button');b.className='mcb';
+    b.innerHTML=`<span class="ltr">${L[i]}</span>${o}`;
+    b.onclick=()=>checkTV(i);opts.appendChild(b);
+  });
+  $id('tv_fb').className='fb';
+  $id('tv_ctr').textContent=`${st.tv.ok}/${st.tv.tot} richtig`;
+  setPlayBtn('tvpb',false);
+}
+function playTV(){const t=TV[st.tv.ti];setPlayBtn('tvpb',true);speak(t.text,()=>setPlayBtn('tvpb',false),0.8);}
+function checkTV(chosen){
+  const key=`tv${st.tv.ti}_${st.tv.qi}`;if(st.tv.done.has(key))return;
+  st.tv.done.add(key);st.tv.tot++;
+  const q=TV[st.tv.ti].qs[st.tv.qi];const ok=chosen===q.a;if(ok)st.tv.ok++;
+  document.querySelectorAll('#tv_opts .mcb').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('ok');else if(i===chosen)b.classList.add('er');});
+  const fb=$id('tv_fb');fb.innerHTML=(ok?'<i class="bi-check-circle-fill"></i>Richtig! ':'<i class="bi-x-circle-fill"></i>Falsch. ')+q.e;fb.className='fb '+(ok?'ok':'er')+' vis';
+  $id('tv_ctr').textContent=`${st.tv.ok}/${st.tv.tot} richtig`;updateScores();
+}
+function navTV(d){
+  const t=TV[st.tv.ti];
+  if(d>0){if(st.tv.qi<t.qs.length-1)st.tv.qi++;else if(st.tv.ti<TV.length-1){st.tv.ti++;st.tv.qi=0;}}
+  else{if(st.tv.qi>0)st.tv.qi--;else if(st.tv.ti>0){st.tv.ti--;st.tv.qi=TV[st.tv.ti-1]?TV[st.tv.ti].qs.length-1:0;}}
+  renderTV();
+}
+
+// ═══════ RECOGNITION ═══════
+let activeRec=null;
+let prFinal='',frFinal='',siFinal='';
+let siTimer=null,siSecs=0;
+
+function createRec(onResult,onEnd){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR)return null;
+  const r=new SR();r.lang='de-DE';r.continuous=true;r.interimResults=true;
+  r.onresult=e=>{let fin='',int='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)fin+=e.results[i][0].transcript+' ';else int+=e.results[i][0].transcript;}onResult(fin,int);};
+  r.onend=onEnd;r.onerror=()=>onEnd();return r;
+}
+function stopAllRec(){
+  if(activeRec){try{activeRec.stop();}catch(e){}activeRec=null;}
+  if(siTimer){clearInterval(siTimer);siTimer=null;}
+  ['pr_mb','fr_mb','si_mb'].forEach(id=>{const b=$id(id);if(b){b.classList.remove('rec');b.innerHTML='<i class="bi-mic-fill"></i>';}});
+}
+
+// ═══════ SPRECHEN: AUSSPRACHE ═══════
+function initPR(){$id('pr_tot').textContent=PR.length;renderPR();}
+function renderPR(){
+  const d=PR[st.pr.i];
+  $id('pr_idx').textContent=st.pr.i+1;
+  $id('pr_diff').textContent=d.d;
+  // Render word chips (pending state)
+  const wc=$id('pr_words');wc.innerHTML='';
+  getWords(d.t).forEach(w=>{const s=document.createElement('span');s.className='pw pend';s.textContent=w;wc.appendChild(s);});
+  $id('pr_tb').textContent='Deine gesprochene Version erscheint hier…';$id('pr_tb').className='tb em';
+  $id('pr_accbar').style.display='none';
+  $id('pr_fb').className='fb';
+  $id('pr_ms').textContent='Drücke zum Aufnehmen';
+  $id('pr_ctr').textContent=`${st.pr.evaled}/${PR.length} bewertet · Ø ${st.pr.evaled?Math.round(st.pr.totalAcc/st.pr.evaled):0}%`;
+  prFinal='';
+}
+function togPron(){
+  if(activeRec){stopAllRec();return;}
+  const btn=$id('pr_mb'),status=$id('pr_ms'),box=$id('pr_tb');
+  prFinal='';box.className='tb';box.textContent='…';
+  const rec=createRec(
+    (fin,int)=>{if(fin)prFinal+=fin;box.textContent=(prFinal+int)||'…';},
+    ()=>{btn.classList.remove('rec');btn.innerHTML='<i class="bi-mic-fill"></i>';status.textContent='Auswertung…';activeRec=null;if(prFinal.trim())evalPron();}
+  );
+  if(!rec){status.innerHTML='<i class="bi-exclamation-triangle-fill"></i> Chrome/Edge benötigt';return;}
+  activeRec=rec;rec.start();btn.classList.add('rec');btn.innerHTML='<i class="bi-stop-fill"></i>';
+  status.innerHTML='<i class="bi-record-circle-fill" style="color:#c96060"></i> Aufnahme läuft — nochmal drücken zum Beenden';
+}
+function evalPron(){
+  const d=PR[st.pr.i];
+  const target=getWords(d.t);
+  const spoken=getWords(prFinal);
+  // Per-word scoring using fuzzy match (Levenshtein-based)
+  function lev(a,b){
+    const m=a.length,n=b.length;
+    const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));
+    for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+    return dp[m][n];
+  }
+  function bestMatch(w,candidates){
+    let best=0;
+    candidates.forEach(c=>{const sim=1-lev(w,c)/Math.max(w.length,c.length,1);if(sim>best)best=sim;});
+    return best;
+  }
+  // Score each target word
+  const wordScores=target.map(w=>bestMatch(w,spoken));
+  const overallAcc=wordScores.reduce((a,b)=>a+b,0)/target.length;
+  const pct=Math.round(overallAcc*100);
+  // Update word chips
+  const chips=$id('pr_words').querySelectorAll('.pw');
+  chips.forEach((chip,i)=>{chip.className='pw '+colorClass(wordScores[i]);});
+  // Accuracy bar
+  $id('pr_accbar').style.display='';
+  $id('pr_acc_pct').textContent=pct+'%';
+  $id('pr_acc_fill').style.width=pct+'%';
+  // Score cards
+  const matched=wordScores.filter(s=>s>=0.85).length;
+  const partial=wordScores.filter(s=>s>=0.5&&s<0.85).length;
+  const missed=wordScores.filter(s=>s<0.5).length;
+  const cls=pct>=75?'gd':pct>=50?'md':'bd';
+  $id('pr_score_cards').innerHTML=`
+    <div class="sc-card"><div class="sc-num ${cls}">${pct}%</div><div class="sc-lbl">Gesamt</div></div>
+    <div class="sc-card"><div class="sc-num gd">${matched}</div><div class="sc-lbl"><i class="bi-circle-fill" style="color:#5aab8a"></i> Korrekt</div></div>
+    <div class="sc-card"><div class="sc-num md">${partial}</div><div class="sc-lbl"><i class="bi-circle-fill" style="color:#E0A828"></i> Teilweise</div></div>
+    <div class="sc-card"><div class="sc-num bd">${missed}</div><div class="sc-lbl"><i class="bi-circle-fill" style="color:#c96060"></i> Fehlt</div></div>`;
+  // Recommendations
+  const recs=[];
+  if(missed>0){
+    const missedWords=target.filter((_,i)=>wordScores[i]<0.5);
+    recs.push({icon:'<i class="bi-record-circle-fill" style="color:#c96060"></i>',txt:`<strong>Nicht erkannte Wörter:</strong> ${missedWords.slice(0,5).join(', ')}. Übe diese gezielt langsam und deutlich.`});
+  }
+  if(partial>0){
+    const partialWords=target.filter((_,i)=>wordScores[i]>=0.5&&wordScores[i]<0.85);
+    recs.push({icon:'<i class="bi-record-circle-fill" style="color:#E0A828"></i>',txt:`<strong>Unsichere Wörter:</strong> ${partialWords.slice(0,4).join(', ')}. Sprich sie einzeln und dann im Satz.`});
+  }
+  if(pct<50)recs.push({icon:'<i class="bi-lightbulb-fill"></i>',txt:'<strong>Tipp:</strong> Hör dir zuerst den Satz mit <i class="bi-play-fill"></i> an und wiederhole ihn Wort für Wort.'});
+  if(pct>=50&&pct<75)recs.push({icon:'<i class="bi-lightbulb-fill"></i>',txt:'<strong>Tipp:</strong> Sprich etwas langsamer und betone die Silben stärker.'});
+  if(pct>=75&&pct<90)recs.push({icon:'<i class="bi-stars"></i>',txt:'<strong>Gut!</strong> Versuche nun den Satz noch flüssiger zu sprechen, ohne Pausen.'});
+  if(pct>=90)recs.push({icon:'<i class="bi-star-fill"></i>',txt:'<strong>Ausgezeichnet!</strong> Deine Aussprache entspricht dem B2-Niveau.'});
+  // Phonetic tips for German-specific issues
+  const sp=getWords(prFinal).join(' ');
+  if(/[aeiou]{2,}/.test(sp)||pct<60){
+    recs.push({icon:'<i class="bi-volume-up-fill"></i>',txt:'<strong>Phonetik-Tipp:</strong> Im Deutschen sprich Vokale kurz und klar. Beachte: ü, ö, ä, ch, sch, st, sp.'});
+  }
+  $id('pr_recs').innerHTML='<div class="recs-hdr">Empfehlungen</div>'+recs.map(r=>`<div class="rec-item"><span class="rec-icon">${r.icon}</span><span class="rec-text">${r.txt}</span></div>`).join('');
+  // Feedback line
+  const fb=$id('pr_fb');
+  fb.innerHTML=`${colorLabel(overallAcc)} · ${pct}% Wortgenauigkeit · ${matched}/${target.length} Wörter korrekt erkannt`;
+  fb.className='fb '+(pct>=70?'ok':pct>=45?'wn':'er')+' vis';
+  // Update cumulative
+  st.pr.totalAcc+=pct;st.pr.evaled++;
+  $id('pr_ms').textContent=`Auswertung: ${pct}% · Durchschnitt: ${Math.round(st.pr.totalAcc/st.pr.evaled)}%`;
+  $id('pr_ctr').textContent=`${st.pr.evaled}/${PR.length} bewertet · Ø ${Math.round(st.pr.totalAcc/st.pr.evaled)}%`;
+  updateScores();
+}
+function navPR(d){const n=st.pr.i+d;if(n>=0&&n<PR.length){st.pr.i=n;stopAllRec();renderPR();}}
+
+// ═══════ SPRECHEN: FREIE ANTWORT ═══════
+function initFR(){$id('fr_tot').textContent=FR.length;renderFR();}
+function renderFR(){
+  const d=FR[st.fr.i];
+  $id('fr_idx').textContent=st.fr.i+1;
+  $id('fr_q').textContent=d.q;
+  $id('fr_hint').textContent=d.h;
+  $id('fr_tb').textContent='Deine Antwort erscheint hier…';$id('fr_tb').className='tb em';
+  $id('fr_result').style.display='none';
+  $id('fr_fb').className='fb';
+  $id('fr_ms').textContent='Drücke und antworte auf Deutsch';
+  $id('fr_ctr').textContent=`Frage ${st.fr.i+1}/${FR.length}`;
+  frFinal='';
+}
+function togFree(){
+  if(activeRec){stopAllRec();return;}
+  const btn=$id('fr_mb'),status=$id('fr_ms'),box=$id('fr_tb');
+  frFinal='';box.className='tb';box.textContent='…';
+  const rec=createRec(
+    (fin,int)=>{if(fin)frFinal+=fin;box.textContent=(frFinal+int)||'…';},
+    ()=>{btn.classList.remove('rec');btn.innerHTML='<i class="bi-mic-fill"></i>';status.textContent='Aufnahme beendet.';activeRec=null;}
+  );
+  if(!rec){status.innerHTML='<i class="bi-exclamation-triangle-fill"></i> Chrome/Edge benötigt';return;}
+  activeRec=rec;rec.start();btn.classList.add('rec');btn.innerHTML='<i class="bi-stop-fill"></i>';
+  status.innerHTML='<i class="bi-record-circle-fill" style="color:#c96060"></i> Läuft — nochmal drücken zum Beenden';
+}
+function evalFree(){
+  const txt=frFinal.trim();
+  if(!txt){$id('fr_fb').innerHTML='<i class="bi-exclamation-triangle-fill"></i> Noch keine Antwort aufgenommen.';$id('fr_fb').className='fb wn vis';return;}
+  const words=txt.split(/\s+/).filter(Boolean).length;
+  const sents=(txt.match(/[.!?]+/g)||[]).length+1;
+  const lower=txt.toLowerCase();
+  // Linguistic analysis
+  const hasKonnektoren=/weil|obwohl|deshalb|außerdem|jedoch|zudem|einerseits|andererseits|trotzdem|daher|denn|da |indem|sobald|seitdem|nachdem|während|damit|falls/.test(lower);
+  const hasKII=/würde|hätte|wäre|könnte|müsste|dürfte|ließe/.test(lower);
+  const hasOpinion=/ich denke|ich glaube|meiner meinung|meiner ansicht|ich finde|ich bin der|meines erachtens|aus meiner sicht/.test(lower);
+  const hasExamples=/zum beispiel|beispielsweise|etwa |so zeigt|wie zum|man denke/.test(lower);
+  const hasFazit=/zusammenfassend|abschließend|insgesamt|fazit|also |deshalb|daher gilt/.test(lower);
+  const hasPassiv=/wird |wurde |werden |worden|ist \w+t\b/.test(lower);
+  // Scores
+  let scores={};
+  scores.laenge=Math.min(1,words/80);
+  scores.konnektoren=hasKonnektoren?1:0.1;
+  scores.konjunktiv=hasKII?1:0.2;
+  scores.meinung=hasOpinion?1:0.2;
+  scores.beispiele=hasExamples?0.9:0.3;
+  scores.struktur=hasFazit?0.9:0.4;
+  scores.passiv=hasPassiv?0.8:0.5;
+  const overall=Math.round((scores.laenge*20+scores.konnektoren*20+scores.konjunktiv*15+scores.meinung*15+scores.beispiele*10+scores.struktur*10+scores.passiv*10));
+  // Cards
+  $id('fr_result').style.display='';
+  const cls=overall>=70?'gd':overall>=45?'md':'bd';
+  $id('fr_cards').innerHTML=`
+    <div class="sc-card"><div class="sc-num ${cls}">${overall}%</div><div class="sc-lbl">Gesamt</div></div>
+    <div class="sc-card"><div class="sc-num ${scores.laenge>=0.6?'gd':'bd'}">${words}</div><div class="sc-lbl">Wörter</div></div>
+    <div class="sc-card"><div class="sc-num ${sents>=3?'gd':'md'}">${sents}</div><div class="sc-lbl">Sätze</div></div>`;
+  // Recs
+  const recs=[];
+  if(words<50)recs.push({icon:'<i class="bi-pencil-square"></i>',txt:`<strong>Zu kurz:</strong> Nur ${words} Wörter. Ziel: mindestens 60–80 Wörter für eine vollständige B2-Antwort.`});
+  if(!hasKonnektoren)recs.push({icon:'<i class="bi-link-45deg"></i>',txt:'<strong>Konnektoren fehlen:</strong> Verwende Verbindungswörter wie <em>obwohl, deshalb, außerdem, trotzdem, da, indem</em>.'});
+  if(!hasKII)recs.push({icon:'<i class="bi-rulers"></i>',txt:'<strong>Konjunktiv II fehlt:</strong> Verwende <em>würde, hätte, wäre, könnte</em> für Hypothesen oder höfliche Formulierungen.'});
+  if(!hasOpinion)recs.push({icon:'<i class="bi-chat-dots-fill"></i>',txt:'<strong>Meinung fehlt:</strong> Drücke deine Meinung aus: <em>Meiner Meinung nach, Ich bin der Ansicht, dass, Aus meiner Sicht…</em>'});
+  if(!hasExamples)recs.push({icon:'<i class="bi-lightbulb-fill"></i>',txt:'<strong>Beispiele fehlen:</strong> Belege deine Argumente: <em>Zum Beispiel, Beispielsweise, So zeigt sich, dass…</em>'});
+  if(!hasFazit)recs.push({icon:'<i class="bi-flag-fill"></i>',txt:'<strong>Fazit fehlt:</strong> Schließe mit einer Zusammenfassung: <em>Zusammenfassend lässt sich sagen, Abschließend, Insgesamt…</em>'});
+  if(recs.length===0)recs.push({icon:'<i class="bi-star-fill"></i>',txt:'<strong>Ausgezeichnet!</strong> Du verwendest eine breite Palette grammatischer Strukturen — typisch für B2/C1.'});
+  $id('fr_recs').innerHTML='<div class="recs-hdr">Empfehlungen</div>'+recs.map(r=>`<div class="rec-item"><span class="rec-icon">${r.icon}</span><span class="rec-text">${r.txt}</span></div>`).join('');
+  const fb=$id('fr_fb');
+  fb.innerHTML=`${colorLabel(overall/100)} · ${overall}% · ${words} Wörter, ${sents} Sätze`;
+  fb.className='fb '+(overall>=70?'ok':overall>=45?'wn':'er')+' vis';
+  updateScores();
+}
+function navFR(d){const n=st.fr.i+d;if(n>=0&&n<FR.length){st.fr.i=n;stopAllRec();renderFR();}}
+
+// ═══════ SPRECHEN: SITUATION ═══════
+function initSI(){$id('si_tot').textContent=SI.length;renderSI();}
+function renderSI(){
+  const d=SI[st.si.i];
+  $id('si_idx').textContent=st.si.i+1;
+  $id('si_txt').textContent=d.s;
+  $id('si_prompt').innerHTML='<i class="bi-arrow-right-short"></i> '+d.p;
+  $id('si_tb').textContent='Dein Text erscheint hier…';$id('si_tb').className='tb em';
+  $id('si_result').style.display='none';
+  $id('si_fb').className='fb';
+  $id('si_ms').textContent='Drücke · Sprich ≥ 30 Sekunden';
+  $id('si_ctr').textContent=`Situation ${st.si.i+1}/${SI.length}`;
+  siFinal='';siSecs=0;
+}
+function togSitu(){
+  if(activeRec){stopAllRec();return;}
+  const btn=$id('si_mb'),status=$id('si_ms'),box=$id('si_tb');
+  siFinal='';siSecs=0;box.className='tb';box.textContent='…';
+  const rec=createRec(
+    (fin,int)=>{if(fin)siFinal+=fin;box.textContent=(siFinal+int)||'…';},
+    ()=>{btn.classList.remove('rec');btn.innerHTML='<i class="bi-mic-fill"></i>';if(siTimer){clearInterval(siTimer);siTimer=null;}status.textContent=`Aufnahme beendet · ${siSecs}s`;activeRec=null;}
+  );
+  if(!rec){status.innerHTML='<i class="bi-exclamation-triangle-fill"></i> Chrome/Edge benötigt';return;}
+  activeRec=rec;rec.start();btn.classList.add('rec');btn.innerHTML='<i class="bi-stop-fill"></i>';
+  siTimer=setInterval(()=>{siSecs++;status.innerHTML=`<i class="bi-record-circle-fill" style="color:#c96060"></i> ${siSecs}s aufgenommen (Ziel: ≥30s)`;},1000);
+}
+function evalSitu(){
+  const txt=siFinal.trim();
+  if(!txt){$id('si_fb').innerHTML='<i class="bi-exclamation-triangle-fill"></i> Noch keine Aufnahme.';$id('si_fb').className='fb wn vis';return;}
+  const d=SI[st.si.i];
+  const words=txt.split(/\s+/).filter(Boolean).length;
+  const lower=txt.toLowerCase();
+  const kwFound=d.k.filter(k=>lower.includes(k)).length;
+  const hasConn=/weil|obwohl|deshalb|außerdem|jedoch|einerseits|andererseits|trotzdem|daher|indem|falls|sodass/.test(lower);
+  const hasOpinion=/ich denke|ich glaube|meiner meinung|meiner ansicht|ich finde|aus meiner sicht/.test(lower);
+  const hasKII=/würde|hätte|wäre|könnte|müsste/.test(lower);
+  const hasPro=/vorteil|dafür|pro |positiv|sprich|für |einerseits/.test(lower);
+  const hasKontra=/nachteil|dagegen|kontra|negativ|problematisch|andererseits|jedoch/.test(lower);
+  // Scoring
+  let overall=0;
+  overall+=Math.min(25,Math.round(siSecs/30*25));
+  overall+=Math.min(20,Math.round(words/70*20));
+  overall+=Math.round(kwFound/d.k.length*20);
+  if(hasConn)overall+=10;
+  if(hasOpinion)overall+=8;
+  if(hasKII)overall+=7;
+  if(hasPro&&hasKontra)overall+=10;
+  else if(hasPro||hasKontra)overall+=5;
+  overall=Math.min(100,overall);
+  $id('si_result').style.display='';
+  const cls=overall>=70?'gd':overall>=45?'md':'bd';
+  $id('si_cards').innerHTML=`
+    <div class="sc-card"><div class="sc-num ${cls}">${overall}%</div><div class="sc-lbl">Gesamt</div></div>
+    <div class="sc-card"><div class="sc-num ${siSecs>=30?'gd':'bd'}">${siSecs}s</div><div class="sc-lbl">Dauer</div></div>
+    <div class="sc-card"><div class="sc-num ${words>=50?'gd':'md'}">${words}</div><div class="sc-lbl">Wörter</div></div>
+    <div class="sc-card"><div class="sc-num ${kwFound>=3?'gd':'md'}">${kwFound}/${d.k.length}</div><div class="sc-lbl">Schlüsselwörter</div></div>`;
+  const recs=[];
+  if(siSecs<30)recs.push({icon:'<i class="bi-stopwatch-fill"></i>',txt:`<strong>Zu kurz:</strong> Nur ${siSecs}s. Eine B2-Sprechaufgabe sollte mindestens 30–45 Sekunden dauern. Entwickle jeden Punkt weiter.`});
+  if(kwFound<3)recs.push({icon:'<i class="bi-bullseye"></i>',txt:`<strong>Themenwörter fehlen:</strong> Benutze mehr inhaltliche Schlüsselwörter zum Thema: <em>${d.k.slice(0,4).join(', ')}…</em>`});
+  if(!hasConn)recs.push({icon:'<i class="bi-link-45deg"></i>',txt:'<strong>Konnektoren fehlen:</strong> Verbinde deine Sätze: <em>einerseits … andererseits, obwohl, deshalb, jedoch, trotzdem</em>.'});
+  if(!hasOpinion)recs.push({icon:'<i class="bi-chat-dots-fill"></i>',txt:'<strong>Position fehlt:</strong> Nimm klar Stellung: <em>Ich bin der Meinung, dass … / Meiner Ansicht nach … / Ich halte es für sinnvoll, dass…</em>'});
+  if(!hasPro||!hasKontra)recs.push({icon:'<i class="bi-justify"></i>',txt:'<strong>Nur eine Seite:</strong> Für B2 solltest du Vor- und Nachteile oder Pro- und Kontra-Argumente nennen.'});
+  if(!hasKII)recs.push({icon:'<i class="bi-rulers"></i>',txt:'<strong>KII fehlt:</strong> Verwende Konjunktiv II für Bedingungen und Hypothesen: <em>Wenn … wäre, würde ich …</em>'});
+  if(recs.length===0)recs.push({icon:'<i class="bi-star-fill"></i>',txt:'<strong>Ausgezeichnet!</strong> Du beschreibst die Situation strukturiert, inhaltlich präzise und grammatisch auf B2-Niveau.'});
+  $id('si_recs').innerHTML='<div class="recs-hdr">Empfehlungen</div>'+recs.map(r=>`<div class="rec-item"><span class="rec-icon">${r.icon}</span><span class="rec-text">${r.txt}</span></div>`).join('');
+  const fb=$id('si_fb');
+  fb.innerHTML=`${colorLabel(overall/100)} · ${overall}% · ${words} Wörter · ${siSecs}s · ${kwFound}/${d.k.length} Schlüsselwörter`;
+  fb.className='fb '+(overall>=70?'ok':overall>=45?'wn':'er')+' vis';
+  updateScores();
+}
+function navSI(d){const n=st.si.i+d;if(n>=0&&n<SI.length){st.si.i=n;stopAllRec();renderSI();}}
+
+// ═══════ INIT ═══════
+window.addEventListener('load',()=>{
+  if(!window.speechSynthesis)$id('synthW').classList.add('vis');
+  if(!window.SpeechRecognition&&!window.webkitSpeechRecognition)$id('asrW').classList.add('vis');
+  window.speechSynthesis&&window.speechSynthesis.getVoices();
+  initRF();initDK();initTV();initPR();initFR();initSI();
+});
+</script>
+</body>
+</html>

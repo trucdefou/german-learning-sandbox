@@ -1,0 +1,10 @@
+# Planning notes (internal, not part of the published site)
+PLAN.md
+plan.md
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deutsch lernen — B1 & B2 Übungen</title>
+<link href="assets/img/favicon.png" rel="icon">
+<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+:root{
+  --white:#ffffff;
+  --primary:#81B29A;
+  --secondary:#3D405B;
+  --section-bg:#F4F1DE;
+  --btn-bg:#F2CC8F;
+  --btn-hover:#E07A5F;
+  --p:#717275;
+  --brd:#e8e3d0;
+  --font:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--white);color:var(--secondary);font-family:var(--font);font-weight:400;min-height:100vh;line-height:1.65}
+header{border-bottom:1px solid var(--brd);padding:1.8rem 2.5rem 1.5rem;display:flex;justify-content:space-between;align-items:flex-end;position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(12px)}
+.h-left h1{font-size:1.9rem;color:var(--secondary);font-weight:700;letter-spacing:-1px}
+.h-left span{font-size:.7rem;color:var(--primary);letter-spacing:.15em;text-transform:uppercase;display:block;margin-bottom:.3rem;font-weight:500}
+.h-right{font-size:.78rem;color:var(--p);display:flex;align-items:center;gap:.4rem}
+.h-right i{color:var(--primary)}
+.hero{background:var(--section-bg);padding:3.5rem 2.5rem;text-align:center;border-bottom:1px solid var(--brd)}
+.hero h2{font-size:2.2rem;font-weight:700;letter-spacing:-1px;margin-bottom:.75rem}
+.hero p{font-size:1rem;color:var(--p);max-width:560px;margin:0 auto;line-height:1.7}
+.levels{max-width:980px;margin:0 auto;padding:3rem 1.5rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.8rem}
+.level-card{background:var(--white);border:1px solid var(--brd);border-radius:20px;padding:2rem 2rem 1.5rem;box-shadow:0 3px 12px rgba(61,64,91,.06);transition:box-shadow .2s,border-color .2s;display:flex;flex-direction:column;gap:1.3rem}
+.level-card:hover{box-shadow:0 6px 24px rgba(61,64,91,.1)}
+.level-card.b1{border-top:4px solid var(--primary)}
+.level-card.b2{border-top:4px solid var(--btn-hover)}
+.lc-eyebrow{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin-bottom:.3rem}
+.level-card.b1 .lc-eyebrow{color:var(--primary)}
+.level-card.b2 .lc-eyebrow{color:var(--btn-hover)}
+.lc-title{font-size:1.7rem;font-weight:700;letter-spacing:-1px;line-height:1.1}
+.lc-desc{font-size:.9rem;color:var(--p);line-height:1.65}
+.lc-modules{display:flex;flex-direction:column;gap:.6rem;margin-top:.4rem}
+.module-link{display:flex;align-items:center;gap:.85rem;padding:1rem 1.2rem;background:var(--section-bg);border:1px solid var(--brd);border-radius:14px;text-decoration:none;color:var(--secondary);transition:all .2s;font-size:.9rem;font-weight:500}
+.module-link:hover{background:var(--white);border-color:var(--primary);color:var(--primary);box-shadow:0 2px 10px rgba(129,178,154,.15)}
+.module-link .mi{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem}
+.level-card.b1 .module-link .mi{background:rgba(129,178,154,.15);color:var(--primary)}
+.level-card.b2 .module-link .mi{background:rgba(224,122,95,.12);color:var(--btn-hover)}
+.mi-info{flex:1;min-width:0}
+.mi-title{font-weight:700;font-size:.88rem}
+.mi-sub{font-size:.72rem;color:var(--p);margin-top:.1rem;font-weight:400}
+.chip{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;border-radius:100px;padding:.2rem .6rem;font-weight:700;white-space:nowrap;flex-shrink:0}
+.level-card.b1 .chip{background:rgba(129,178,154,.15);color:var(--primary)}
+.level-card.b2 .chip{background:rgba(224,122,95,.12);color:var(--btn-hover)}
+.module-link i.bi-arrow-right{margin-left:auto;color:var(--brd);transition:color .2s;flex-shrink:0}
+.module-link:hover i.bi-arrow-right{color:var(--primary)}
+footer{background:var(--section-bg);border-top:1px solid var(--brd);padding:1.2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.footer-note{font-size:.75rem;color:var(--p);display:flex;align-items:center;gap:.4rem}
+.footer-note i{color:var(--btn-hover);font-size:.85rem}
+.footer-level-tags{display:flex;gap:.5rem}
+.ftag{font-size:.68rem;font-weight:700;padding:.3rem .8rem;border-radius:100px;letter-spacing:.06em;text-transform:uppercase}
+.ftag.b1{background:rgba(129,178,154,.15);color:var(--primary)}
+.ftag.b2{background:rgba(224,122,95,.12);color:var(--btn-hover)}
+@media(max-width:680px){
+  header{padding:1.2rem 1rem;flex-direction:column;align-items:flex-start;gap:.6rem}
+  .hero{padding:2.5rem 1rem}
+  .levels{grid-template-columns:1fr;padding:2rem 1rem 4rem}
+  footer{padding:.9rem 1rem}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="h-left">
+    <span>Deutsch lernen · Prüfungsvorbereitung</span>
+    <h1>Niveaustufentraining</h1>
+  </div>
+  <div class="h-right">
+    <i class="bi-mortarboard-fill"></i>
+    B1 &amp; B2 Übungen
+  </div>
+</header>
+
+<div class="hero">
+  <h2>Wähle dein Niveau</h2>
+  <p>Jedes Modul enthält mehrere Hundert Übungen mit sofortigem Feedback. Das Komplettheft trainiert Grammatik, Wortschatz und Schreiben. Hören &amp; Sprechen nutzt die Web Speech API.</p>
+</div>
+
+<div class="levels">
+  <div class="level-card b1">
+    <div>
+      <div class="lc-eyebrow">Niveau B1 · Mittelstufe</div>
+      <div class="lc-title">B1 — Mittelstufe</div>
+    </div>
+    <p class="lc-desc">Festige deine Grundkenntnisse: Modalverben, Zeitformen, Präpositionen, alltägliche Textsorten und häufige Wortfelder (Familie, Arbeit, Reisen, Gesundheit).</p>
+    <div class="lc-modules">
+      <a class="module-link" href="b1-deutsch-komplett.html">
+        <span class="mi"><i class="bi-journal-text"></i></span>
+        <span class="mi-info">
+          <div class="mi-title">Komplettheft</div>
+          <div class="mi-sub">350 Übungen · 7 Sektionen</div>
+        </span>
+        <span class="chip">Schreiben &amp; Lesen</span>
+        <i class="bi-arrow-right"></i>
+      </a>
+      <a class="module-link" href="b1-hoeren-sprechen.html">
+        <span class="mi"><i class="bi-mic-fill"></i></span>
+        <span class="mi-info">
+          <div class="mi-title">Hören &amp; Sprechen</div>
+          <div class="mi-sub">50 Übungen je Modul</div>
+        </span>
+        <span class="chip">Audio · Mikrofon</span>
+        <i class="bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="level-card b2">
+    <div>
+      <div class="lc-eyebrow">Niveau B2 · Selbstständige Sprachverwendung</div>
+      <div class="lc-title">B2 — Selbstständig</div>
+    </div>
+    <p class="lc-desc">Vertiefe komplexe Strukturen: Konjunktiv II, Passiv, Konnektoren, Leseverstehen anspruchsvoller Texte und formelle Textsorten (Bewerbung, Erörterung).</p>
+    <div class="lc-modules">
+      <a class="module-link" href="b2-deutsch-komplett.html">
+        <span class="mi"><i class="bi-journal-text"></i></span>
+        <span class="mi-info">
+          <div class="mi-title">Komplettheft</div>
+          <div class="mi-sub">350 Übungen · 7 Sektionen</div>
+        </span>
+        <span class="chip">Schreiben &amp; Lesen</span>
+        <i class="bi-arrow-right"></i>
+      </a>
+      <a class="module-link" href="b2-hoeren-sprechen.html">
+        <span class="mi"><i class="bi-mic-fill"></i></span>
+        <span class="mi-info">
+          <div class="mi-title">Hören &amp; Sprechen</div>
+          <div class="mi-sub">50 Übungen je Modul</div>
+        </span>
+        <span class="chip">Audio · Mikrofon</span>
+        <i class="bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-note">
+    <i class="bi-exclamation-triangle-fill"></i>
+    Hören &amp; Sprechen benötigt Chrome oder Edge mit aktiviertem Mikrofon (Web Speech API).
+  </div>
+  <div class="footer-level-tags">
+    <span class="ftag b1">B1</span>
+    <span class="ftag b2">B2</span>
+  </div>
+</footer>
+</body>
+</html>

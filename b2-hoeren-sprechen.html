@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>B2 Hören & Sprechen — 50 Übungen</title>
+<link href="assets/img/favicon.png" rel="icon">
+<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
@@ -25,6 +27,10 @@
   --font:'DM Sans',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
+.voicebar{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:1.1rem;}
+.voicebar label{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--p);font-weight:500;}
+.voicebar select{font-family:var(--font);font-size:.82rem;color:var(--secondary);background:var(--white);border:1px solid var(--brd);border-radius:8px;padding:.45rem .7rem;cursor:pointer;min-width:220px;max-width:100%;}
+.voicebar select:focus{outline:none;border-color:var(--primary);}
 body{background:var(--white);color:var(--secondary);font-family:var(--font);font-weight:400;min-height:100vh;line-height:1.6;}
 .header{padding:1.6rem 2.5rem 1.3rem;border-bottom:1px solid var(--brd);display:flex;align-items:flex-end;justify-content:space-between;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);position:sticky;top:0;z-index:200;}
 .hl .eyebrow{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--primary);margin-bottom:.3rem;font-weight:500;}
@@ -202,6 +208,10 @@ textarea.ti{min-height:70px;resize:vertical;font-family:var(--font);line-height:
   </div>
   <div class="main">
     <div class="bwarn" id="synthW"><i class="bi-exclamation-triangle-fill"></i>Sprachsynthese nicht verfügbar. Empfehlung: Chrome oder Edge nutzen.</div>
+    <div class="voicebar">
+      <label for="voiceSel"><i class="bi-soundwave"></i> Stimme</label>
+      <select id="voiceSel" onchange="setVoice(this.value)"></select>
+    </div>
     <!-- RF -->
     <div id="hx0" class="panel vis">
       <div class="card">
@@ -209,7 +219,7 @@ textarea.ti{min-height:70px;resize:vertical;font-family:var(--font);line-height:
         <div class="aw">
           <button class="pb" id="rfpb" onclick="playRF()"><i class="bi-play-fill"></i></button>
           <div class="ai"><div class="at" id="rf_atxt">Drücke <i class="bi-play-fill"></i> um die Aussage zu hören.</div><div class="am">Aussage · Hören und urteilen</div></div>
-          <button class="rbtn" onclick="playRF()"><i class="bi-arrow-counterclockwise"></i>Nochmal</button>
+          <button class="rbtn" onclick="playRF(true)"><i class="bi-arrow-counterclockwise"></i>Nochmal</button>
         </div>
         <div class="q" id="rf_q">Höre dir die Aussage an und entscheide: richtig oder falsch?</div>
         <div class="rfo">
@@ -227,7 +237,7 @@ textarea.ti{min-height:70px;resize:vertical;font-family:var(--font);line-height:
         <div class="aw">
           <button class="pb" id="dkpb" onclick="playDK()"><i class="bi-play-fill"></i></button>
           <div class="ai"><div class="at">Höre und schreibe den Satz vollständig.</div><div class="am">Mehrmaliges Anhören erlaubt · Rate: langsam</div></div>
-          <button class="rbtn" onclick="playDK()"><i class="bi-arrow-counterclockwise"></i>Nochmal</button>
+          <button class="rbtn" onclick="playDK(true)"><i class="bi-arrow-counterclockwise"></i>Nochmal</button>
         </div>
         <div class="ir"><input class="ti" id="dk_inp" placeholder="Schreibe den gehörten Satz…" onkeydown="if(event.key==='Enter')checkDK()"><button class="btn" onclick="checkDK()">Prüfen</button></div>
         <div class="fb" id="dk_fb"></div>
@@ -243,7 +253,7 @@ textarea.ti{min-height:70px;resize:vertical;font-family:var(--font);line-height:
         <div class="aw">
           <button class="pb" id="tvpb" onclick="playTV()"><i class="bi-play-fill"></i></button>
           <div class="ai"><div class="at" id="tv_al">—</div><div class="am">Höre den Text, dann beantworte die Fragen</div></div>
-          <button class="rbtn" onclick="playTV()"><i class="bi-arrow-counterclockwise"></i>Nochmal</button>
+          <button class="rbtn" onclick="playTV(true)"><i class="bi-arrow-counterclockwise"></i>Nochmal</button>
         </div>
         <div class="q" id="tv_q">—</div>
         <div class="mco" id="tv_opts"></div>
@@ -692,7 +702,7 @@ const SI=[
 const st={
   mode:'h', hEx:0, sEx:0,
   rf:{i:0,ok:0,tot:0,done:new Set()},
-  dk:{i:0,ok:0,tot:0,done:new Set()},
+  dk:{i:0,ok:0,tot:0,done:new Set(),ans:{}},
   tv:{ti:0,qi:0,ok:0,tot:0,done:new Set()},
   pr:{i:0,scores:[],totalAcc:0,evaled:0},
   fr:{i:0},
@@ -703,15 +713,122 @@ const st={
 function $id(id){return document.getElementById(id);}
 function tog(id){const h=$id(id);if(h)h.classList.toggle('vis');}
 function setPlayBtn(id,playing){const b=$id(id);if(!b)return;b.innerHTML=playing?'<i class="bi-stop-fill"></i>':'<i class="bi-play-fill"></i>';b.classList.toggle('playing',playing);}
-function speak(txt,cb,rate=0.82){
+// Score German voices so we prefer natural/neural ones over the basic robotic local voice.
+function voiceScore(v){
+  const n=(v.name||'').toLowerCase();
+  let s=0;
+  if(!v.localService)s+=6;                                  // online voices are usually neural and far less robotic
+  if(/natural|neural|wavenet|premium|enhanced/.test(n))s+=5;
+  if(/google/.test(n))s+=4;                                 // "Google Deutsch" sounds much better than eSpeak
+  if(/microsoft/.test(n)&&/online|natural/.test(n))s+=4;
+  if(/eddy|reed|sandy|grandma|grandpa|flo|rocko|shelley/.test(n))s+=3; // Apple's newer natural voices
+  if(/anna|petra|markus|katja|conrad|hedda|stefan|amala|ingrid/.test(n))s+=1;
+  if(v.lang==='de-DE')s+=1;
+  if(/espeak|compact|robot/.test(n))s-=4;                   // explicitly avoid the robotic ones
+  return s;
+}
+let _bestVoice=null;
+function bestGermanVoice(){
+  if(!window.speechSynthesis)return null;
+  const de=window.speechSynthesis.getVoices().filter(x=>x.lang&&x.lang.toLowerCase().startsWith('de'));
+  if(!de.length)return null;
+  _bestVoice=de.slice().sort((a,b)=>voiceScore(b)-voiceScore(a))[0];
+  return _bestVoice;
+}
+// Selected voice. 'google' = Google Translate TTS; otherwise the name of a native voice.
+let _voiceSel='google';
+function setVoice(val){stopSpeak();_voiceSel=val;}
+function nativeVoiceByName(name){
+  if(!window.speechSynthesis)return null;
+  return window.speechSynthesis.getVoices().find(v=>v.name===name)||null;
+}
+// Browser Web Speech API voice (used when picked explicitly, or as offline fallback for Google).
+function speakNative(txt,cb,rate=0.82){
   if(!window.speechSynthesis){if(cb)cb();return;}
   window.speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(txt);
   u.lang='de-DE';u.rate=rate;u.pitch=1;
-  const vs=window.speechSynthesis.getVoices();
-  const v=vs.find(x=>x.lang.startsWith('de'));if(v)u.voice=v;
+  const v=(_voiceSel!=='google'&&nativeVoiceByName(_voiceSel))||_bestVoice||bestGermanVoice();
+  if(v)u.voice=v;
   u.onend=()=>{if(cb)cb();};u.onerror=()=>{if(cb)cb();};
   window.speechSynthesis.speak(u);
+}
+// Build the <select>: Google natural voice first, then every available native German voice.
+function populateVoices(){
+  const sel=$id('voiceSel');if(!sel)return;
+  const prev=_voiceSel;
+  const de=window.speechSynthesis?window.speechSynthesis.getVoices()
+    .filter(x=>x.lang&&x.lang.toLowerCase().startsWith('de')):[];
+  let html='<option value="google">Google Deutsch (natural)</option>';
+  de.sort((a,b)=>voiceScore(b)-voiceScore(a)).forEach(v=>{
+    const label=v.name+(v.localService?'':' - online');
+    html+='<option value="'+v.name.replace(/"/g,'&quot;')+'">'+label+'</option>';
+  });
+  sel.innerHTML=html;
+  // Keep the previous choice if it still exists.
+  if([...sel.options].some(o=>o.value===prev))sel.value=prev;else{sel.value='google';_voiceSel='google';}
+}
+
+// Primary: Google Translate TTS (free, natural "Google Deutsch" voice). Streams MP3 chunks
+// through an <audio> element; no API key. Falls back to the native voice on any failure.
+let _gAudio=null,_gActive=false;
+function splitForTTS(txt,max=190){
+  const parts=[],sentences=txt.trim().match(/[^.!?…]+[.!?…]*\s*/g)||[txt.trim()];
+  let cur='';
+  for(const sen of sentences){
+    if((cur+sen).length<=max){cur+=sen;continue;}
+    if(cur){parts.push(cur.trim());cur='';}
+    if(sen.length<=max){cur=sen;continue;}
+    let w='';
+    for(const word of sen.split(/\s+/)){
+      if((w+' '+word).trim().length<=max){w=(w+' '+word).trim();}
+      else{if(w)parts.push(w);w=word;}
+    }
+    cur=w?w+' ':'';
+  }
+  if(cur.trim())parts.push(cur.trim());
+  return parts;
+}
+function gTtsUrl(chunk,rate){
+  // ttsspeed lets us approximate the requested rate (slow dictation -> ~0.4).
+  const speed=rate<0.75?0.4:1;
+  return 'https://translate.google.com/translate_tts?ie=UTF-8&tl=de&client=tw-ob'
+    +'&ttsspeed='+speed+'&q='+encodeURIComponent(chunk);
+}
+function speak(txt,cb,rate=0.82){
+  stopSpeak();
+  if(_voiceSel!=='google'){speakNative(txt,cb,rate);return;}
+  const chunks=splitForTTS(txt);
+  _gActive=true;
+  let i=0,fellBack=false;
+  const a=_gAudio=new Audio();
+  const done=()=>{_gActive=false;if(cb)cb();};
+  const next=()=>{
+    if(!_gActive||a!==_gAudio)return;        // a stopSpeak() happened
+    if(i>=chunks.length){done();return;}
+    a.src=gTtsUrl(chunks[i++],rate);
+    a.play().catch(fail);
+  };
+  const fail=()=>{
+    if(fellBack||!_gActive||a!==_gAudio)return;
+    fellBack=true;_gActive=false;
+    // Speak the not-yet-played remainder with the native voice.
+    speakNative(chunks.slice(Math.max(0,i-1)).join(' '),cb,rate);
+  };
+  a.onended=next;
+  a.onerror=fail;
+  next();
+}
+function stopSpeak(){
+  _gActive=false;
+  if(_gAudio){_gAudio.onended=_gAudio.onerror=null;try{_gAudio.pause();}catch(e){}_gAudio=null;}
+  if(window.speechSynthesis)window.speechSynthesis.cancel();
+}
+// If the given play button is currently playing, stop audio and reset it. Returns true if it stopped.
+function toggleStop(id){
+  const b=$id(id);
+  if(b&&b.classList.contains('playing')){stopSpeak();setPlayBtn(id,false);return true;}
+  return false;
 }
 function normText(s){return s.toLowerCase().replace(/[.,!?;:„"–\-]/g,'').replace(/\s+/g,' ').trim();}
 function getWords(s){return normText(s).split(' ').filter(Boolean);}
@@ -750,7 +867,7 @@ function updateScores(){
 // ═══════ MODE / TAB ═══════
 function setMode(m){
   st.mode=m;
-  window.speechSynthesis&&window.speechSynthesis.cancel();
+  stopSpeak();
   $id('mh').classList.toggle('vis',m==='h');
   $id('ms').classList.toggle('vis',m==='s');
   document.querySelectorAll('.mnb').forEach((b,i)=>{
@@ -762,7 +879,7 @@ function setMode(m){
   updateScores();
 }
 function setHEx(i){
-  st.hEx=i;window.speechSynthesis&&window.speechSynthesis.cancel();
+  st.hEx=i;stopSpeak();
   [0,1,2].forEach(j=>$id('hx'+j).classList.toggle('vis',j===i));
   document.querySelectorAll('#htabs .etb').forEach((b,j)=>b.classList.toggle('act',j===i));
 }
@@ -784,7 +901,7 @@ function renderRF(){
   $id('rf_ctr').textContent=`${st.rf.ok}/${st.rf.tot} richtig`;
   setPlayBtn('rfpb',false);
 }
-function playRF(){const d=RF[st.rf.i];setPlayBtn('rfpb',true);speak(d.t,()=>setPlayBtn('rfpb',false));}
+function playRF(force){if(!force&&toggleStop('rfpb'))return;const d=RF[st.rf.i];setPlayBtn('rfpb',true);speak(d.t,()=>setPlayBtn('rfpb',false));}
 function checkRF(ans){
   const d=RF[st.rf.i];const key='rf'+st.rf.i;
   if(st.rf.done.has(key))return;
@@ -807,34 +924,51 @@ function navRF(d){const n=st.rf.i+d;if(n>=0&&n<RF.length){st.rf.i=n;renderRF();}
 // ═══════ HÖREN: DIKTAT ═══════
 function initDK(){$id('dk_tot').textContent=DK.length;renderDK();}
 function renderDK(){
-  const d=DK[st.dk.i];
+  const d=DK[st.dk.i];const key='dk'+st.dk.i;
   $id('dk_idx').textContent=st.dk.i+1;
-  const inp=$id('dk_inp');inp.value='';inp.className='ti';inp.disabled=false;
+  const inp=$id('dk_inp');
+  inp.value=st.dk.ans[st.dk.i]||'';
+  inp.className='ti';inp.disabled=false;
   $id('dk_fb').className='fb';
   $id('dk_hint').textContent='Tipp: '+d.h;$id('dk_hint').classList.remove('vis');
   $id('dk_ctr').textContent=`${st.dk.ok}/${st.dk.tot} richtig`;
   setPlayBtn('dkpb',false);
+  // Restore graded state when revisiting an already-checked item.
+  if(st.dk.done.has(key))showDKResult(d,inp.value.trim());
 }
-function playDK(){const d=DK[st.dk.i];setPlayBtn('dkpb',true);speak(d.t,()=>setPlayBtn('dkpb',false),0.68);}
+function showDKResult(d,val){
+  const inp=$id('dk_inp');
+  const tW=getWords(d.t);const uW=getWords(val);
+  const matched=uW.filter(w=>tW.includes(w)).length;
+  const score=matched/tW.length;
+  const exact=normText(val)===normText(d.t);
+  inp.disabled=true;inp.classList.add(score>=0.7?'ok':'er');
+  const pct=Math.round(score*100);
+  const fb=$id('dk_fb');
+  fb.innerHTML=(exact?`<i class="bi-check-circle-fill"></i>Perfekt! Genau richtig.`:`${colorLabel(score)} · ${pct}% Wörter korrekt.<br>Richtig: <em style="font-family:var(--font);font-weight:500">${d.t}</em>`);
+  fb.className='fb '+(score>=0.7?'ok':score>=0.45?'wn':'er')+' vis';
+}
+function playDK(force){if(!force&&toggleStop('dkpb'))return;const d=DK[st.dk.i];setPlayBtn('dkpb',true);speak(d.t,()=>setPlayBtn('dkpb',false),0.68);}
 function checkDK(){
   const d=DK[st.dk.i];const key='dk'+st.dk.i;
   const inp=$id('dk_inp');const val=inp.value.trim();
   if(!val||st.dk.done.has(key))return;
+  st.dk.ans[st.dk.i]=val;
   st.dk.done.add(key);st.dk.tot++;
   const tW=getWords(d.t);const uW=getWords(val);
   const matched=uW.filter(w=>tW.includes(w)).length;
   const score=matched/tW.length;
   const exact=normText(val)===normText(d.t);
   if(exact||score>=0.95)st.dk.ok++;
-  inp.disabled=true;inp.classList.add(score>=0.7?'ok':'er');
-  const pct=Math.round(score*100);
-  const fb=$id('dk_fb');
-  fb.innerHTML=(exact?`<i class="bi-check-circle-fill"></i>Perfekt! Genau richtig.`:`${colorLabel(score)} · ${pct}% Wörter korrekt.<br>Richtig: <em style="font-family:var(--font);font-weight:500">${d.t}</em>`);
-  fb.className='fb '+(score>=0.7?'ok':score>=0.45?'wn':'er')+' vis';
+  showDKResult(d,val);
   $id('dk_ctr').textContent=`${st.dk.ok}/${st.dk.tot} richtig`;
   updateScores();
 }
-function navDK(d){const n=st.dk.i+d;if(n>=0&&n<DK.length){st.dk.i=n;renderDK();}}
+function navDK(d){
+  // Preserve the current answer before leaving this item.
+  st.dk.ans[st.dk.i]=$id('dk_inp').value;
+  const n=st.dk.i+d;if(n>=0&&n<DK.length){st.dk.i=n;renderDK();}
+}
 
 // ═══════ HÖREN: TV ═══════
 function initTV(){$id('tv_tt').textContent=TV.length;renderTV();}
@@ -854,7 +988,7 @@ function renderTV(){
   $id('tv_ctr').textContent=`${st.tv.ok}/${st.tv.tot} richtig`;
   setPlayBtn('tvpb',false);
 }
-function playTV(){const t=TV[st.tv.ti];setPlayBtn('tvpb',true);speak(t.text,()=>setPlayBtn('tvpb',false),0.8);}
+function playTV(force){if(!force&&toggleStop('tvpb'))return;const t=TV[st.tv.ti];setPlayBtn('tvpb',true);speak(t.text,()=>setPlayBtn('tvpb',false),0.8);}
 function checkTV(chosen){
   const key=`tv${st.tv.ti}_${st.tv.qi}`;if(st.tv.done.has(key))return;
   st.tv.done.add(key);st.tv.tot++;
@@ -1134,7 +1268,11 @@ function navSI(d){const n=st.si.i+d;if(n>=0&&n<SI.length){st.si.i=n;stopAllRec()
 window.addEventListener('load',()=>{
   if(!window.speechSynthesis)$id('synthW').classList.add('vis');
   if(!window.SpeechRecognition&&!window.webkitSpeechRecognition)$id('asrW').classList.add('vis');
-  window.speechSynthesis&&window.speechSynthesis.getVoices();
+  if(window.speechSynthesis){
+    bestGermanVoice();populateVoices();
+    // Voices often load asynchronously; recompute once the full list (incl. online voices) is ready.
+    window.speechSynthesis.onvoiceschanged=()=>{bestGermanVoice();populateVoices();};
+  }else{populateVoices();}
   initRF();initDK();initTV();initPR();initFR();initSI();
 });
 </script>

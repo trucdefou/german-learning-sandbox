@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B1 Hören & Sprechen — 50 Übungen</title>
+<link href="assets/img/favicon.png" rel="icon">
+<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+/* Tiya Golf Club inspired palette */
+:root{
+  --white:#ffffff;
+  --primary:#81B29A;
+  --secondary:#3D405B;
+  --section-bg:#F4F1DE;
+  --btn-bg:#F2CC8F;
+  --btn-hover:#E07A5F;
+  --p:#717275;
+  --ok:#5aab8a;
+  --err:#c96060;
+  --warn:#E07A5F;
+  --brd:#e8e3d0;
+  --font:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+.voicebar{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:1.1rem;}
+.voicebar label{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--p);font-weight:500;}
+.voicebar select{font-family:var(--font);font-size:.82rem;color:var(--secondary);background:var(--white);border:1px solid var(--brd);border-radius:8px;padding:.45rem .7rem;cursor:pointer;min-width:220px;max-width:100%;}
+.voicebar select:focus{outline:none;border-color:var(--primary);}
+body{background:var(--white);color:var(--secondary);font-family:var(--font);font-weight:400;min-height:100vh;line-height:1.6;}
+.header{padding:1.6rem 2.5rem 1.3rem;border-bottom:1px solid var(--brd);display:flex;align-items:flex-end;justify-content:space-between;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);position:sticky;top:0;z-index:200;}
+.hl .eyebrow{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--primary);margin-bottom:.3rem;font-weight:500;}
+.hl h1{font-family:var(--font);font-size:1.9rem;font-weight:700;letter-spacing:-1px;line-height:1;color:var(--secondary);}
+.hl h1 em{color:var(--primary);font-style:normal;}
+.hl h1 span{color:var(--btn-bg);}
+.scores{display:flex;gap:.6rem;align-items:flex-end;flex-wrap:wrap;}
+.sp{font-family:var(--font);font-size:.75rem;padding:.4rem 1rem;border-radius:100px;border:1px solid;letter-spacing:.03em;font-weight:500;}
+.sp.h{border-color:var(--primary);color:var(--white);background:var(--primary);}
+.sp.s{border-color:var(--btn-bg);color:var(--secondary);background:var(--btn-bg);}
+.sp.acc{border-color:var(--btn-hover);color:var(--white);background:var(--btn-hover);}
+.mode-nav{display:flex;border-bottom:1px solid var(--brd);background:var(--section-bg);}
+.mnb{flex:1;padding:.95rem 1rem;border:none;background:transparent;font-family:var(--font);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--p);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;font-weight:500;}
+.mnb:hover{color:var(--secondary);}
+.mnb.ah{color:var(--secondary);border-bottom-color:var(--primary);background:rgba(129,178,154,.12);font-weight:700;}
+.mnb.as{color:var(--secondary);border-bottom-color:var(--btn-hover);background:rgba(224,122,95,.1);font-weight:700;}
+.ex-tabs{display:flex;gap:.5rem;padding:1rem 2rem .9rem;border-bottom:1px solid var(--brd);background:var(--section-bg);flex-wrap:wrap;}
+.etb{font-family:var(--font);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:.4rem .95rem;border:1px solid var(--brd);background:var(--white);color:var(--secondary);cursor:pointer;border-radius:100px;transition:all .15s;font-weight:500;}
+.etb:hover{border-color:var(--primary);color:var(--primary);}
+.etb.act{background:var(--btn-bg);color:var(--secondary);border-color:var(--btn-bg);font-weight:700;}
+.main{max-width:800px;margin:0 auto;padding:2rem 1.5rem 6rem;}
+.panel{display:none;}
+.panel.vis{display:block;}
+.card{background:var(--white);border:1px solid var(--brd);padding:1.8rem;margin-bottom:1.2rem;position:relative;border-radius:20px;box-shadow:0 2px 8px rgba(61,64,91,.05);}
+.card-lbl{font-family:var(--font);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;font-weight:500;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--brd);}
+.aw{background:var(--section-bg);border:1px solid var(--brd);padding:1rem 1.3rem;margin-bottom:1.3rem;display:flex;align-items:center;gap:.9rem;border-radius:14px;}
+.pb{width:46px;height:46px;border-radius:50%;background:var(--primary);border:none;color:#fff;font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;box-shadow:0 3px 10px rgba(129,178,154,.35);}
+.pb:hover{background:#6ea389;transform:scale(1.05);}
+.pb.playing{background:var(--btn-hover);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(224,122,95,.45)}50%{box-shadow:0 0 0 10px rgba(224,122,95,0)}}
+.ai{flex:1;min-width:0;}
+.at{font-family:var(--font);font-size:.95rem;color:var(--secondary);line-height:1.55;margin-bottom:.3rem;font-weight:500;}
+.am{font-size:.7rem;color:var(--p);letter-spacing:.03em;}
+.rbtn{font-family:var(--font);font-size:.7rem;letter-spacing:.05em;color:var(--secondary);background:var(--white);border:1px solid var(--brd);padding:.35rem .75rem;cursor:pointer;border-radius:100px;flex-shrink:0;transition:all .15s;font-weight:500;}
+.rbtn:hover{background:var(--primary);color:#fff;border-color:var(--primary);}
+.q{font-size:.95rem;color:var(--secondary);line-height:1.7;margin-bottom:1rem;}
+.rfo{display:flex;gap:.7rem;margin-bottom:.9rem;}
+.rfb{flex:1;padding:.8rem;border:2px solid var(--brd);background:var(--white);font-family:var(--font);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:100px;transition:all .15s;font-weight:700;}
+.rfb.r{color:var(--ok);}
+.rfb.r:hover:not(:disabled){background:rgba(129,178,154,.12);border-color:var(--ok);}
+.rfb.f{color:var(--err);}
+.rfb.f:hover:not(:disabled){background:rgba(224,122,95,.1);border-color:var(--err);}
+.rfb.sok{background:rgba(129,178,154,.15);border-color:var(--ok);color:#2d6a4f;}
+.rfb.serr{background:rgba(224,122,95,.12);border-color:var(--err);color:#a04545;}
+.rfb:disabled{cursor:default;opacity:.85;}
+.mco{display:grid;gap:.5rem;margin-bottom:.9rem;}
+.mcb{text-align:left;padding:.7rem 1rem;border:1px solid var(--brd);background:var(--section-bg);font-family:var(--font);font-size:.9rem;color:var(--secondary);cursor:pointer;border-radius:10px;display:flex;gap:.7rem;align-items:flex-start;transition:all .15s;line-height:1.45;}
+.mcb:hover:not(:disabled){background:var(--white);border-color:var(--primary);}
+.mcb .ltr{font-family:var(--font);font-size:.78rem;color:var(--primary);min-width:1rem;flex-shrink:0;margin-top:.1rem;font-weight:700;}
+.mcb.ok{background:rgba(129,178,154,.15);border-color:var(--ok);color:#2d6a4f;}
+.mcb.ok .ltr{color:#2d6a4f;}
+.mcb.er{background:rgba(224,122,95,.12);border-color:var(--err);color:#a04545;}
+.mcb:disabled{cursor:default;}
+.ir{display:flex;gap:.6rem;margin-bottom:.75rem;}
+.ti{flex:1;background:var(--white);border:1px solid var(--brd);color:var(--secondary);font-family:var(--font);font-size:.9rem;padding:.6rem .9rem;outline:none;border-radius:10px;transition:border-color .2s;}
+.ti:focus{border-color:var(--primary);}
+.ti.ok{border-color:var(--ok);color:#2d6a4f;}
+.ti.er{border-color:var(--err);color:#a04545;}
+textarea.ti{min-height:70px;resize:vertical;font-family:var(--font);line-height:1.6;}
+.btn{background:var(--btn-bg);color:var(--secondary);border:none;font-family:var(--font);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1.1rem;cursor:pointer;border-radius:100px;transition:all .2s;white-space:nowrap;font-weight:700;}
+.btn:hover{background:var(--btn-hover);color:var(--white);}
+.btn.sec{background:var(--white);border:1px solid var(--brd);color:var(--secondary);}
+.btn.sec:hover{border-color:var(--primary);color:var(--primary);background:var(--white);}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.fb{display:none;padding:.7rem 1rem;border-radius:10px;font-size:.87rem;line-height:1.55;margin-top:.6rem;border-left:3px solid;}
+.fb.vis{display:block;}
+.fb.ok{background:rgba(129,178,154,.12);border-color:var(--ok);color:#2d6a4f;}
+.fb.er{background:rgba(224,122,95,.1);border-color:var(--err);color:#a04545;}
+.fb.wn{background:rgba(242,204,143,.18);border-color:var(--warn);color:#9c5a30;}
+/* Mic area */
+.ma{display:flex;flex-direction:column;align-items:center;gap:1rem;padding:1.8rem;background:var(--section-bg);border:1px dashed var(--brd);border-radius:14px;margin-bottom:.9rem;text-align:center;}
+.mb{width:72px;height:72px;border-radius:50%;background:var(--btn-hover);border:none;color:#fff;font-size:1.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 4px 18px rgba(224,122,95,.35);}
+.mb:hover{background:#cf6749;transform:scale(1.05);}
+.mb.rec{background:var(--err);animation:mp 1s infinite;}
+@keyframes mp{0%,100%{box-shadow:0 0 0 0 rgba(201,96,96,.5)}50%{box-shadow:0 0 0 16px rgba(201,96,96,0)}}
+.ms{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--p);font-weight:500;}
+.tb{width:100%;background:var(--white);border:1px solid var(--brd);padding:.85rem 1rem;font-family:var(--font);font-size:.95rem;color:var(--secondary);min-height:50px;line-height:1.6;border-radius:10px;}
+.tb.em{color:var(--p);font-size:.78rem;}
+/* Pronunciation word display */
+.pron-target{background:var(--section-bg);border:1px solid var(--brd);padding:1rem 1.2rem;margin-bottom:1rem;border-radius:14px;}
+.pron-target-lbl{font-family:var(--font);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:.55rem;font-weight:500;}
+.pron-words{display:flex;flex-wrap:wrap;gap:.4rem;line-height:1;}
+.pw{font-family:var(--font);font-size:1.05rem;padding:.2rem .5rem;border-radius:6px;border-bottom:3px solid transparent;transition:all .3s;position:relative;font-weight:500;}
+/* Accuracy gradient colors */
+.pw.g100{color:#1a5c35;border-bottom-color:#1a5c35;background:rgba(26,92,53,.1);}
+.pw.g90{color:#2d6a4f;border-bottom-color:#2d6a4f;background:rgba(45,106,79,.1);}
+.pw.g75{color:#52a675;border-bottom-color:#52a675;background:rgba(82,166,117,.1);}
+.pw.g60{color:#7ab648;border-bottom-color:#7ab648;background:rgba(122,182,72,.1);}
+.pw.g50{color:#c8a020;border-bottom-color:#c8a020;background:rgba(200,160,32,.1);}
+.pw.g35{color:#d4731a;border-bottom-color:#d4731a;background:rgba(212,115,26,.1);}
+.pw.g20{color:#c4512a;border-bottom-color:#c4512a;background:rgba(196,81,42,.1);}
+.pw.g0{color:#9b2335;border-bottom-color:#9b2335;background:rgba(155,35,53,.12);}
+.pw.pend{color:var(--p);border-bottom-color:var(--brd);background:transparent;}
+/* Accuracy score bar */
+.acc-bar-wrap{margin:1rem 0 .5rem;}
+.acc-bar-lbl{display:flex;justify-content:space-between;margin-bottom:.4rem;}
+.acc-bar-lbl span{font-size:.72rem;letter-spacing:.05em;color:var(--p);text-transform:uppercase;font-weight:500;}
+.acc-bar-lbl strong{font-size:.8rem;color:var(--secondary);font-weight:700;}
+.acc-bar-track{height:10px;background:var(--section-bg);border:1px solid var(--brd);border-radius:100px;overflow:hidden;}
+.acc-bar-fill{height:100%;border-radius:100px;transition:width .6s ease;background:linear-gradient(to right,#9b2335,#d4731a,#c8a020,#7ab648,#2d6a4f);}
+/* Score cards */
+.score-cards{display:flex;gap:.7rem;flex-wrap:wrap;margin:1rem 0;}
+.sc-card{flex:1;min-width:90px;background:var(--section-bg);border:1px solid var(--brd);padding:.9rem;text-align:center;border-radius:14px;}
+.sc-num{font-family:var(--font);font-size:1.6rem;line-height:1;margin-bottom:.25rem;font-weight:700;color:var(--secondary);}
+.sc-num.gd{color:var(--ok);}
+.sc-num.md{color:var(--warn);}
+.sc-num.bd{color:var(--err);}
+.sc-lbl{font-size:.6rem;color:var(--p);letter-spacing:.08em;text-transform:uppercase;font-weight:500;}
+/* Recommendations */
+.recs{margin-top:1rem;}
+.recs-hdr{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:.7rem;font-weight:500;}
+.rec-item{display:flex;gap:.7rem;align-items:flex-start;padding:.6rem .85rem;background:var(--section-bg);border:1px solid var(--brd);border-radius:10px;margin-bottom:.4rem;font-size:.86rem;line-height:1.5;}
+.rec-icon{font-size:.95rem;flex-shrink:0;margin-top:.05rem;}
+.rec-text{color:var(--secondary);}
+.rec-text strong{font-weight:700;color:var(--btn-hover);}
+/* Situation card */
+.situ-card{background:linear-gradient(135deg,rgba(129,178,154,.1),rgba(242,204,143,.12));border:1px solid var(--brd);border-left:4px solid var(--primary);padding:1.2rem 1.4rem;margin-bottom:1rem;border-radius:14px;}
+.situ-lbl{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:.5rem;font-weight:500;}
+.situ-txt{font-family:var(--font);font-size:1rem;line-height:1.65;color:var(--secondary);font-weight:500;}
+/* Nav row */
+.nr{display:flex;gap:.6rem;margin-top:1.1rem;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+.nr-r{display:flex;gap:.55rem;}
+.ctr{font-size:.72rem;color:var(--p);letter-spacing:.03em;font-weight:500;}
+/* Hint */
+.ht{display:none;font-size:.85rem;color:var(--secondary);background:rgba(129,178,154,.08);border-left:3px solid var(--primary);padding:.55rem .85rem;margin-top:.5rem;font-style:italic;line-height:1.55;border-radius:0 10px 10px 0;}
+.ht.vis{display:block;}
+.htg{font-size:.75rem;color:var(--primary);cursor:pointer;margin-top:.4rem;display:inline-block;letter-spacing:.03em;font-weight:500;}
+.htg:hover{color:var(--btn-hover);}
+/* Progress bar */
+.pgw{position:fixed;bottom:0;left:0;right:0;height:4px;background:var(--section-bg);z-index:100;}
+.pg{height:100%;transition:width .4s;}
+.pg.h{background:linear-gradient(to right,var(--primary),#a8cdb8);}
+.pg.s{background:linear-gradient(to right,var(--btn-hover),var(--btn-bg));}
+/* Warn */
+.bwarn{background:rgba(224,122,95,.08);border:1px solid var(--warn);border-radius:10px;padding:.8rem 1.1rem;font-size:.82rem;color:#9c5a30;margin-bottom:1.3rem;display:none;line-height:1.55;font-weight:500;}
+.bwarn.vis{display:block;}
+/* Cumulative accuracy panel */
+.cum-panel{background:var(--white);border:1px solid var(--brd);padding:1.2rem 1.5rem;margin-bottom:1.2rem;border-radius:14px;box-shadow:0 2px 8px rgba(61,64,91,.05);}
+.cum-lbl{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:.8rem;font-weight:500;}
+.cum-bar-wrap{margin-bottom:.5rem;}
+.cum-bar-track{height:22px;background:var(--section-bg);border:1px solid var(--brd);border-radius:100px;overflow:hidden;position:relative;}
+.cum-bar-fill{height:100%;border-radius:100px;transition:width .6s;}
+.cum-bar-label{position:absolute;right:.7rem;top:50%;transform:translateY(-50%);font-size:.75rem;font-weight:700;color:var(--secondary);}
+@media(max-width:600px){.header{padding:1rem;flex-direction:column;align-items:flex-start;gap:.8rem}.main{padding:1.2rem .8rem 5rem}.card{padding:1.2rem .9rem}.ex-tabs{padding:.8rem 1rem}}
+/* Icon helpers */
+.mnb i[class^="bi-"],.rfb i[class^="bi-"],.htg i[class^="bi-"],.bwarn i[class^="bi-"],.rbtn i[class^="bi-"],.btn i[class^="bi-"]{margin-right:.35rem;vertical-align:-.05em}
+.fb i[class^="bi-"]{margin-right:.35rem;vertical-align:-.05em}
+.rec-icon i[class^="bi-"]{font-size:1.05em;color:var(--btn-hover)}
+.pb i[class^="bi-"],.mb i[class^="bi-"]{margin:0;font-size:1em;line-height:1}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="hl">
+    <div class="eyebrow">B1 · Prüfungstraining · 50 Übungen je Modul</div>
+    <h1><em>Hören</em> <span>&</span> Sprechen</h1>
+  </div>
+  <div class="scores">
+    <div class="sp h" id="sc_h">Hören: 0/0</div>
+    <div class="sp s" id="sc_s">Sprechen: —</div>
+    <div class="sp acc" id="sc_a">Accuracy: —%</div>
+  </div>
+</header>
+<nav class="mode-nav">
+  <button class="mnb ah" onclick="setMode('h')"><i class="bi-headphones"></i>Hören</button>
+  <button class="mnb" onclick="setMode('s')"><i class="bi-mic-fill"></i>Sprechen</button>
+</nav>
+<!-- HÖREN -->
+<div id="mh" class="panel vis">
+  <div class="ex-tabs" id="htabs">
+    <button class="etb act" onclick="setHEx(0)">Richtig/Falsch</button>
+    <button class="etb" onclick="setHEx(1)">Diktat</button>
+    <button class="etb" onclick="setHEx(2)">Textverstehen</button>
+  </div>
+  <div class="main">
+    <div class="bwarn" id="synthW"><i class="bi-exclamation-triangle-fill"></i>Sprachsynthese nicht verfügbar. Empfehlung: Chrome oder Edge nutzen.</div>
+    <div class="voicebar">
+      <label for="voiceSel"><i class="bi-soundwave"></i> Stimme</label>
+      <select id="voiceSel" onchange="setVoice(this.value)"></select>
+    </div>
+    <!-- RF -->
+    <div id="hx0" class="panel vis">
+      <div class="card">
+        <div class="card-lbl">Richtig oder Falsch · <span id="rf_idx">1</span>/<span id="rf_tot">50</span></div>
+        <div class="aw">
+          <button class="pb" id="rfpb" onclick="playRF()"><i class="bi-play-fill"></i></button>
+          <div class="ai"><div class="at" id="rf_atxt">Drücke <i class="bi-play-fill"></i> um die Aussage zu hören.</div><div class="am">Aussage · Hören und urteilen</div></div>
+          <button class="rbtn" onclick="playRF(true)"><i class="bi-arrow-counterclockwise"></i>Nochmal</button>
+        </div>
+        <div class="q" id="rf_q">Höre dir die Aussage an und entscheide: richtig oder falsch?</div>
+        <div class="rfo">
+          <button class="rfb r" onclick="checkRF(true)"><i class="bi-check-circle-fill"></i>Richtig</button>
+          <button class="rfb f" onclick="checkRF(false)"><i class="bi-x-circle-fill"></i>Falsch</button>
+        </div>
+        <div class="fb" id="rf_fb"></div>
+        <div class="nr"><span class="ctr" id="rf_ctr">0/0 richtig</span><div class="nr-r"><button class="btn sec" onclick="navRF(-1)"><i class="bi-arrow-left"></i>Zurück</button><button class="btn" onclick="navRF(1)">Nächste<i class="bi-arrow-right" style="margin-left:.35rem;margin-right:0"></i></button></div></div>
+      </div>
+    </div>
+    <!-- DIKTAT -->
+    <div id="hx1" class="panel">
+      <div class="card">
+        <div class="card-lbl">Diktat — Schreibe was du hörst · <span id="dk_idx">1</span>/<span id="dk_tot">50</span></div>
+        <div class="aw">
+          <button class="pb" id="dkpb" onclick="playDK()"><i class="bi-play-fill"></i></button>
+          <div class="ai"><div class="at">Höre und schreibe den Satz vollständig.</div><div class="am">Mehrmaliges Anhören erlaubt · Rate: langsam</div></div>
+          <button class="rbtn" onclick="playDK(true)"><i class="bi-arrow-counterclockwise"></i>Nochmal</button>
+        </div>
+        <div class="ir"><input class="ti" id="dk_inp" placeholder="Schreibe den gehörten Satz…" onkeydown="if(event.key==='Enter')checkDK()"><button class="btn" onclick="checkDK()">Prüfen</button></div>
+        <div class="fb" id="dk_fb"></div>
+        <span class="htg" onclick="tog('dk_hint')"><i class="bi-search"></i>Tipp</span>
+        <div class="ht" id="dk_hint"></div>
+        <div class="nr"><span class="ctr" id="dk_ctr">0/0 richtig</span><div class="nr-r"><button class="btn sec" onclick="navDK(-1)"><i class="bi-arrow-left"></i>Zurück</button><button class="btn" onclick="navDK(1)">Nächste<i class="bi-arrow-right" style="margin-left:.35rem;margin-right:0"></i></button></div></div>
+      </div>
+    </div>
+    <!-- TV -->
+    <div id="hx2" class="panel">
+      <div class="card">
+        <div class="card-lbl">Textverstehen · Text <span id="tv_ti">1</span>/<span id="tv_tt">10</span> · Frage <span id="tv_qi">1</span>/<span id="tv_qt">5</span></div>
+        <div class="aw">
+          <button class="pb" id="tvpb" onclick="playTV()"><i class="bi-play-fill"></i></button>
+          <div class="ai"><div class="at" id="tv_al">—</div><div class="am">Höre den Text, dann beantworte die Fragen</div></div>
+          <button class="rbtn" onclick="playTV(true)"><i class="bi-arrow-counterclockwise"></i>Nochmal</button>
+        </div>
+        <div class="q" id="tv_q">—</div>
+        <div class="mco" id="tv_opts"></div>
+        <div class="fb" id="tv_fb"></div>
+        <div class="nr"><span class="ctr" id="tv_ctr">0/0 richtig</span><div class="nr-r"><button class="btn sec" onclick="navTV(-1)"><i class="bi-arrow-left"></i>Zurück</button><button class="btn" onclick="navTV(1)">Nächste<i class="bi-arrow-right" style="margin-left:.35rem;margin-right:0"></i></button></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- SPRECHEN -->
+<div id="ms" class="panel">
+  <div class="ex-tabs" id="stabs">
+    <button class="etb act" onclick="setSEx(0)">Aussprache</button>
+    <button class="etb" onclick="setSEx(1)">Freie Antwort</button>
+    <button class="etb" onclick="setSEx(2)">Situation</button>
+  </div>
+  <div class="main">
+    <div class="bwarn" id="asrW"><i class="bi-exclamation-triangle-fill"></i>Spracherkennung erfordert Chrome/Edge mit Mikrofon-Zugriff.</div>
+    <!-- AUSSPRACHE -->
+    <div id="sx0" class="panel vis">
+      <div class="card">
+        <div class="card-lbl">Aussprache · <span id="pr_idx">1</span>/<span id="pr_tot">50</span></div>
+        <div class="pron-target">
+          <div class="pron-target-lbl">Zu sprechen · <span id="pr_diff">—</span></div>
+          <div class="pron-words" id="pr_words"></div>
+        </div>
+        <div class="ma">
+          <button class="mb" id="pr_mb" onclick="togPron()"><i class="bi-mic-fill"></i></button>
+          <div class="ms" id="pr_ms">Drücke zum Aufnehmen</div>
+          <div class="tb em" id="pr_tb">Deine gesprochene Version erscheint hier…</div>
+        </div>
+        <div id="pr_accbar" style="display:none">
+          <div class="acc-bar-wrap">
+            <div class="acc-bar-lbl"><span>Wortgenauigkeit</span><strong id="pr_acc_pct">—%</strong></div>
+            <div class="acc-bar-track"><div class="acc-bar-fill" id="pr_acc_fill" style="width:0%"></div></div>
+          </div>
+          <div class="score-cards" id="pr_score_cards"></div>
+          <div class="recs" id="pr_recs"></div>
+        </div>
+        <div class="fb" id="pr_fb"></div>
+        <div class="nr"><span class="ctr" id="pr_ctr">0/0 bewertet · Ø —%</span><div class="nr-r"><button class="btn sec" onclick="navPR(-1)"><i class="bi-arrow-left"></i>Zurück</button><button class="btn" onclick="navPR(1)">Nächste<i class="bi-arrow-right" style="margin-left:.35rem;margin-right:0"></i></button></div></div>
+      </div>
+    </div>
+    <!-- FREIE ANTWORT -->
+    <div id="sx1" class="panel">
+      <div class="card">
+        <div class="card-lbl">Freie Antwort · <span id="fr_idx">1</span>/<span id="fr_tot">50</span></div>
+        <div class="situ-card"><div class="situ-lbl">Frage</div><div class="situ-txt" id="fr_q">—</div></div>
+        <div class="ht vis" id="fr_hint" style="margin-bottom:.9rem"></div>
+        <div class="ma">
+          <button class="mb" id="fr_mb" onclick="togFree()"><i class="bi-mic-fill"></i></button>
+          <div class="ms" id="fr_ms">Drücke und antworte auf Deutsch</div>
+          <div class="tb em" id="fr_tb">Deine Antwort erscheint hier…</div>
+        </div>
+        <div id="fr_result" style="display:none">
+          <div class="score-cards" id="fr_cards"></div>
+          <div class="recs" id="fr_recs"></div>
+        </div>
+        <div class="fb" id="fr_fb"></div>
+        <div class="nr"><span class="ctr" id="fr_ctr">Frage 1/50</span><div class="nr-r"><button class="btn sec" onclick="navFR(-1)"><i class="bi-arrow-left"></i>Zurück</button><button class="btn" onclick="evalFree()"><i class="bi-check-circle-fill"></i>Auswerten</button><button class="btn" onclick="navFR(1)">Nächste<i class="bi-arrow-right" style="margin-left:.35rem;margin-right:0"></i></button></div></div>
+      </div>
+    </div>
+    <!-- SITUATION -->
+    <div id="sx2" class="panel">
+      <div class="card">
+        <div class="card-lbl">Situation beschreiben · <span id="si_idx">1</span>/<span id="si_tot">50</span></div>
+        <div class="situ-card"><div class="situ-lbl">Situation</div><div class="situ-txt" id="si_txt">—</div></div>
+        <div class="q" id="si_prompt" style="font-size:.83rem;color:var(--p);margin-bottom:.9rem">—</div>
+        <div class="ma">
+          <button class="mb" id="si_mb" onclick="togSitu()"><i class="bi-mic-fill"></i></button>
+          <div class="ms" id="si_ms">Drücke · Sprich ≥ 30 Sekunden</div>
+          <div class="tb em" id="si_tb">Dein Text erscheint hier…</div>
+        </div>
+        <div id="si_result" style="display:none">
+          <div class="score-cards" id="si_cards"></div>
+          <div class="recs" id="si_recs"></div>
+        </div>
+        <div class="fb" id="si_fb"></div>
+        <div class="nr"><span class="ctr" id="si_ctr">Situation 1/50</span><div class="nr-r"><button class="btn sec" onclick="navSI(-1)"><i class="bi-arrow-left"></i>Zurück</button><button class="btn" onclick="evalSitu()"><i class="bi-check-circle-fill"></i>Auswerten</button><button class="btn" onclick="navSI(1)">Nächste<i class="bi-arrow-right" style="margin-left:.35rem;margin-right:0"></i></button></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pgw"><div class="pg h" id="pgbar" style="width:0%"></div></div>
+<script>
+// ═══════ DATA ═══════
+const RF=[
+{t:"Berlin ist die Hauptstadt von Deutschland.",c:true,e:"Richtig. Berlin ist die Hauptstadt Deutschlands."},
+{t:"In Deutschland fährt man auf der linken Straßenseite.",c:false,e:"Falsch. In Deutschland fährt man rechts."},
+{t:"Eine Woche hat sieben Tage.",c:true,e:"Richtig. Montag bis Sonntag sind sieben Tage."},
+{t:"Das Frühstück isst man normalerweise am Abend.",c:false,e:"Falsch. Das Frühstück isst man am Morgen."},
+{t:"Im Deutschen schreibt man alle Nomen groß.",c:true,e:"Richtig. Nomen werden im Deutschen großgeschrieben."},
+{t:"Im Supermarkt kann man Brot und Milch kaufen.",c:true,e:"Richtig. Lebensmittel gibt es im Supermarkt."},
+{t:"Ein Jahr hat dreizehn Monate.",c:false,e:"Falsch. Ein Jahr hat zwölf Monate."},
+{t:"Der Arzt hilft kranken Menschen.",c:true,e:"Richtig. Der Arzt behandelt kranke Menschen."},
+{t:"Man braucht einen Reisepass, um in ein anderes Land zu reisen.",c:true,e:"Richtig. Für Reisen ins Ausland braucht man oft einen Pass."},
+{t:"Im Sommer schneit es in Deutschland sehr oft.",c:false,e:"Falsch. Schnee fällt meistens im Winter."},
+{t:"Man kann in der Bibliothek Bücher ausleihen.",c:true,e:"Richtig. In der Bibliothek leiht man Bücher aus."},
+{t:"Kaffee ist ein Möbelstück.",c:false,e:"Falsch. Kaffee ist ein Getränk."},
+{t:"Montag ist der erste Tag der Arbeitswoche.",c:true,e:"Richtig. Die Arbeitswoche beginnt am Montag."},
+{t:"Die Sonne geht im Westen auf.",c:false,e:"Falsch. Die Sonne geht im Osten auf."},
+{t:"Ein Kilogramm hat tausend Gramm.",c:true,e:"Richtig. 1 kg = 1000 g."},
+{t:"In Deutschland bezahlt man mit Euro.",c:true,e:"Richtig. Die Währung ist der Euro."},
+{t:"Eine Stunde hat sechzig Minuten.",c:true,e:"Richtig. 1 Stunde = 60 Minuten."},
+{t:"Im Restaurant kann man essen und trinken.",c:true,e:"Richtig. Im Restaurant bekommt man Essen und Getränke."},
+{t:"Der Lehrer arbeitet meistens in einer Schule.",c:true,e:"Richtig. Lehrer arbeiten in Schulen."},
+{t:"Wasser kocht bei null Grad.",c:false,e:"Falsch. Wasser kocht bei 100 Grad. Bei 0 Grad gefriert es."},
+{t:"Im Herbst fallen die Blätter von den Bäumen.",c:true,e:"Richtig. Im Herbst verlieren viele Bäume ihre Blätter."},
+{t:"Im Winter trägt man oft einen warmen Mantel.",c:true,e:"Richtig. Im Winter ist es kalt, deshalb trägt man einen Mantel."},
+{t:"Deutschland liegt in Europa.",c:true,e:"Richtig. Deutschland ist ein europäisches Land."},
+{t:"Eine Minute hat hundert Sekunden.",c:false,e:"Falsch. Eine Minute hat sechzig Sekunden."},
+{t:"Beim Bäcker kann man Brötchen kaufen.",c:true,e:"Richtig. Der Bäcker verkauft Brot und Brötchen."},
+{t:"Der Zug fährt auf Schienen.",c:true,e:"Richtig. Züge fahren auf Schienen."},
+{t:"Tomaten sind eine Farbe.",c:false,e:"Falsch. Tomaten sind ein Gemüse (oder Obst)."},
+{t:"Im Kino kann man Filme sehen.",c:true,e:"Richtig. Im Kino laufen Filme."},
+{t:"Kinder gehen in die Schule, um zu lernen.",c:true,e:"Richtig. In der Schule lernen Kinder."},
+{t:"Ein normales Fahrrad hat vier Räder.",c:false,e:"Falsch. Ein Fahrrad hat zwei Räder."},
+{t:"Die meisten Menschen schlafen in der Nacht.",c:true,e:"Richtig. Nachts schläft man normalerweise."},
+{t:"In der Apotheke kann man Medikamente kaufen.",c:true,e:"Richtig. Medikamente bekommt man in der Apotheke."},
+{t:"Der Januar ist in Deutschland ein Sommermonat.",c:false,e:"Falsch. Der Januar ist ein Wintermonat."},
+{t:"Beim Friseur lässt man sich die Haare schneiden.",c:true,e:"Richtig. Der Friseur schneidet die Haare."},
+{t:"Man kann im Meer schwimmen.",c:true,e:"Richtig. Im Meer kann man schwimmen."},
+{t:"Brot backt man unter anderem aus Mehl.",c:true,e:"Richtig. Mehl ist eine wichtige Zutat für Brot."},
+{t:"Eine Katze ist ein Tier.",c:true,e:"Richtig. Die Katze ist ein Haustier."},
+{t:"Suppe isst man normalerweise mit einem Messer.",c:false,e:"Falsch. Suppe isst man mit einem Löffel."},
+{t:"Im Frühling werden die Tage länger.",c:true,e:"Richtig. Im Frühling nehmen die Tage an Länge zu."},
+{t:"Berlin liegt direkt am Meer.",c:false,e:"Falsch. Berlin liegt nicht am Meer."},
+{t:"Bei Regen benutzt man oft einen Regenschirm.",c:true,e:"Richtig. Der Regenschirm schützt vor Regen."},
+{t:"Ein Arzt repariert normalerweise Autos.",c:false,e:"Falsch. Autos repariert der Mechaniker."},
+{t:"Die deutschen Umlaute sind ä, ö und ü.",c:true,e:"Richtig. Das sind die drei Umlaute im Deutschen."},
+{t:"Am Bahnhof kann man einen Zug nehmen.",c:true,e:"Richtig. Züge fahren vom Bahnhof ab."},
+{t:"Ein Jahr hat 365 oder 366 Tage.",c:true,e:"Richtig. Ein Schaltjahr hat 366 Tage, sonst 365."},
+{t:"Man trinkt Milch normalerweise aus einem Glas oder einer Tasse.",c:true,e:"Richtig. Milch trinkt man aus einem Glas oder einer Tasse."},
+{t:"Der Sommer ist meistens kälter als der Winter.",c:false,e:"Falsch. Der Sommer ist wärmer als der Winter."},
+{t:"München liegt im Süden von Deutschland.",c:true,e:"Richtig. München liegt im Süden, in Bayern."},
+{t:"Mit dem Telefon kann man mit anderen Menschen sprechen.",c:true,e:"Richtig. Das Telefon dient zum Sprechen."},
+{t:"Ein Hund kann fliegen.",c:false,e:"Falsch. Hunde können nicht fliegen."},
+];
+
+const DK=[
+{t:"Ich stehe jeden Morgen um sieben Uhr auf.",h:"Trennbares Verb: aufstehen"},
+{t:"Am Wochenende besuche ich meine Großeltern.",h:"Zeitangabe am Anfang, Verb auf Position 2"},
+{t:"Kannst du mir bitte helfen?",h:"Modalverb in der Frage"},
+{t:"Im Sommer fahren wir oft ans Meer.",h:"im + Jahreszeit, ans + Akkusativ"},
+{t:"Meine Schwester arbeitet in einem Krankenhaus.",h:"in + Dativ"},
+{t:"Ich habe gestern einen guten Film gesehen.",h:"Perfekt mit haben"},
+{t:"Das Wetter ist heute sehr schön.",h:"sein + Adjektiv"},
+{t:"Er trinkt morgens gern einen Kaffee.",h:"Wortstellung: morgens, gern"},
+{t:"Heute Abend gehen wir ins Kino.",h:"ins + Akkusativ"},
+{t:"Ich möchte bitte ein Glas Wasser.",h:"höfliche Bitte mit möchten"},
+{t:"Meine Wohnung hat drei Zimmer und eine Küche.",h:"haben + Akkusativ"},
+{t:"Am Montag muss ich früh zur Arbeit.",h:"Modalverb müssen, zur = zu der"},
+{t:"Hast du am Samstag schon etwas vor?",h:"Trennbares Verb: vorhaben"},
+{t:"Ich lerne seit einem Jahr Deutsch.",h:"seit + Dativ"},
+{t:"Der Bus kommt in fünf Minuten.",h:"in + Zeitangabe"},
+{t:"Am Sonntag haben wir eine Party gefeiert.",h:"Perfekt: gefeiert"},
+{t:"Bitte schließ die Tür, es ist kalt.",h:"Imperativ (du)"},
+{t:"Ich freue mich auf das Wochenende.",h:"sich freuen auf + Akkusativ"},
+{t:"Können Sie mir den Weg zum Bahnhof zeigen?",h:"höfliche Frage mit Sie"},
+{t:"Mein Bruder spielt gern Fußball im Park.",h:"im = in dem"},
+{t:"Ich habe Hunger und möchte etwas essen.",h:"und + möchten"},
+{t:"Am Abend lese ich oft ein Buch.",h:"Zeitangabe am Anfang"},
+{t:"Wo hast du deinen neuen Mantel gekauft?",h:"Perfekt + Adjektivendung"},
+{t:"Wir müssen noch Brot und Milch kaufen.",h:"Modalverb müssen"},
+{t:"Sie hat einen interessanten Film gesehen.",h:"Perfekt + Akkusativ"},
+{t:"Der Zug nach München fährt um neun Uhr ab.",h:"Trennbares Verb: abfahren"},
+{t:"Ich fahre mit dem Fahrrad zur Schule.",h:"mit + Dativ, zur = zu der"},
+{t:"Am Wochenende schlafe ich gern länger.",h:"Komparativ: länger"},
+{t:"Meine Eltern wohnen in einer kleinen Stadt.",h:"in + Dativ + Adjektivendung"},
+{t:"Hast du heute schon deine Hausaufgaben gemacht?",h:"Perfekt: gemacht"},
+{t:"Im Urlaub waren wir letztes Jahr in Italien.",h:"Präteritum von sein"},
+{t:"Ich rufe dich morgen Abend an.",h:"Trennbares Verb: anrufen"},
+{t:"Das Restaurant ist heute leider geschlossen.",h:"sein + Partizip als Adjektiv"},
+{t:"Wir treffen uns um acht Uhr vor dem Kino.",h:"sich treffen, vor + Dativ"},
+{t:"Kannst du mir bitte das Salz geben?",h:"Dativ + Akkusativ"},
+{t:"Mein Tag beginnt immer mit einem Frühstück.",h:"mit + Dativ"},
+{t:"Sie spricht drei Sprachen sehr gut.",h:"unregelmäßiges Verb sprechen"},
+{t:"Wir haben einen Tisch für zwei Personen reserviert.",h:"Perfekt: reserviert"},
+{t:"Im Winter trinke ich gern heißen Tee.",h:"Adjektivendung: heißen"},
+{t:"Der Film hat mir sehr gut gefallen.",h:"gefallen + Dativ (mir)"},
+{t:"Ich habe meinen Schlüssel zu Hause vergessen.",h:"Perfekt: vergessen"},
+{t:"Bitte warten Sie einen kurzen Moment.",h:"Imperativ Sie + Akkusativ"},
+{t:"Am Freitag gehe ich mit Freunden essen.",h:"mit + Dativ Plural"},
+{t:"Mein Computer funktioniert heute leider nicht.",h:"Verben auf -ieren"},
+{t:"Nächstes Jahr wollen wir nach Berlin ziehen.",h:"Modalverb wollen + nach"},
+{t:"Sie hat sich ein neues Auto gekauft.",h:"Perfekt + Dativ (sich)"},
+{t:"Ich nehme den Bus, weil es regnet.",h:"weil = Nebensatz, Verb am Ende"},
+{t:"Kannst du bitte etwas langsamer sprechen?",h:"Komparativ: langsamer"},
+{t:"Das kleine Kind spielt gern mit dem Hund.",h:"Adjektivendung + mit + Dativ"},
+{t:"Wir haben das ganze Wochenende zu Hause verbracht.",h:"Perfekt: verbracht"},
+];
+
+const TV=[
+{title:"Eine neue Wohnung",
+text:"Familie Becker sucht eine neue Wohnung. Die alte Wohnung ist zu klein, denn die Familie hat jetzt zwei Kinder. Die neue Wohnung soll drei Zimmer, eine große Küche und einen Balkon haben. Herr Becker möchte nicht zu viel Miete bezahlen. Am liebsten möchte die Familie in der Nähe von einem Park wohnen, damit die Kinder draußen spielen können.",
+qs:[
+{q:"Warum sucht die Familie eine neue Wohnung?",o:["Die Wohnung ist zu teuer.","Die Wohnung ist zu klein.","Die Wohnung ist zu alt.","Die Wohnung hat keinen Balkon."],a:1,e:"„Die alte Wohnung ist zu klein, denn die Familie hat jetzt zwei Kinder."},
+{q:"Wie viele Zimmer soll die neue Wohnung haben?",o:["zwei","drei","vier","fünf"],a:1,e:"„…soll drei Zimmer … haben."},
+{q:"Was möchte Herr Becker NICHT?",o:["einen Balkon","eine große Küche","zu viel Miete bezahlen","in der Stadt wohnen"],a:2,e:"„Herr Becker möchte nicht zu viel Miete bezahlen."},
+{q:"Wo möchte die Familie am liebsten wohnen?",o:["am Meer","in der Nähe von einem Park","im Stadtzentrum","auf dem Land"],a:1,e:"„…in der Nähe von einem Park wohnen."},
+{q:"Warum möchte die Familie in der Nähe von einem Park wohnen?",o:["weil es dort billig ist","damit die Kinder draußen spielen können","weil es dort ruhig ist","weil es dort einen Supermarkt gibt"],a:1,e:"„…damit die Kinder draußen spielen können."},
+]},
+{title:"Ein Wochenende in Hamburg",
+text:"Letztes Wochenende war Lisa in Hamburg. Sie ist mit dem Zug gefahren, weil das Auto kaputt war. In Hamburg hat sie ihre Freundin Maria besucht. Am Samstag haben die beiden eine Hafenrundfahrt gemacht und am Abend sind sie ins Theater gegangen. Am Sonntag hat es leider geregnet, deshalb sind sie ins Museum gegangen. Lisa fand das Wochenende sehr schön und möchte bald wiederkommen.",
+qs:[
+{q:"Wohin ist Lisa gefahren?",o:["nach Berlin","nach Hamburg","nach München","nach Köln"],a:1,e:"„Letztes Wochenende war Lisa in Hamburg."},
+{q:"Womit ist Lisa gereist?",o:["mit dem Auto","mit dem Flugzeug","mit dem Zug","mit dem Bus"],a:2,e:"„Sie ist mit dem Zug gefahren, weil das Auto kaputt war."},
+{q:"Was haben Lisa und Maria am Samstag gemacht?",o:["eine Hafenrundfahrt","einen Stadtbummel","ein Picknick","einen Ausflug ans Meer"],a:0,e:"„Am Samstag haben die beiden eine Hafenrundfahrt gemacht."},
+{q:"Warum sind sie am Sonntag ins Museum gegangen?",o:["weil es kostenlos war","weil es geregnet hat","weil Maria das wollte","weil das Theater zu war"],a:1,e:"„Am Sonntag hat es leider geregnet, deshalb sind sie ins Museum gegangen."},
+{q:"Wie fand Lisa das Wochenende?",o:["langweilig","sehr schön","zu kurz","anstrengend"],a:1,e:"„Lisa fand das Wochenende sehr schön."},
+]},
+{title:"Der erste Arbeitstag",
+text:"Heute ist Tareks erster Arbeitstag in einer Firma. Er arbeitet jetzt als Verkäufer in einem Elektrogeschäft. Tarek ist ein bisschen nervös, aber auch glücklich. Seine Chefin ist sehr freundlich und zeigt ihm alles. Die Arbeit beginnt um neun Uhr und endet um achtzehn Uhr. In der Mittagspause isst Tarek mit seinen neuen Kollegen in der Kantine. Am Abend ist er müde, aber zufrieden.",
+qs:[
+{q:"Was ist Tareks neuer Beruf?",o:["Lehrer","Verkäufer","Koch","Arzt"],a:1,e:"„Er arbeitet jetzt als Verkäufer in einem Elektrogeschäft."},
+{q:"Wie fühlt sich Tarek am Anfang?",o:["traurig","nervös, aber glücklich","wütend","krank"],a:1,e:"„Tarek ist ein bisschen nervös, aber auch glücklich."},
+{q:"Wie ist die Chefin?",o:["streng","unfreundlich","sehr freundlich","oft krank"],a:2,e:"„Seine Chefin ist sehr freundlich und zeigt ihm alles."},
+{q:"Wann endet die Arbeit?",o:["um neun Uhr","um zwölf Uhr","um fünfzehn Uhr","um achtzehn Uhr"],a:3,e:"„…endet um achtzehn Uhr."},
+{q:"Wo isst Tarek in der Mittagspause?",o:["zu Hause","im Restaurant","in der Kantine","im Park"],a:2,e:"„…isst Tarek mit seinen neuen Kollegen in der Kantine."},
+]},
+{title:"Mein Hobby: Fotografieren",
+text:"Sofia fotografiert sehr gern. Sie hat schon als Kind eine kleine Kamera von ihrem Vater bekommen. Heute fotografiert sie am liebsten die Natur, zum Beispiel Bäume, Blumen und Tiere. Jeden Samstag macht sie einen langen Spaziergang im Wald und nimmt ihre Kamera mit. Manchmal zeigt sie ihre Fotos im Internet. Viele Menschen finden ihre Bilder schön. Sofia möchte später vielleicht einen Fotokurs machen.",
+qs:[
+{q:"Was ist Sofias Hobby?",o:["Malen","Fotografieren","Singen","Kochen"],a:1,e:"„Sofia fotografiert sehr gern."},
+{q:"Von wem hat sie ihre erste Kamera bekommen?",o:["von ihrer Mutter","von ihrem Vater","von ihrer Freundin","von ihrer Oma"],a:1,e:"„…eine kleine Kamera von ihrem Vater bekommen."},
+{q:"Was fotografiert Sofia am liebsten?",o:["Menschen","Autos","die Natur","Gebäude"],a:2,e:"„…fotografiert sie am liebsten die Natur."},
+{q:"Was macht Sofia jeden Samstag?",o:["einen Spaziergang im Wald","einen Fotokurs","eine Reise","eine Party"],a:0,e:"„Jeden Samstag macht sie einen langen Spaziergang im Wald."},
+{q:"Was möchte Sofia später vielleicht machen?",o:["eine Kamera verkaufen","einen Fotokurs machen","im Wald arbeiten","ein Buch schreiben"],a:1,e:"„Sofia möchte später vielleicht einen Fotokurs machen."},
+]},
+{title:"Lernen an der Volkshochschule",
+text:"Herr Yilmaz möchte besser Deutsch sprechen. Deshalb besucht er einen Kurs an der Volkshochschule. Der Kurs findet zweimal pro Woche am Abend statt, denn am Tag arbeitet Herr Yilmaz. In seiner Gruppe sind zwölf Personen aus verschiedenen Ländern. Die Lehrerin spricht langsam und deutlich. Herr Yilmaz macht jeden Tag seine Hausaufgaben. Nach drei Monaten kann er schon viel besser sprechen.",
+qs:[
+{q:"Warum besucht Herr Yilmaz einen Kurs?",o:["Er möchte besser Deutsch sprechen.","Er sucht neue Freunde.","Er hat viel Freizeit.","Er möchte Lehrer werden."],a:0,e:"„Herr Yilmaz möchte besser Deutsch sprechen."},
+{q:"Wann findet der Kurs statt?",o:["jeden Tag","am Morgen","zweimal pro Woche am Abend","nur am Wochenende"],a:2,e:"„Der Kurs findet zweimal pro Woche am Abend statt."},
+{q:"Warum besucht er den Kurs am Abend?",o:["weil er am Tag arbeitet","weil es billiger ist","weil die Lehrerin nur abends da ist","weil er morgens schläft"],a:0,e:"„…am Abend statt, denn am Tag arbeitet Herr Yilmaz."},
+{q:"Wie viele Personen sind in der Gruppe?",o:["acht","zehn","zwölf","zwanzig"],a:2,e:"„In seiner Gruppe sind zwölf Personen…"},
+{q:"Was kann Herr Yilmaz nach drei Monaten?",o:["nichts Neues","viel besser sprechen","perfekt schreiben","die Lehrerin ersetzen"],a:1,e:"„Nach drei Monaten kann er schon viel besser sprechen."},
+]},
+{title:"Beim Arzt",
+text:"Frau Kowalski fühlt sich seit drei Tagen nicht gut. Sie hat Kopfschmerzen und ist sehr müde. Deshalb geht sie heute zum Arzt. Der Arzt untersucht sie und sagt, sie hat eine Erkältung. Er gibt ihr ein Rezept für Medikamente. Frau Kowalski soll viel Tee trinken, viel schlafen und ein paar Tage zu Hause bleiben. Nach einer Woche geht es ihr wieder besser.",
+qs:[
+{q:"Wie lange fühlt sich Frau Kowalski schon nicht gut?",o:["seit einem Tag","seit drei Tagen","seit einer Woche","seit einem Monat"],a:1,e:"„…seit drei Tagen nicht gut."},
+{q:"Welche Beschwerden hat sie?",o:["Bauchschmerzen","Kopfschmerzen und Müdigkeit","Zahnschmerzen","Rückenschmerzen"],a:1,e:"„Sie hat Kopfschmerzen und ist sehr müde."},
+{q:"Was sagt der Arzt?",o:["Sie ist gesund.","Sie hat eine Erkältung.","Sie muss ins Krankenhaus.","Sie braucht eine Brille."],a:1,e:"„…sie hat eine Erkältung."},
+{q:"Was soll Frau Kowalski tun?",o:["viel arbeiten","Sport machen","viel Tee trinken und schlafen","sofort reisen"],a:2,e:"„…viel Tee trinken, viel schlafen…"},
+{q:"Wie geht es ihr nach einer Woche?",o:["schlechter","wieder besser","genauso","sie ist noch im Bett"],a:1,e:"„Nach einer Woche geht es ihr wieder besser."},
+]},
+{title:"Gesund essen",
+text:"Viele Menschen möchten gesünder essen. Das ist eigentlich nicht schwer. Man sollte jeden Tag Obst und Gemüse essen und nicht zu viel Zucker zu sich nehmen. Auch genug Wasser zu trinken ist wichtig. Fast Food schmeckt zwar gut, aber man sollte es nur selten essen. Wer selbst kocht, weiß genau, was im Essen ist. Mit ein bisschen Planung kann jeder gesünder leben.",
+qs:[
+{q:"Worum geht es in dem Text?",o:["um Sport","um gesundes Essen","um Reisen","um Arbeit"],a:1,e:"Der Text handelt von gesundem Essen."},
+{q:"Was sollte man jeden Tag essen?",o:["Fast Food","viel Zucker","Obst und Gemüse","nur Brot"],a:2,e:"„…jeden Tag Obst und Gemüse essen…"},
+{q:"Was ist laut Text auch wichtig?",o:["viel Kaffee","genug Wasser trinken","wenig schlafen","viel Fleisch"],a:1,e:"„Auch genug Wasser zu trinken ist wichtig."},
+{q:"Wie oft sollte man Fast Food essen?",o:["jeden Tag","nur selten","nie","dreimal pro Tag"],a:1,e:"„…man sollte es nur selten essen."},
+{q:"Welchen Vorteil hat es, selbst zu kochen?",o:["Es ist teurer.","Man weiß, was im Essen ist.","Es geht schneller.","Man braucht kein Gemüse."],a:1,e:"„Wer selbst kocht, weiß genau, was im Essen ist."},
+]},
+{title:"Eine große Familie",
+text:"Carlos kommt aus einer großen Familie. Er hat drei Schwestern und zwei Brüder. Seine Großeltern wohnen im selben Haus. Jeden Sonntag isst die ganze Familie zusammen zu Mittag. Carlos mag das sehr, denn dann erzählen alle, was sie in der Woche gemacht haben. Manchmal gibt es auch Streit, aber am Ende lachen alle wieder. Carlos sagt: „Eine große Familie ist manchmal laut, aber nie langweilig.",
+qs:[
+{q:"Wie viele Geschwister hat Carlos?",o:["drei","vier","fünf","sechs"],a:2,e:"Drei Schwestern und zwei Brüder sind fünf Geschwister."},
+{q:"Wo wohnen seine Großeltern?",o:["in einer anderen Stadt","im selben Haus","im Ausland","im Altersheim"],a:1,e:"„Seine Großeltern wohnen im selben Haus."},
+{q:"Was macht die Familie jeden Sonntag?",o:["einen Ausflug","zusammen zu Mittag essen","Sport","einkaufen"],a:1,e:"„Jeden Sonntag isst die ganze Familie zusammen zu Mittag."},
+{q:"Was passiert manchmal?",o:["Es gibt Streit.","Alle gehen früh ins Bett.","Niemand kommt.","Sie sehen fern."],a:0,e:"„Manchmal gibt es auch Streit…"},
+{q:"Was sagt Carlos über seine Familie?",o:["Sie ist langweilig.","Sie ist laut, aber nie langweilig.","Sie ist zu klein.","Sie ist immer ruhig."],a:1,e:"„…manchmal laut, aber nie langweilig."},
+]},
+{title:"Sport im Verein",
+text:"Jonas spielt seit fünf Jahren Fußball in einem Verein. Das Training ist dreimal pro Woche. Am Wochenende hat seine Mannschaft oft ein Spiel. Jonas findet Sport sehr wichtig, weil er fit bleibt und neue Freunde findet. Im Verein lernt man auch, im Team zu arbeiten. Manchmal verliert seine Mannschaft, aber das ist für Jonas nicht schlimm. Für ihn ist der Spaß am wichtigsten.",
+qs:[
+{q:"Welchen Sport macht Jonas?",o:["Schwimmen","Fußball","Tennis","Basketball"],a:1,e:"„Jonas spielt seit fünf Jahren Fußball…"},
+{q:"Wie oft trainiert er?",o:["einmal pro Woche","zweimal pro Woche","dreimal pro Woche","jeden Tag"],a:2,e:"„Das Training ist dreimal pro Woche."},
+{q:"Warum findet Jonas Sport wichtig?",o:["weil er viel Geld verdient","weil er fit bleibt und Freunde findet","weil er berühmt werden will","weil seine Eltern das wollen"],a:1,e:"„…weil er fit bleibt und neue Freunde findet."},
+{q:"Was lernt man laut Text im Verein auch?",o:["Sprachen","im Team zu arbeiten","kochen","Auto fahren"],a:1,e:"„Im Verein lernt man auch, im Team zu arbeiten."},
+{q:"Was ist für Jonas am wichtigsten?",o:["gewinnen","der Spaß","Geld","Pokale"],a:1,e:"„Für ihn ist der Spaß am wichtigsten."},
+]},
+{title:"Müll trennen",
+text:"In Deutschland trennt man den Müll. Es gibt verschiedene Tonnen: für Papier, für Plastik, für Glas und für Bioabfall. Das ist gut für die Umwelt, denn so kann man viele Materialien wiederverwenden. Am Anfang ist es für viele Menschen kompliziert, aber man gewöhnt sich schnell daran. Auch Kinder lernen schon in der Schule, wie man Müll richtig trennt. Jeder kann so ein bisschen helfen, die Umwelt zu schützen.",
+qs:[
+{q:"Was macht man in Deutschland mit dem Müll?",o:["man verbrennt alles","man trennt ihn","man wirft alles zusammen weg","man bringt ihn ins Ausland"],a:1,e:"„In Deutschland trennt man den Müll."},
+{q:"Für was gibt es KEINE eigene Tonne im Text?",o:["Papier","Glas","Metall","Bioabfall"],a:2,e:"Im Text werden Papier, Plastik, Glas und Bioabfall genannt, aber kein Metall."},
+{q:"Warum ist Mülltrennen gut?",o:["es ist billig","es ist gut für die Umwelt","es macht Spaß","es ist Pflicht"],a:1,e:"„Das ist gut für die Umwelt…"},
+{q:"Wie finden viele Menschen das Trennen am Anfang?",o:["einfach","kompliziert","langweilig","unnötig"],a:1,e:"„Am Anfang ist es für viele Menschen kompliziert…"},
+{q:"Wo lernen Kinder, Müll zu trennen?",o:["zu Hause","im Supermarkt","in der Schule","im Verein"],a:2,e:"„Auch Kinder lernen schon in der Schule, wie man Müll richtig trennt."},
+]},
+];
+
+const PR=[
+{t:"Guten Morgen, wie geht es Ihnen?",d:"B1"},
+{t:"Ich hätte gern einen Kaffee, bitte.",d:"B1"},
+{t:"Können Sie mir bitte helfen?",d:"B1"},
+{t:"Die Übung ist nicht besonders schwierig.",d:"B1"},
+{t:"Im Frühling blühen die schönen Blumen.",d:"B1"},
+{t:"Mein Bruder wohnt in einer großen Stadt.",d:"B1"},
+{t:"Natürlich komme ich gern zu deiner Party.",d:"B1"},
+{t:"Die Gesundheit ist das Wichtigste im Leben.",d:"B1"},
+{t:"Fünf Brötchen kosten zwei Euro fünfzig.",d:"B1"},
+{t:"Tschüss, bis morgen und schönen Abend!",d:"B1"},
+{t:"Das Mädchen spielt fröhlich im Garten.",d:"B1"},
+{t:"Ich möchte ein Stück Kuchen, bitte.",d:"B1"},
+{t:"Wir fahren nächste Woche nach Österreich.",d:"B1"},
+{t:"Die Straße ist heute sehr ruhig.",d:"B1"},
+{t:"Er spricht sehr deutlich und langsam.",d:"B1"},
+{t:"Vielen Dank für deine freundliche Hilfe.",d:"B1"},
+{t:"Der Zug fährt pünktlich um acht Uhr ab.",d:"B1"},
+{t:"Ich bin müde, ich möchte schlafen gehen.",d:"B1"},
+{t:"Die Kinder gehen früh zur Schule.",d:"B1"},
+{t:"Heute scheint die Sonne wunderschön.",d:"B1"},
+{t:"Möchtest du lieber Tee oder Kaffee?",d:"B1"},
+{t:"Die Königin wohnt in einem großen Schloss.",d:"B1"},
+{t:"Ich verstehe leider nicht alles.",d:"B1"},
+{t:"Das Frühstück steht schon auf dem Tisch.",d:"B1"},
+{t:"Wir treffen uns vor dem Bahnhof.",d:"B1"},
+{t:"Mein Lieblingsessen ist Spaghetti mit Soße.",d:"B1"},
+{t:"Es tut mir wirklich sehr leid.",d:"B1"},
+{t:"Die Wohnung hat ein gemütliches Wohnzimmer.",d:"B1"},
+{t:"Ich freue mich auf das Wochenende.",d:"B1"},
+{t:"Bitte sprich ein bisschen langsamer.",d:"B1"},
+{t:"Der Himmel ist heute ganz blau.",d:"B1"},
+{t:"Wir möchten gern zusammen kochen.",d:"B1"},
+{t:"Die Prüfung war zum Glück nicht schwer.",d:"B1"},
+{t:"Mein Vater liest jeden Tag die Zeitung.",d:"B1"},
+{t:"Im Sommer schwimmen wir gern im See.",d:"B1"},
+{t:"Entschuldigung, wo ist die nächste Apotheke?",d:"B1"},
+{t:"Die Tür ist leider geschlossen.",d:"B1"},
+{t:"Ich putze mir zweimal am Tag die Zähne.",d:"B1"},
+{t:"Wir wünschen dir alles Gute zum Geburtstag.",d:"B1"},
+{t:"Das Wetter wird morgen wahrscheinlich besser.",d:"B1"},
+{t:"Sie kauft frisches Gemüse auf dem Markt.",d:"B1"},
+{t:"Mein Bruder möchte Arzt werden.",d:"B1"},
+{t:"Ich höre gern Musik beim Spazierengehen.",d:"B1"},
+{t:"Die Geschichte war richtig spannend.",d:"B1"},
+{t:"Könntest du bitte das Fenster öffnen?",d:"B1"},
+{t:"Wir wohnen seit drei Jahren hier.",d:"B1"},
+{t:"Das ist eine sehr gute Idee.",d:"B1"},
+{t:"Am Sonntag besuchen wir unsere Großeltern.",d:"B1"},
+{t:"Bitte schreiben Sie Ihren Namen hier.",d:"B1"},
+{t:"Ich wünsche dir einen schönen Tag.",d:"B1"},
+];
+
+const FR=[
+{q:"Was machst du gern in deiner Freizeit?",h:"Nenne 2-3 Hobbys: 'In meiner Freizeit … Außerdem … Manchmal …'"},
+{q:"Beschreibe deine Familie.",h:"Wer gehört dazu? 'Meine Familie besteht aus … Mein/e … heißt …'"},
+{q:"Wie sieht dein typischer Tag aus?",h:"Temporal: 'Zuerst … Dann … Danach … Am Abend …'"},
+{q:"Wo wohnst du und wie ist deine Wohnung?",h:"'Ich wohne in … Meine Wohnung hat … Zimmer …'"},
+{q:"Was isst du gern und was nicht?",h:"'Ich esse gern … Ich mag kein/e … weil …'"},
+{q:"Erzähle von deinem letzten Wochenende.",h:"Perfekt: 'Am Samstag habe ich … Am Sonntag bin ich …'"},
+{q:"Was möchtest du am nächsten Wochenende machen?",h:"Futur/Präsens mit Zeitangabe: 'Nächstes Wochenende möchte ich …'"},
+{q:"Welche Sprachen sprichst du?",h:"'Ich spreche … Meine Muttersprache ist … Ich lerne …'"},
+{q:"Wie kommst du jeden Tag zur Arbeit oder zur Schule?",h:"'Ich fahre mit … Es dauert … Minuten.'"},
+{q:"Was ist dein Lieblingsessen? Beschreibe es.",h:"'Mein Lieblingsessen ist … Das schmeckt … Man macht es mit …'"},
+{q:"Beschreibe deine beste Freundin oder deinen besten Freund.",h:"Aussehen + Charakter: 'Sie/Er ist … und hat …'"},
+{q:"Wie war das Wetter gestern?",h:"'Gestern war es … Es hat … / Die Sonne hat …'"},
+{q:"Was machst du, wenn du krank bist?",h:"'Wenn ich krank bin, … Ich gehe … Ich trinke …'"},
+{q:"Erzähle von deiner Heimatstadt.",h:"'Meine Heimatstadt heißt … Dort gibt es … Sie liegt …'"},
+{q:"Welches Hobby möchtest du gern lernen?",h:"'Ich möchte gern … lernen, weil …'"},
+{q:"Wie feierst du deinen Geburtstag?",h:"'An meinem Geburtstag … Ich lade … ein. Wir …'"},
+{q:"Was machst du gern im Sommer?",h:"'Im Sommer … Ich gehe … Am liebsten …'"},
+{q:"Beschreibe dein Lieblingstier.",h:"'Mein Lieblingstier ist … Es ist … und kann …'"},
+{q:"Was kaufst du normalerweise im Supermarkt?",h:"'Ich kaufe … und … Außerdem brauche ich …'"},
+{q:"Wie sieht dein Zimmer aus?",h:"'In meinem Zimmer gibt es … Links/rechts steht …'"},
+{q:"Was machst du am liebsten am Abend?",h:"'Am Abend … Ich finde das … weil …'"},
+{q:"Erzähle von einer Reise, die dir gefallen hat.",h:"Perfekt: 'Ich war in … Ich bin … gefahren. Es war …'"},
+{q:"Welche Jahreszeit magst du am liebsten? Warum?",h:"'Ich mag … am liebsten, weil … Dann kann man …'"},
+{q:"Was möchtest du in den nächsten Ferien machen?",h:"'In den Ferien möchte ich … Ich würde gern …'"},
+{q:"Wie hilfst du zu Hause im Haushalt?",h:"'Ich … oft. Manchmal … Mein/e … macht …'"},
+{q:"Beschreibe deinen Weg von zu Hause zum Supermarkt.",h:"'Zuerst gehe ich … Dann … Der Supermarkt ist …'"},
+{q:"Was machst du, um Deutsch zu lernen?",h:"'Ich … jeden Tag. Außerdem … Das hilft mir, weil …'"},
+{q:"Welche Musik hörst du gern?",h:"'Ich höre gern … Mein/e Lieblings… ist … weil …'"},
+{q:"Was ist dein Lieblingsfilm oder deine Lieblingsserie?",h:"'Mein Lieblingsfilm ist … Es geht um … Ich finde ihn …'"},
+{q:"Wie verbringst du gern einen Regentag?",h:"'Wenn es regnet, … Ich bleibe … und …'"},
+{q:"Erzähle, was du gestern Abend gegessen hast.",h:"Perfekt: 'Gestern Abend habe ich … gegessen. Dazu …'"},
+{q:"Was machst du gern mit deinen Freunden?",h:"'Mit meinen Freunden … Wir treffen uns … und …'"},
+{q:"Beschreibe einen Beruf, den du interessant findest.",h:"'Ich finde den Beruf … interessant, weil … Man muss …'"},
+{q:"Was nimmst du immer mit, wenn du das Haus verlässt?",h:"'Ich nehme immer … mit, weil …'"},
+{q:"Wie sieht dein Lieblingsplatz in der Stadt aus?",h:"'Mein Lieblingsplatz ist … Dort kann man … Ich gehe dorthin, weil …'"},
+{q:"Was hast du letzte Woche Neues gelernt?",h:"Perfekt: 'Letzte Woche habe ich … gelernt. Das war …'"},
+{q:"Wie feiert man ein wichtiges Fest in deinem Land?",h:"'Bei uns feiert man … Man isst … und macht …'"},
+{q:"Was machst du, wenn du Stress hast?",h:"'Wenn ich Stress habe, … Das hilft mir, weil …'"},
+{q:"Beschreibe dein Lieblingskleidungsstück.",h:"'Mein Lieblings… ist … Es ist … und ich trage es …'"},
+{q:"Welche Pläne hast du für die nächste Woche?",h:"'Nächste Woche möchte ich … Am … habe ich …'"},
+{q:"Erzähle von deinem ersten Schultag.",h:"Präteritum/Perfekt: 'An meinem ersten Schultag … Ich war …'"},
+{q:"Was machst du am liebsten am Wochenende?",h:"'Am Wochenende … Am Samstag … und am Sonntag …'"},
+{q:"Welches Essen kannst du kochen? Wie macht man es?",h:"'Ich kann … kochen. Zuerst … Dann … Zum Schluss …'"},
+{q:"Beschreibe einen guten Lehrer oder eine gute Lehrerin.",h:"'Ein guter Lehrer ist … und kann … Er/Sie sollte …'"},
+{q:"Was machst du gern, wenn du Urlaub hast?",h:"'Im Urlaub … Am liebsten … weil …'"},
+{q:"Wie sieht dein Lieblingsplatz zu Hause aus?",h:"'Mein Lieblingsplatz zu Hause ist … Dort … Ich mag ihn, weil …'"},
+{q:"Was würdest du einem Touristen in deiner Stadt zeigen?",h:"'Ich würde ihm … zeigen, weil … Dort kann man …'"},
+{q:"Welches Verkehrsmittel benutzt du am liebsten? Warum?",h:"'Ich fahre am liebsten mit … weil … Das ist …'"},
+{q:"Erzähle, wie du einen Freund kennengelernt hast.",h:"Perfekt: 'Ich habe ihn/sie … kennengelernt. Wir haben …'"},
+{q:"Was möchtest du in der Zukunft beruflich machen?",h:"'In der Zukunft möchte ich … weil … Dafür muss ich …'"},
+];
+
+const SI=[
+{s:"Sie sind beim Arzt und fühlen sich nicht gut.",p:"Beschreiben Sie Ihre Beschwerden und fragen Sie nach Medikamenten.",k:["arzt","schmerzen","krank","medikament","fühle","weh","hilfe"]},
+{s:"Sie sind im Restaurant und möchten etwas bestellen.",p:"Bestellen Sie ein Essen und ein Getränk und fragen Sie nach der Rechnung.",k:["restaurant","bestellen","essen","getränk","rechnung","möchte","bitte"]},
+{s:"Sie sind im Supermarkt und suchen einige Produkte.",p:"Fragen Sie eine Mitarbeiterin, wo die Produkte sind, und bezahlen Sie an der Kasse.",k:["supermarkt","suchen","wo","kasse","bezahlen","produkt","brauche"]},
+{s:"Sie kommen in einem Hotel an und möchten einchecken.",p:"Sagen Sie an der Rezeption, dass Sie ein Zimmer reserviert haben, und fragen Sie nach dem Frühstück.",k:["hotel","zimmer","reserviert","rezeption","frühstück","schlüssel","nacht"]},
+{s:"Sie möchten beim Zahnarzt einen Termin vereinbaren.",p:"Rufen Sie an und vereinbaren Sie einen Termin. Sagen Sie, wann Sie Zeit haben.",k:["termin","zahnarzt","zeit","montag","uhr","vereinbaren","wann"]},
+{s:"Sie haben sich in einer fremden Stadt verlaufen.",p:"Fragen Sie einen Passanten nach dem Weg zum Bahnhof.",k:["weg","bahnhof","wo","links","rechts","geradeaus","entschuldigung"]},
+{s:"Ein Freund lädt Sie zu seiner Geburtstagsparty ein.",p:"Sagen Sie zu und fragen Sie, wann und wo die Party ist und was Sie mitbringen können.",k:["party","geburtstag","gern","wann","wo","mitbringen","komme"]},
+{s:"Sie möchten ein Kleidungsstück im Geschäft kaufen.",p:"Fragen Sie nach der Größe, der Farbe und dem Preis.",k:["geschäft","größe","farbe","preis","kosten","kaufen","anprobieren"]},
+{s:"Ihr Zug hat Verspätung und Sie verpassen einen Anschluss.",p:"Erklären Sie die Situation am Schalter und fragen Sie nach dem nächsten Zug.",k:["zug","verspätung","schalter","nächste","anschluss","wann","ticket"]},
+{s:"Sie möchten Ihren Freund am Wochenende treffen.",p:"Machen Sie einen Vorschlag und einigen Sie sich auf Zeit und Ort.",k:["wochenende","treffen","vorschlag","zeit","wo","samstag","uhr"]},
+{s:"Sie rufen bei einem Sprachkurs an und möchten Informationen.",p:"Fragen Sie nach dem Preis, den Zeiten und dem Beginn des Kurses.",k:["kurs","preis","zeit","beginn","anmelden","information","wann"]},
+{s:"Sie sind neu in der Stadt und möchten Leute kennenlernen.",p:"Stellen Sie sich vor und erzählen Sie, woher Sie kommen und was Sie gern machen.",k:["heiße","komme","gern","freizeit","neu","kennenlernen","wohne"]},
+{s:"Im Café bekommen Sie das falsche Getränk.",p:"Erklären Sie höflich das Problem und bitten Sie um das richtige Getränk.",k:["café","getränk","falsch","bestellt","entschuldigung","bitte","richtig"]},
+{s:"Sie möchten ein Buch in der Bibliothek ausleihen.",p:"Fragen Sie, wie das geht und wie lange Sie das Buch behalten dürfen.",k:["bibliothek","buch","ausleihen","wie lange","karte","zurück","möchte"]},
+{s:"Sie planen mit einem Freund einen Filmabend.",p:"Schlagen Sie einen Film vor und besprechen Sie Zeit, Ort und Snacks.",k:["film","abend","vorschlag","zeit","wann","snacks","schauen"]},
+{s:"Sie haben Ihren Regenschirm im Bus vergessen.",p:"Beschreiben Sie beim Fundbüro Ihren Regenschirm und fragen Sie, ob er da ist.",k:["regenschirm","bus","vergessen","fundbüro","farbe","verloren","gefunden"]},
+{s:"Sie möchten in einem Geschäft etwas umtauschen.",p:"Erklären Sie, warum Sie das Produkt umtauschen möchten, und fragen Sie nach den Möglichkeiten.",k:["umtauschen","geschäft","kaputt","passt nicht","quittung","geld","zurück"]},
+{s:"Ein neuer Kollege fragt Sie nach dem Weg zur Kantine.",p:"Beschreiben Sie ihm den Weg im Gebäude.",k:["kantine","weg","links","rechts","geradeaus","treppe","stock"]},
+{s:"Sie möchten einen Tisch im Restaurant reservieren.",p:"Rufen Sie an und sagen Sie, für wie viele Personen und für wann.",k:["tisch","reservieren","personen","wann","uhr","name","abend"]},
+{s:"Sie sind erkältet und müssen sich bei der Arbeit krankmelden.",p:"Rufen Sie an und erklären Sie, dass Sie krank sind und nicht kommen können.",k:["krank","erkältet","arbeit","krankmelden","heute","nicht","entschuldigung"]},
+{s:"Sie wollen mit Freunden einen Ausflug machen.",p:"Schlagen Sie ein Ziel vor und besprechen Sie, wann und wie Sie hinfahren.",k:["ausflug","ziel","wann","fahren","zusammen","vorschlag","treffen"]},
+{s:"Sie kaufen eine Fahrkarte am Automaten und brauchen Hilfe.",p:"Bitten Sie eine Person um Hilfe und erklären Sie, wohin Sie fahren möchten.",k:["fahrkarte","automat","hilfe","wohin","ticket","fahren","wie"]},
+{s:"Ihr Nachbar macht abends sehr laute Musik.",p:"Sprechen Sie höflich mit ihm und bitten Sie ihn, leiser zu sein.",k:["nachbar","musik","laut","leise","abend","bitte","schlafen"]},
+{s:"Sie möchten ein Praktikum machen und schreiben einer Firma.",p:"Stellen Sie sich vor und erklären Sie, warum Sie ein Praktikum machen möchten.",k:["praktikum","firma","interesse","erfahrung","möchte","lernen","arbeiten"]},
+{s:"Sie sind auf einem Markt und möchten Obst kaufen.",p:"Fragen Sie nach dem Preis und kaufen Sie verschiedene Obstsorten.",k:["markt","obst","preis","kilo","kaufen","frisch","kosten"]},
+{s:"Sie haben einen Termin verpasst und möchten einen neuen.",p:"Entschuldigen Sie sich und vereinbaren Sie einen neuen Termin.",k:["termin","verpasst","entschuldigung","neuer","wann","zeit","leider"]},
+{s:"Sie möchten Ihrem Freund bei einem Problem helfen.",p:"Fragen Sie nach dem Problem und machen Sie Vorschläge.",k:["problem","helfen","vorschlag","vielleicht","könntest","was ist","idee"]},
+{s:"Sie suchen eine neue Wohnung und rufen einen Vermieter an.",p:"Fragen Sie nach der Größe, der Miete und einem Besichtigungstermin.",k:["wohnung","miete","größe","zimmer","besichtigung","termin","wann"]},
+{s:"Sie sind im Fitnessstudio und möchten Mitglied werden.",p:"Fragen Sie nach den Preisen, den Öffnungszeiten und den Kursen.",k:["fitnessstudio","preis","öffnungszeit","kurs","mitglied","anmelden","trainieren"]},
+{s:"Ein Tourist fragt Sie nach Sehenswürdigkeiten in Ihrer Stadt.",p:"Empfehlen Sie zwei Orte und erklären Sie, warum sie interessant sind.",k:["sehenswürdigkeit","empfehlen","besuchen","interessant","stadt","schön","dort"]},
+{s:"Sie möchten ein Paket auf der Post abschicken.",p:"Fragen Sie, wie viel es kostet und wie lange es dauert.",k:["post","paket","schicken","kosten","wie lange","adresse","wohin"]},
+{s:"Sie haben Geburtstag und planen eine kleine Feier.",p:"Beschreiben Sie, wen Sie einladen und was Sie zusammen machen möchten.",k:["geburtstag","feier","einladen","freunde","essen","musik","feiern"]},
+{s:"Sie möchten ein Hotelzimmer telefonisch buchen.",p:"Sagen Sie das Datum, die Anzahl der Nächte und fragen Sie nach dem Preis.",k:["hotel","zimmer","buchen","nächte","datum","preis","frühstück"]},
+{s:"Im Bus weiß ein anderer Fahrgast nicht, wo er aussteigen muss.",p:"Helfen Sie ihm und erklären Sie, an welcher Haltestelle er aussteigen soll.",k:["bus","haltestelle","aussteigen","wo","nächste","helfen","richtung"]},
+{s:"Sie möchten einen Computerkurs für Anfänger besuchen.",p:"Fragen Sie nach dem Niveau, dem Preis und den Terminen.",k:["computerkurs","anfänger","niveau","preis","termin","wann","lernen"]},
+{s:"Ihr Essen im Restaurant ist kalt.",p:"Sagen Sie der Kellnerin höflich Bescheid und bitten Sie um eine Lösung.",k:["essen","kalt","restaurant","kellnerin","entschuldigung","bitte","warm"]},
+{s:"Sie planen mit der Familie ein Picknick im Park.",p:"Besprechen Sie, was Sie mitnehmen und wann Sie losgehen.",k:["picknick","park","mitnehmen","essen","wann","wetter","decke"]},
+{s:"Sie haben ein gebrauchtes Fahrrad gekauft und es hat einen Mangel.",p:"Erklären Sie dem Verkäufer das Problem und fragen Sie nach einer Lösung.",k:["fahrrad","kaputt","problem","verkäufer","reparieren","geld","zurück"]},
+{s:"Eine Freundin ist traurig, weil sie eine Prüfung nicht bestanden hat.",p:"Trösten Sie sie und geben Sie ihr Tipps für das nächste Mal.",k:["prüfung","traurig","trösten","tipp","nächste","lernen","schaffst"]},
+{s:"Sie möchten in einem neuen Land ein Bankkonto eröffnen.",p:"Fragen Sie, welche Dokumente Sie brauchen und wie das geht.",k:["bank","konto","eröffnen","dokumente","ausweis","brauche","wie"]},
+{s:"Sie verabreden sich mit Kollegen zum Mittagessen.",p:"Schlagen Sie ein Lokal vor und einigen Sie sich auf eine Uhrzeit.",k:["mittagessen","kollegen","lokal","vorschlag","uhr","wann","treffen"]},
+{s:"Sie möchten Ihrem Freund Ihr Lieblingsbuch empfehlen.",p:"Erzählen Sie, worum es geht und warum es Ihnen gefällt.",k:["buch","empfehlen","geht um","gefällt","lesen","interessant","weil"]},
+{s:"Sie sind auf einer Party und lernen jemanden Neues kennen.",p:"Stellen Sie sich vor und stellen Sie ein paar Fragen.",k:["party","heiße","komme","wohnst","machst","kennenlernen","gern"]},
+{s:"Sie haben den falschen Bus genommen und brauchen Hilfe.",p:"Fragen Sie einen Mitfahrer, wie Sie zu Ihrem Ziel kommen.",k:["bus","falsch","ziel","wie","umsteigen","haltestelle","hilfe"]},
+{s:"Sie möchten Ihrem Nachbarn helfen, der gerade einzieht.",p:"Bieten Sie Ihre Hilfe an und fragen Sie, was Sie tun können.",k:["nachbar","einziehen","helfen","tragen","kisten","kann ich","gern"]},
+{s:"Im Kino sind Sie sich über den Film nicht einig.",p:"Sagen Sie, welchen Film Sie sehen möchten, und begründen Sie es.",k:["kino","film","möchte","weil","sehen","lieber","interessant"]},
+{s:"Sie möchten ein Zugticket für eine Reise nach Hamburg kaufen.",p:"Sagen Sie, wann Sie fahren möchten, und fragen Sie nach dem Preis.",k:["zugticket","hamburg","fahren","wann","preis","hin und zurück","uhr"]},
+{s:"Ein Freund fragt Sie nach einem guten Restaurant.",p:"Empfehlen Sie eins und erklären Sie, was dort besonders gut ist.",k:["restaurant","empfehlen","gut","essen","dort","besonders","weil"]},
+{s:"Sie wollen mit Freunden einen Filmabend zu Hause organisieren.",p:"Besprechen Sie, wer was mitbringt und wann es losgeht.",k:["filmabend","zu hause","mitbringen","wann","wer","essen","organisieren"]},
+{s:"Sie möchten sich für einen Deutschkurs anmelden.",p:"Fragen Sie nach dem passenden Niveau, dem Preis und dem Beginn.",k:["deutschkurs","anmelden","niveau","preis","beginn","wann","lernen"]},
+];
+
+const st={
+  mode:'h', hEx:0, sEx:0,
+  rf:{i:0,ok:0,tot:0,done:new Set()},
+  dk:{i:0,ok:0,tot:0,done:new Set(),ans:{}},
+  tv:{ti:0,qi:0,ok:0,tot:0,done:new Set()},
+  pr:{i:0,scores:[],totalAcc:0,evaled:0},
+  fr:{i:0},
+  si:{i:0,secs:0},
+};
+
+// ═══════ HELPERS ═══════
+function $id(id){return document.getElementById(id);}
+function tog(id){const h=$id(id);if(h)h.classList.toggle('vis');}
+function setPlayBtn(id,playing){const b=$id(id);if(!b)return;b.innerHTML=playing?'<i class="bi-stop-fill"></i>':'<i class="bi-play-fill"></i>';b.classList.toggle('playing',playing);}
+// Score German voices so we prefer natural/neural ones over the basic robotic local voice.
+function voiceScore(v){
+  const n=(v.name||'').toLowerCase();
+  let s=0;
+  if(!v.localService)s+=6;                                  // online voices are usually neural and far less robotic
+  if(/natural|neural|wavenet|premium|enhanced/.test(n))s+=5;
+  if(/google/.test(n))s+=4;                                 // "Google Deutsch" sounds much better than eSpeak
+  if(/microsoft/.test(n)&&/online|natural/.test(n))s+=4;
+  if(/eddy|reed|sandy|grandma|grandpa|flo|rocko|shelley/.test(n))s+=3; // Apple's newer natural voices
+  if(/anna|petra|markus|katja|conrad|hedda|stefan|amala|ingrid/.test(n))s+=1;
+  if(v.lang==='de-DE')s+=1;
+  if(/espeak|compact|robot/.test(n))s-=4;                   // explicitly avoid the robotic ones
+  return s;
+}
+let _bestVoice=null;
+function bestGermanVoice(){
+  if(!window.speechSynthesis)return null;
+  const de=window.speechSynthesis.getVoices().filter(x=>x.lang&&x.lang.toLowerCase().startsWith('de'));
+  if(!de.length)return null;
+  _bestVoice=de.slice().sort((a,b)=>voiceScore(b)-voiceScore(a))[0];
+  return _bestVoice;
+}
+// Selected voice. 'google' = Google Translate TTS; otherwise the name of a native voice.
+let _voiceSel='google';
+function setVoice(val){stopSpeak();_voiceSel=val;}
+function nativeVoiceByName(name){
+  if(!window.speechSynthesis)return null;
+  return window.speechSynthesis.getVoices().find(v=>v.name===name)||null;
+}
+// Browser Web Speech API voice (used when picked explicitly, or as offline fallback for Google).
+function speakNative(txt,cb,rate=0.82){
+  if(!window.speechSynthesis){if(cb)cb();return;}
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='de-DE';u.rate=rate;u.pitch=1;
+  const v=(_voiceSel!=='google'&&nativeVoiceByName(_voiceSel))||_bestVoice||bestGermanVoice();
+  if(v)u.voice=v;
+  u.onend=()=>{if(cb)cb();};u.onerror=()=>{if(cb)cb();};
+  window.speechSynthesis.speak(u);
+}
+// Build the <select>: Google natural voice first, then every available native German voice.
+function populateVoices(){
+  const sel=$id('voiceSel');if(!sel)return;
+  const prev=_voiceSel;
+  const de=window.speechSynthesis?window.speechSynthesis.getVoices()
+    .filter(x=>x.lang&&x.lang.toLowerCase().startsWith('de')):[];
+  let html='<option value="google">Google Deutsch (natural)</option>';
+  de.sort((a,b)=>voiceScore(b)-voiceScore(a)).forEach(v=>{
+    const label=v.name+(v.localService?'':' - online');
+    html+='<option value="'+v.name.replace(/"/g,'&quot;')+'">'+label+'</option>';
+  });
+  sel.innerHTML=html;
+  // Keep the previous choice if it still exists.
+  if([...sel.options].some(o=>o.value===prev))sel.value=prev;else{sel.value='google';_voiceSel='google';}
+}
+
+// Primary: Google Translate TTS (free, natural "Google Deutsch" voice). Streams MP3 chunks
+// through an <audio> element; no API key. Falls back to the native voice on any failure.
+let _gAudio=null,_gActive=false;
+function splitForTTS(txt,max=190){
+  const parts=[],sentences=txt.trim().match(/[^.!?…]+[.!?…]*\s*/g)||[txt.trim()];
+  let cur='';
+  for(const sen of sentences){
+    if((cur+sen).length<=max){cur+=sen;continue;}
+    if(cur){parts.push(cur.trim());cur='';}
+    if(sen.length<=max){cur=sen;continue;}
+    let w='';
+    for(const word of sen.split(/\s+/)){
+      if((w+' '+word).trim().length<=max){w=(w+' '+word).trim();}
+      else{if(w)parts.push(w);w=word;}
+    }
+    cur=w?w+' ':'';
+  }
+  if(cur.trim())parts.push(cur.trim());
+  return parts;
+}
+function gTtsUrl(chunk,rate){
+  // ttsspeed lets us approximate the requested rate (slow dictation -> ~0.4).
+  const speed=rate<0.75?0.4:1;
+  return 'https://translate.google.com/translate_tts?ie=UTF-8&tl=de&client=tw-ob'
+    +'&ttsspeed='+speed+'&q='+encodeURIComponent(chunk);
+}
+function speak(txt,cb,rate=0.82){
+  stopSpeak();
+  if(_voiceSel!=='google'){speakNative(txt,cb,rate);return;}
+  const chunks=splitForTTS(txt);
+  _gActive=true;
+  let i=0,fellBack=false;
+  const a=_gAudio=new Audio();
+  const done=()=>{_gActive=false;if(cb)cb();};
+  const next=()=>{
+    if(!_gActive||a!==_gAudio)return;        // a stopSpeak() happened
+    if(i>=chunks.length){done();return;}
+    a.src=gTtsUrl(chunks[i++],rate);
+    a.play().catch(fail);
+  };
+  const fail=()=>{
+    if(fellBack||!_gActive||a!==_gAudio)return;
+    fellBack=true;_gActive=false;
+    // Speak the not-yet-played remainder with the native voice.
+    speakNative(chunks.slice(Math.max(0,i-1)).join(' '),cb,rate);
+  };
+  a.onended=next;
+  a.onerror=fail;
+  next();
+}
+function stopSpeak(){
+  _gActive=false;
+  if(_gAudio){_gAudio.onended=_gAudio.onerror=null;try{_gAudio.pause();}catch(e){}_gAudio=null;}
+  if(window.speechSynthesis)window.speechSynthesis.cancel();
+}
+// If the given play button is currently playing, stop audio and reset it. Returns true if it stopped.
+function toggleStop(id){
+  const b=$id(id);
+  if(b&&b.classList.contains('playing')){stopSpeak();setPlayBtn(id,false);return true;}
+  return false;
+}
+function normText(s){return s.toLowerCase().replace(/[.,!?;:„"–\-]/g,'').replace(/\s+/g,' ').trim();}
+function getWords(s){return normText(s).split(' ').filter(Boolean);}
+
+function colorClass(score){
+  if(score>=0.9)return 'g100';
+  if(score>=0.8)return 'g90';
+  if(score>=0.65)return 'g75';
+  if(score>=0.5)return 'g60';
+  if(score>=0.4)return 'g50';
+  if(score>=0.25)return 'g35';
+  if(score>=0.1)return 'g20';
+  return 'g0';
+}
+
+function colorLabel(score){
+  if(score>=0.85)return '<i class="bi-circle-fill" style="color:#5aab8a"></i> Ausgezeichnet';
+  if(score>=0.7)return '<i class="bi-circle-fill" style="color:#E0A828"></i> Gut';
+  if(score>=0.5)return '<i class="bi-circle-fill" style="color:#E07A5F"></i> Ausreichend';
+  return '<i class="bi-circle-fill" style="color:#c96060"></i> Zu überarbeiten';
+}
+
+function updateScores(){
+  const hOk=st.rf.ok+st.dk.ok+st.tv.ok;
+  const hTot=st.rf.tot+st.dk.tot+st.tv.tot;
+  $id('sc_h').textContent=`Hören: ${hOk}/${hTot}`;
+  const avg=st.pr.evaled>0?Math.round(st.pr.totalAcc/st.pr.evaled):0;
+  $id('sc_s').textContent=`Sprechen: ${st.pr.evaled} bew.`;
+  $id('sc_a').textContent=`Accuracy: ${avg||'—'}%`;
+  // progress
+  const done=st.rf.done.size+st.dk.done.size+st.tv.done.size;
+  const total=RF.length+DK.length+TV.reduce((a,t)=>a+t.qs.length,0);
+  $id('pgbar').style.width=Math.round(done/total*100)+'%';
+}
+
+// ═══════ MODE / TAB ═══════
+function setMode(m){
+  st.mode=m;
+  stopSpeak();
+  $id('mh').classList.toggle('vis',m==='h');
+  $id('ms').classList.toggle('vis',m==='s');
+  document.querySelectorAll('.mnb').forEach((b,i)=>{
+    b.className='mnb';
+    if(i===0&&m==='h')b.classList.add('ah');
+    if(i===1&&m==='s')b.classList.add('as');
+  });
+  $id('pgbar').className='pg '+(m==='h'?'h':'s');
+  updateScores();
+}
+function setHEx(i){
+  st.hEx=i;stopSpeak();
+  [0,1,2].forEach(j=>$id('hx'+j).classList.toggle('vis',j===i));
+  document.querySelectorAll('#htabs .etb').forEach((b,j)=>b.classList.toggle('act',j===i));
+}
+function setSEx(i){
+  st.sEx=i;stopAllRec();
+  [0,1,2].forEach(j=>$id('sx'+j).classList.toggle('vis',j===i));
+  document.querySelectorAll('#stabs .etb').forEach((b,j)=>b.classList.toggle('act',j===i));
+}
+
+// ═══════ HÖREN: RF ═══════
+function initRF(){$id('rf_tot').textContent=RF.length;renderRF();}
+function renderRF(){
+  const d=RF[st.rf.i];
+  $id('rf_idx').textContent=st.rf.i+1;
+  $id('rf_atxt').innerHTML='Drücke <i class="bi-play-fill"></i> um die Aussage zu hören.';
+  $id('rf_q').textContent='Höre dir die Aussage an und entscheide: richtig oder falsch?';
+  $id('rf_fb').className='fb';
+  document.querySelectorAll('.rfb').forEach(b=>{b.disabled=false;b.className='rfb '+(b.textContent.includes('Richtig')?'r':'f');});
+  $id('rf_ctr').textContent=`${st.rf.ok}/${st.rf.tot} richtig`;
+  setPlayBtn('rfpb',false);
+}
+function playRF(force){if(!force&&toggleStop('rfpb'))return;const d=RF[st.rf.i];setPlayBtn('rfpb',true);speak(d.t,()=>setPlayBtn('rfpb',false));}
+function checkRF(ans){
+  const d=RF[st.rf.i];const key='rf'+st.rf.i;
+  if(st.rf.done.has(key))return;
+  st.rf.done.add(key);st.rf.tot++;
+  const ok=ans===d.c;if(ok)st.rf.ok++;
+  document.querySelectorAll('.rfb').forEach(b=>{
+    b.disabled=true;
+    const isR=b.textContent.includes('Richtig');
+    if(isR===d.c)b.classList.add('sok');
+    else if(isR===ans&&!ok)b.classList.add('serr');
+  });
+  const fb=$id('rf_fb');
+  fb.innerHTML=(ok?'<i class="bi-check-circle-fill"></i>Richtig! ':'<i class="bi-x-circle-fill"></i>Falsch. ')+d.e;
+  fb.className='fb '+(ok?'ok':'er')+' vis';
+  $id('rf_ctr').textContent=`${st.rf.ok}/${st.rf.tot} richtig`;
+  updateScores();
+}
+function navRF(d){const n=st.rf.i+d;if(n>=0&&n<RF.length){st.rf.i=n;renderRF();}}
+
+// ═══════ HÖREN: DIKTAT ═══════
+function initDK(){$id('dk_tot').textContent=DK.length;renderDK();}
+function renderDK(){
+  const d=DK[st.dk.i];const key='dk'+st.dk.i;
+  $id('dk_idx').textContent=st.dk.i+1;
+  const inp=$id('dk_inp');
+  inp.value=st.dk.ans[st.dk.i]||'';
+  inp.className='ti';inp.disabled=false;
+  $id('dk_fb').className='fb';
+  $id('dk_hint').textContent='Tipp: '+d.h;$id('dk_hint').classList.remove('vis');
+  $id('dk_ctr').textContent=`${st.dk.ok}/${st.dk.tot} richtig`;
+  setPlayBtn('dkpb',false);
+  // Restore graded state when revisiting an already-checked item.
+  if(st.dk.done.has(key))showDKResult(d,inp.value.trim());
+}
+function showDKResult(d,val){
+  const inp=$id('dk_inp');
+  const tW=getWords(d.t);const uW=getWords(val);
+  const matched=uW.filter(w=>tW.includes(w)).length;
+  const score=matched/tW.length;
+  const exact=normText(val)===normText(d.t);
+  inp.disabled=true;inp.classList.add(score>=0.7?'ok':'er');
+  const pct=Math.round(score*100);
+  const fb=$id('dk_fb');
+  fb.innerHTML=(exact?`<i class="bi-check-circle-fill"></i>Perfekt! Genau richtig.`:`${colorLabel(score)} · ${pct}% Wörter korrekt.<br>Richtig: <em style="font-family:var(--font);font-weight:500">${d.t}</em>`);
+  fb.className='fb '+(score>=0.7?'ok':score>=0.45?'wn':'er')+' vis';
+}
+function playDK(force){if(!force&&toggleStop('dkpb'))return;const d=DK[st.dk.i];setPlayBtn('dkpb',true);speak(d.t,()=>setPlayBtn('dkpb',false),0.68);}
+function checkDK(){
+  const d=DK[st.dk.i];const key='dk'+st.dk.i;
+  const inp=$id('dk_inp');const val=inp.value.trim();
+  if(!val||st.dk.done.has(key))return;
+  st.dk.ans[st.dk.i]=val;
+  st.dk.done.add(key);st.dk.tot++;
+  const tW=getWords(d.t);const uW=getWords(val);
+  const matched=uW.filter(w=>tW.includes(w)).length;
+  const score=matched/tW.length;
+  const exact=normText(val)===normText(d.t);
+  if(exact||score>=0.95)st.dk.ok++;
+  showDKResult(d,val);
+  $id('dk_ctr').textContent=`${st.dk.ok}/${st.dk.tot} richtig`;
+  updateScores();
+}
+function navDK(d){
+  // Preserve the current answer before leaving this item.
+  st.dk.ans[st.dk.i]=$id('dk_inp').value;
+  const n=st.dk.i+d;if(n>=0&&n<DK.length){st.dk.i=n;renderDK();}
+}
+
+// ═══════ HÖREN: TV ═══════
+function initTV(){$id('tv_tt').textContent=TV.length;renderTV();}
+function renderTV(){
+  const {ti,qi}=st.tv;const t=TV[ti];const q=t.qs[qi];
+  $id('tv_ti').textContent=ti+1;$id('tv_qi').textContent=qi+1;$id('tv_qt').textContent=t.qs.length;
+  $id('tv_al').textContent=`Text: „${t.title}"`;
+  $id('tv_q').textContent=q.q;
+  const opts=$id('tv_opts');opts.innerHTML='';
+  const L=['A','B','C','D'];
+  q.o.forEach((o,i)=>{
+    const b=document.createElement('button');b.className='mcb';
+    b.innerHTML=`<span class="ltr">${L[i]}</span>${o}`;
+    b.onclick=()=>checkTV(i);opts.appendChild(b);
+  });
+  $id('tv_fb').className='fb';
+  $id('tv_ctr').textContent=`${st.tv.ok}/${st.tv.tot} richtig`;
+  setPlayBtn('tvpb',false);
+}
+function playTV(force){if(!force&&toggleStop('tvpb'))return;const t=TV[st.tv.ti];setPlayBtn('tvpb',true);speak(t.text,()=>setPlayBtn('tvpb',false),0.8);}
+function checkTV(chosen){
+  const key=`tv${st.tv.ti}_${st.tv.qi}`;if(st.tv.done.has(key))return;
+  st.tv.done.add(key);st.tv.tot++;
+  const q=TV[st.tv.ti].qs[st.tv.qi];const ok=chosen===q.a;if(ok)st.tv.ok++;
+  document.querySelectorAll('#tv_opts .mcb').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('ok');else if(i===chosen)b.classList.add('er');});
+  const fb=$id('tv_fb');fb.innerHTML=(ok?'<i class="bi-check-circle-fill"></i>Richtig! ':'<i class="bi-x-circle-fill"></i>Falsch. ')+q.e;fb.className='fb '+(ok?'ok':'er')+' vis';
+  $id('tv_ctr').textContent=`${st.tv.ok}/${st.tv.tot} richtig`;updateScores();
+}
+function navTV(d){
+  const t=TV[st.tv.ti];
+  if(d>0){if(st.tv.qi<t.qs.length-1)st.tv.qi++;else if(st.tv.ti<TV.length-1){st.tv.ti++;st.tv.qi=0;}}
+  else{if(st.tv.qi>0)st.tv.qi--;else if(st.tv.ti>0){st.tv.ti--;st.tv.qi=TV[st.tv.ti-1]?TV[st.tv.ti].qs.length-1:0;}}
+  renderTV();
+}
+
+// ═══════ RECOGNITION ═══════
+let activeRec=null;
+let prFinal='',frFinal='',siFinal='';
+let siTimer=null,siSecs=0;
+
+function createRec(onResult,onEnd){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR)return null;
+  const r=new SR();r.lang='de-DE';r.continuous=true;r.interimResults=true;
+  r.onresult=e=>{let fin='',int='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)fin+=e.results[i][0].transcript+' ';else int+=e.results[i][0].transcript;}onResult(fin,int);};
+  r.onend=onEnd;r.onerror=()=>onEnd();return r;
+}
+function stopAllRec(){
+  if(activeRec){try{activeRec.stop();}catch(e){}activeRec=null;}
+  if(siTimer){clearInterval(siTimer);siTimer=null;}
+  ['pr_mb','fr_mb','si_mb'].forEach(id=>{const b=$id(id);if(b){b.classList.remove('rec');b.innerHTML='<i class="bi-mic-fill"></i>';}});
+}
+
+// ═══════ SPRECHEN: AUSSPRACHE ═══════
+function initPR(){$id('pr_tot').textContent=PR.length;renderPR();}
+function renderPR(){
+  const d=PR[st.pr.i];
+  $id('pr_idx').textContent=st.pr.i+1;
+  $id('pr_diff').textContent=d.d;
+  // Render word chips (pending state)
+  const wc=$id('pr_words');wc.innerHTML='';
+  getWords(d.t).forEach(w=>{const s=document.createElement('span');s.className='pw pend';s.textContent=w;wc.appendChild(s);});
+  $id('pr_tb').textContent='Deine gesprochene Version erscheint hier…';$id('pr_tb').className='tb em';
+  $id('pr_accbar').style.display='none';
+  $id('pr_fb').className='fb';
+  $id('pr_ms').textContent='Drücke zum Aufnehmen';
+  $id('pr_ctr').textContent=`${st.pr.evaled}/${PR.length} bewertet · Ø ${st.pr.evaled?Math.round(st.pr.totalAcc/st.pr.evaled):0}%`;
+  prFinal='';
+}
+function togPron(){
+  if(activeRec){stopAllRec();return;}
+  const btn=$id('pr_mb'),status=$id('pr_ms'),box=$id('pr_tb');
+  prFinal='';box.className='tb';box.textContent='…';
+  const rec=createRec(
+    (fin,int)=>{if(fin)prFinal+=fin;box.textContent=(prFinal+int)||'…';},
+    ()=>{btn.classList.remove('rec');btn.innerHTML='<i class="bi-mic-fill"></i>';status.textContent='Auswertung…';activeRec=null;if(prFinal.trim())evalPron();}
+  );
+  if(!rec){status.innerHTML='<i class="bi-exclamation-triangle-fill"></i> Chrome/Edge benötigt';return;}
+  activeRec=rec;rec.start();btn.classList.add('rec');btn.innerHTML='<i class="bi-stop-fill"></i>';
+  status.innerHTML='<i class="bi-record-circle-fill" style="color:#c96060"></i> Aufnahme läuft — nochmal drücken zum Beenden';
+}
+function evalPron(){
+  const d=PR[st.pr.i];
+  const target=getWords(d.t);
+  const spoken=getWords(prFinal);
+  // Per-word scoring using fuzzy match (Levenshtein-based)
+  function lev(a,b){
+    const m=a.length,n=b.length;
+    const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));
+    for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+    return dp[m][n];
+  }
+  function bestMatch(w,candidates){
+    let best=0;
+    candidates.forEach(c=>{const sim=1-lev(w,c)/Math.max(w.length,c.length,1);if(sim>best)best=sim;});
+    return best;
+  }
+  // Score each target word
+  const wordScores=target.map(w=>bestMatch(w,spoken));
+  const overallAcc=wordScores.reduce((a,b)=>a+b,0)/target.length;
+  const pct=Math.round(overallAcc*100);
+  // Update word chips
+  const chips=$id('pr_words').querySelectorAll('.pw');
+  chips.forEach((chip,i)=>{chip.className='pw '+colorClass(wordScores[i]);});
+  // Accuracy bar
+  $id('pr_accbar').style.display='';
+  $id('pr_acc_pct').textContent=pct+'%';
+  $id('pr_acc_fill').style.width=pct+'%';
+  // Score cards
+  const matched=wordScores.filter(s=>s>=0.85).length;
+  const partial=wordScores.filter(s=>s>=0.5&&s<0.85).length;
+  const missed=wordScores.filter(s=>s<0.5).length;
+  const cls=pct>=75?'gd':pct>=50?'md':'bd';
+  $id('pr_score_cards').innerHTML=`
+    <div class="sc-card"><div class="sc-num ${cls}">${pct}%</div><div class="sc-lbl">Gesamt</div></div>
+    <div class="sc-card"><div class="sc-num gd">${matched}</div><div class="sc-lbl"><i class="bi-circle-fill" style="color:#5aab8a"></i> Korrekt</div></div>
+    <div class="sc-card"><div class="sc-num md">${partial}</div><div class="sc-lbl"><i class="bi-circle-fill" style="color:#E0A828"></i> Teilweise</div></div>
+    <div class="sc-card"><div class="sc-num bd">${missed}</div><div class="sc-lbl"><i class="bi-circle-fill" style="color:#c96060"></i> Fehlt</div></div>`;
+  // Recommendations
+  const recs=[];
+  if(missed>0){
+    const missedWords=target.filter((_,i)=>wordScores[i]<0.5);
+    recs.push({icon:'<i class="bi-record-circle-fill" style="color:#c96060"></i>',txt:`<strong>Nicht erkannte Wörter:</strong> ${missedWords.slice(0,5).join(', ')}. Übe diese gezielt langsam und deutlich.`});
+  }
+  if(partial>0){
+    const partialWords=target.filter((_,i)=>wordScores[i]>=0.5&&wordScores[i]<0.85);
+    recs.push({icon:'<i class="bi-record-circle-fill" style="color:#E0A828"></i>',txt:`<strong>Unsichere Wörter:</strong> ${partialWords.slice(0,4).join(', ')}. Sprich sie einzeln und dann im Satz.`});
+  }
+  if(pct<50)recs.push({icon:'<i class="bi-lightbulb-fill"></i>',txt:'<strong>Tipp:</strong> Hör dir zuerst den Satz mit <i class="bi-play-fill"></i> an und wiederhole ihn Wort für Wort.'});
+  if(pct>=50&&pct<75)recs.push({icon:'<i class="bi-lightbulb-fill"></i>',txt:'<strong>Tipp:</strong> Sprich etwas langsamer und betone die Silben stärker.'});
+  if(pct>=75&&pct<90)recs.push({icon:'<i class="bi-stars"></i>',txt:'<strong>Gut!</strong> Versuche nun den Satz noch flüssiger zu sprechen, ohne Pausen.'});
+  if(pct>=90)recs.push({icon:'<i class="bi-star-fill"></i>',txt:'<strong>Ausgezeichnet!</strong> Deine Aussprache entspricht dem B1-Niveau.'});
+  // Phonetic tips for German-specific issues
+  const sp=getWords(prFinal).join(' ');
+  if(/[aeiou]{2,}/.test(sp)||pct<60){
+    recs.push({icon:'<i class="bi-volume-up-fill"></i>',txt:'<strong>Phonetik-Tipp:</strong> Im Deutschen sprich Vokale kurz und klar. Beachte: ü, ö, ä, ch, sch, st, sp.'});
+  }
+  $id('pr_recs').innerHTML='<div class="recs-hdr">Empfehlungen</div>'+recs.map(r=>`<div class="rec-item"><span class="rec-icon">${r.icon}</span><span class="rec-text">${r.txt}</span></div>`).join('');
+  // Feedback line
+  const fb=$id('pr_fb');
+  fb.innerHTML=`${colorLabel(overallAcc)} · ${pct}% Wortgenauigkeit · ${matched}/${target.length} Wörter korrekt erkannt`;
+  fb.className='fb '+(pct>=70?'ok':pct>=45?'wn':'er')+' vis';
+  // Update cumulative
+  st.pr.totalAcc+=pct;st.pr.evaled++;
+  $id('pr_ms').textContent=`Auswertung: ${pct}% · Durchschnitt: ${Math.round(st.pr.totalAcc/st.pr.evaled)}%`;
+  $id('pr_ctr').textContent=`${st.pr.evaled}/${PR.length} bewertet · Ø ${Math.round(st.pr.totalAcc/st.pr.evaled)}%`;
+  updateScores();
+}
+function navPR(d){const n=st.pr.i+d;if(n>=0&&n<PR.length){st.pr.i=n;stopAllRec();renderPR();}}
+
+// ═══════ SPRECHEN: FREIE ANTWORT ═══════
+function initFR(){$id('fr_tot').textContent=FR.length;renderFR();}
+function renderFR(){
+  const d=FR[st.fr.i];
+  $id('fr_idx').textContent=st.fr.i+1;
+  $id('fr_q').textContent=d.q;
+  $id('fr_hint').textContent=d.h;
+  $id('fr_tb').textContent='Deine Antwort erscheint hier…';$id('fr_tb').className='tb em';
+  $id('fr_result').style.display='none';
+  $id('fr_fb').className='fb';
+  $id('fr_ms').textContent='Drücke und antworte auf Deutsch';
+  $id('fr_ctr').textContent=`Frage ${st.fr.i+1}/${FR.length}`;
+  frFinal='';
+}
+function togFree(){
+  if(activeRec){stopAllRec();return;}
+  const btn=$id('fr_mb'),status=$id('fr_ms'),box=$id('fr_tb');
+  frFinal='';box.className='tb';box.textContent='…';
+  const rec=createRec(
+    (fin,int)=>{if(fin)frFinal+=fin;box.textContent=(frFinal+int)||'…';},
+    ()=>{btn.classList.remove('rec');btn.innerHTML='<i class="bi-mic-fill"></i>';status.textContent='Aufnahme beendet.';activeRec=null;}
+  );
+  if(!rec){status.innerHTML='<i class="bi-exclamation-triangle-fill"></i> Chrome/Edge benötigt';return;}
+  activeRec=rec;rec.start();btn.classList.add('rec');btn.innerHTML='<i class="bi-stop-fill"></i>';
+  status.innerHTML='<i class="bi-record-circle-fill" style="color:#c96060"></i> Läuft — nochmal drücken zum Beenden';
+}
+function evalFree(){
+  const txt=frFinal.trim();
+  if(!txt){$id('fr_fb').innerHTML='<i class="bi-exclamation-triangle-fill"></i> Noch keine Antwort aufgenommen.';$id('fr_fb').className='fb wn vis';return;}
+  const words=txt.split(/\s+/).filter(Boolean).length;
+  const sents=(txt.match(/[.!?]+/g)||[]).length+1;
+  const lower=txt.toLowerCase();
+  // Linguistic analysis
+  const hasKonnektoren=/weil|obwohl|deshalb|außerdem|jedoch|zudem|einerseits|andererseits|trotzdem|daher|denn|da |indem|sobald|seitdem|nachdem|während|damit|falls|und |aber |oder /.test(lower);
+  const hasKII=/würde|hätte|wäre|könnte|müsste|dürfte|ließe|möchte/.test(lower);
+  const hasOpinion=/ich denke|ich glaube|meiner meinung|meiner ansicht|ich finde|ich bin der|meines erachtens|aus meiner sicht|ich mag/.test(lower);
+  const hasExamples=/zum beispiel|beispielsweise|etwa |so zeigt|wie zum|man denke/.test(lower);
+  const hasFazit=/zusammenfassend|abschließend|insgesamt|fazit|also |deshalb|daher gilt|zum schluss/.test(lower);
+  const hasPassiv=/wird |wurde |werden |worden|ist \w+t\b/.test(lower);
+  // Scores
+  let scores={};
+  scores.laenge=Math.min(1,words/60);
+  scores.konnektoren=hasKonnektoren?1:0.1;
+  scores.konjunktiv=hasKII?1:0.2;
+  scores.meinung=hasOpinion?1:0.2;
+  scores.beispiele=hasExamples?0.9:0.3;
+  scores.struktur=hasFazit?0.9:0.4;
+  scores.passiv=hasPassiv?0.8:0.5;
+  const overall=Math.round((scores.laenge*20+scores.konnektoren*20+scores.konjunktiv*15+scores.meinung*15+scores.beispiele*10+scores.struktur*10+scores.passiv*10));
+  // Cards
+  $id('fr_result').style.display='';
+  const cls=overall>=70?'gd':overall>=45?'md':'bd';
+  $id('fr_cards').innerHTML=`
+    <div class="sc-card"><div class="sc-num ${cls}">${overall}%</div><div class="sc-lbl">Gesamt</div></div>
+    <div class="sc-card"><div class="sc-num ${scores.laenge>=0.6?'gd':'bd'}">${words}</div><div class="sc-lbl">Wörter</div></div>
+    <div class="sc-card"><div class="sc-num ${sents>=3?'gd':'md'}">${sents}</div><div class="sc-lbl">Sätze</div></div>`;
+  // Recs
+  const recs=[];
+  if(words<40)recs.push({icon:'<i class="bi-pencil-square"></i>',txt:`<strong>Zu kurz:</strong> Nur ${words} Wörter. Ziel: mindestens 50-70 Wörter für eine vollständige B1-Antwort.`});
+  if(!hasKonnektoren)recs.push({icon:'<i class="bi-link-45deg"></i>',txt:'<strong>Konnektoren fehlen:</strong> Verwende Verbindungswörter wie <em>weil, deshalb, außerdem, aber, und, dann</em>.'});
+  if(!hasKII)recs.push({icon:'<i class="bi-rulers"></i>',txt:'<strong>Höfliche Formen fehlen:</strong> Verwende <em>würde, möchte, könnte</em> für Wünsche oder höfliche Aussagen.'});
+  if(!hasOpinion)recs.push({icon:'<i class="bi-chat-dots-fill"></i>',txt:'<strong>Meinung fehlt:</strong> Drücke deine Meinung aus: <em>Ich finde, dass …, Ich denke …, Meiner Meinung nach …</em>'});
+  if(!hasExamples)recs.push({icon:'<i class="bi-lightbulb-fill"></i>',txt:'<strong>Beispiele fehlen:</strong> Gib ein Beispiel: <em>Zum Beispiel …, Beispielsweise …</em>'});
+  if(!hasFazit)recs.push({icon:'<i class="bi-flag-fill"></i>',txt:'<strong>Abschluss fehlt:</strong> Schließe deine Antwort: <em>Zum Schluss …, Insgesamt …, Also …</em>'});
+  if(recs.length===0)recs.push({icon:'<i class="bi-star-fill"></i>',txt:'<strong>Ausgezeichnet!</strong> Du verwendest eine breite Palette grammatischer Strukturen — typisch für B1/B2.'});
+  $id('fr_recs').innerHTML='<div class="recs-hdr">Empfehlungen</div>'+recs.map(r=>`<div class="rec-item"><span class="rec-icon">${r.icon}</span><span class="rec-text">${r.txt}</span></div>`).join('');
+  const fb=$id('fr_fb');
+  fb.innerHTML=`${colorLabel(overall/100)} · ${overall}% · ${words} Wörter, ${sents} Sätze`;
+  fb.className='fb '+(overall>=70?'ok':overall>=45?'wn':'er')+' vis';
+  updateScores();
+}
+function navFR(d){const n=st.fr.i+d;if(n>=0&&n<FR.length){st.fr.i=n;stopAllRec();renderFR();}}
+
+// ═══════ SPRECHEN: SITUATION ═══════
+function initSI(){$id('si_tot').textContent=SI.length;renderSI();}
+function renderSI(){
+  const d=SI[st.si.i];
+  $id('si_idx').textContent=st.si.i+1;
+  $id('si_txt').textContent=d.s;
+  $id('si_prompt').innerHTML='<i class="bi-arrow-right-short"></i> '+d.p;
+  $id('si_tb').textContent='Dein Text erscheint hier…';$id('si_tb').className='tb em';
+  $id('si_result').style.display='none';
+  $id('si_fb').className='fb';
+  $id('si_ms').textContent='Drücke · Sprich ≥ 30 Sekunden';
+  $id('si_ctr').textContent=`Situation ${st.si.i+1}/${SI.length}`;
+  siFinal='';siSecs=0;
+}
+function togSitu(){
+  if(activeRec){stopAllRec();return;}
+  const btn=$id('si_mb'),status=$id('si_ms'),box=$id('si_tb');
+  siFinal='';siSecs=0;box.className='tb';box.textContent='…';
+  const rec=createRec(
+    (fin,int)=>{if(fin)siFinal+=fin;box.textContent=(siFinal+int)||'…';},
+    ()=>{btn.classList.remove('rec');btn.innerHTML='<i class="bi-mic-fill"></i>';if(siTimer){clearInterval(siTimer);siTimer=null;}status.textContent=`Aufnahme beendet · ${siSecs}s`;activeRec=null;}
+  );
+  if(!rec){status.innerHTML='<i class="bi-exclamation-triangle-fill"></i> Chrome/Edge benötigt';return;}
+  activeRec=rec;rec.start();btn.classList.add('rec');btn.innerHTML='<i class="bi-stop-fill"></i>';
+  siTimer=setInterval(()=>{siSecs++;status.innerHTML=`<i class="bi-record-circle-fill" style="color:#c96060"></i> ${siSecs}s aufgenommen (Ziel: ≥30s)`;},1000);
+}
+function evalSitu(){
+  const txt=siFinal.trim();
+  if(!txt){$id('si_fb').innerHTML='<i class="bi-exclamation-triangle-fill"></i> Noch keine Aufnahme.';$id('si_fb').className='fb wn vis';return;}
+  const d=SI[st.si.i];
+  const words=txt.split(/\s+/).filter(Boolean).length;
+  const lower=txt.toLowerCase();
+  const kwFound=d.k.filter(k=>lower.includes(k)).length;
+  const hasConn=/weil|obwohl|deshalb|außerdem|jedoch|einerseits|andererseits|trotzdem|daher|indem|falls|sodass|und |aber |dann/.test(lower);
+  const hasOpinion=/ich denke|ich glaube|meiner meinung|meiner ansicht|ich finde|aus meiner sicht|ich möchte/.test(lower);
+  const hasKII=/würde|hätte|wäre|könnte|müsste|möchte/.test(lower);
+  const hasPro=/vorteil|dafür|pro |positiv|gut |gern|für /.test(lower);
+  const hasKontra=/nachteil|dagegen|kontra|negativ|problem|aber |leider/.test(lower);
+  // Scoring
+  let overall=0;
+  overall+=Math.min(25,Math.round(siSecs/30*25));
+  overall+=Math.min(20,Math.round(words/60*20));
+  overall+=Math.round(kwFound/d.k.length*25);
+  if(hasConn)overall+=10;
+  if(hasOpinion)overall+=8;
+  if(hasKII)overall+=7;
+  if(hasPro&&hasKontra)overall+=5;
+  overall=Math.min(100,overall);
+  $id('si_result').style.display='';
+  const cls=overall>=70?'gd':overall>=45?'md':'bd';
+  $id('si_cards').innerHTML=`
+    <div class="sc-card"><div class="sc-num ${cls}">${overall}%</div><div class="sc-lbl">Gesamt</div></div>
+    <div class="sc-card"><div class="sc-num ${siSecs>=30?'gd':'bd'}">${siSecs}s</div><div class="sc-lbl">Dauer</div></div>
+    <div class="sc-card"><div class="sc-num ${words>=40?'gd':'md'}">${words}</div><div class="sc-lbl">Wörter</div></div>
+    <div class="sc-card"><div class="sc-num ${kwFound>=3?'gd':'md'}">${kwFound}/${d.k.length}</div><div class="sc-lbl">Schlüsselwörter</div></div>`;
+  const recs=[];
+  if(siSecs<30)recs.push({icon:'<i class="bi-stopwatch-fill"></i>',txt:`<strong>Zu kurz:</strong> Nur ${siSecs}s. Eine B1-Sprechaufgabe sollte mindestens 30 Sekunden dauern. Sage zu jedem Punkt einen Satz.`});
+  if(kwFound<3)recs.push({icon:'<i class="bi-bullseye"></i>',txt:`<strong>Themenwörter fehlen:</strong> Benutze mehr passende Wörter zum Thema: <em>${d.k.slice(0,4).join(', ')}…</em>`});
+  if(!hasConn)recs.push({icon:'<i class="bi-link-45deg"></i>',txt:'<strong>Konnektoren fehlen:</strong> Verbinde deine Sätze: <em>und, aber, weil, deshalb, dann, außerdem</em>.'});
+  if(!hasOpinion)recs.push({icon:'<i class="bi-chat-dots-fill"></i>',txt:'<strong>Wunsch/Meinung fehlt:</strong> Sage, was du möchtest: <em>Ich möchte …, Ich finde …, Könnten Sie …?</em>'});
+  if(!hasKII)recs.push({icon:'<i class="bi-rulers"></i>',txt:'<strong>Höfliche Form fehlt:</strong> Verwende höfliche Formen: <em>Ich möchte …, Könnten Sie …, Ich würde gern …</em>'});
+  if(recs.length===0)recs.push({icon:'<i class="bi-star-fill"></i>',txt:'<strong>Ausgezeichnet!</strong> Du beschreibst die Situation klar und passend zum B1-Niveau.'});
+  $id('si_recs').innerHTML='<div class="recs-hdr">Empfehlungen</div>'+recs.map(r=>`<div class="rec-item"><span class="rec-icon">${r.icon}</span><span class="rec-text">${r.txt}</span></div>`).join('');
+  const fb=$id('si_fb');
+  fb.innerHTML=`${colorLabel(overall/100)} · ${overall}% · ${words} Wörter · ${siSecs}s · ${kwFound}/${d.k.length} Schlüsselwörter`;
+  fb.className='fb '+(overall>=70?'ok':overall>=45?'wn':'er')+' vis';
+  updateScores();
+}
+function navSI(d){const n=st.si.i+d;if(n>=0&&n<SI.length){st.si.i=n;stopAllRec();renderSI();}}
+
+// ═══════ INIT ═══════
+window.addEventListener('load',()=>{
+  if(!window.speechSynthesis)$id('synthW').classList.add('vis');
+  if(!window.SpeechRecognition&&!window.webkitSpeechRecognition)$id('asrW').classList.add('vis');
+  if(window.speechSynthesis){
+    bestGermanVoice();populateVoices();
+    // Voices often load asynchronously; recompute once the full list (incl. online voices) is ready.
+    window.speechSynthesis.onvoiceschanged=()=>{bestGermanVoice();populateVoices();};
+  }else{populateVoices();}
+  initRF();initDK();initTV();initPR();initFR();initSI();
+});
+</script>
+</body>
+</html>

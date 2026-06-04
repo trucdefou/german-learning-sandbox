@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B1 Deutsch — 350 Übungen</title>
+<link href="assets/img/favicon.png" rel="icon">
+<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+/* Tiya Golf Club inspired palette */
+:root{
+  --white:#ffffff;
+  --primary:#81B29A;
+  --secondary:#3D405B;
+  --section-bg:#F4F1DE;
+  --btn-bg:#F2CC8F;
+  --btn-hover:#E07A5F;
+  --dark:#000000;
+  --p:#717275;
+  --link-hover:#F2CC8F;
+  --ok:#5aab8a;
+  --err:#c96060;
+  --brd:#e8e3d0;
+  --font:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--white);color:var(--p);font-family:var(--font);font-weight:400;min-height:100vh;line-height:1.65}
+header{border-bottom:1px solid var(--brd);padding:1.8rem 2.5rem 1.5rem;display:flex;justify-content:space-between;align-items:flex-end;position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(12px)}
+.h-left h1{font-family:var(--font);font-size:1.9rem;color:var(--secondary);font-weight:700;letter-spacing:-1px}
+.h-left span{font-size:.7rem;color:var(--primary);letter-spacing:.15em;text-transform:uppercase;display:block;margin-bottom:.3rem;font-weight:500}
+.score-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:.4rem}
+.score-badge{font-size:.85rem;color:var(--white);background:var(--primary);padding:.4rem 1.1rem;border-radius:100px;letter-spacing:.03em;font-weight:500}
+.pct-badge{font-size:.75rem;color:var(--p);letter-spacing:.03em}
+.tabs{display:flex;flex-wrap:wrap;gap:.5rem;padding:1rem 2.5rem .9rem;background:var(--section-bg);position:sticky;top:88px;z-index:90;border-bottom:1px solid var(--brd)}
+.tab-btn{background:var(--white);border:1px solid var(--brd);color:var(--secondary);font-family:var(--font);font-size:.72rem;letter-spacing:.05em;padding:.45rem 1rem;cursor:pointer;border-radius:100px;text-transform:uppercase;font-weight:500;transition:all .2s}
+.tab-btn:hover,.tab-btn.active{background:var(--btn-bg);border-color:var(--btn-bg);color:var(--secondary)}
+.tab-btn .cnt{display:inline-block;background:rgba(61,64,91,.08);border-radius:100px;padding:0 .5rem;margin-left:.4rem;font-size:.65rem;color:var(--secondary)}
+.tab-btn.active .cnt{background:rgba(61,64,91,.2);color:var(--secondary)}
+.container{max-width:860px;margin:0 auto;padding:2.5rem 1.5rem 7rem}
+.sec-hdr{display:flex;align-items:center;gap:1rem;margin:2.5rem 0 1.2rem}
+.sec-hdr::before{content:attr(data-num);font-size:.7rem;color:var(--white);background:var(--secondary);padding:.3rem .75rem;border-radius:100px;letter-spacing:.05em;white-space:nowrap;font-weight:500}
+.sec-hdr h2{font-family:var(--font);font-size:1.5rem;color:var(--secondary);font-weight:700;letter-spacing:-.5px}
+.sec-hdr::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--brd),transparent)}
+.subsec{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin:2rem 0 .8rem;padding-left:.7rem;border-left:3px solid var(--primary);font-weight:500}
+.card{background:var(--white);border:1px solid var(--brd);border-left:4px solid transparent;border-radius:20px;padding:1.4rem 1.6rem;margin-bottom:1rem;transition:border-color .2s,box-shadow .2s;position:relative;box-shadow:0 2px 6px rgba(61,64,91,.04)}
+.card:hover{border-left-color:var(--primary);box-shadow:0 4px 16px rgba(61,64,91,.08)}
+.card.ok{border-left-color:var(--ok)}
+.card.err{border-left-color:var(--err)}
+.card-num{font-size:.7rem;color:var(--p);position:absolute;top:.8rem;right:1rem;background:var(--section-bg);padding:.18rem .6rem;border-radius:100px}
+.prompt{font-size:.95rem;color:var(--secondary);margin-bottom:1rem;line-height:1.75}
+.prompt em{color:var(--primary);font-style:normal;font-weight:500}
+.prompt strong{color:var(--btn-hover);font-weight:700}
+.choices{display:grid;gap:.5rem}
+.opt{background:var(--section-bg);border:1px solid var(--brd);color:var(--secondary);font-family:var(--font);font-size:.9rem;padding:.7rem 1rem;text-align:left;cursor:pointer;border-radius:10px;transition:all .15s;display:flex;align-items:flex-start;gap:.7rem}
+.opt:hover:not(:disabled){background:var(--white);color:var(--secondary);border-color:var(--primary)}
+.opt .ltr{font-family:var(--font);font-size:.78rem;color:var(--primary);min-width:1rem;flex-shrink:0;margin-top:.1rem;font-weight:700}
+.opt.ok{background:rgba(129,178,154,.15);border-color:var(--ok);color:#2d6a4f}
+.opt.err{background:rgba(224,122,95,.12);border-color:var(--err);color:#a04545}
+.opt:disabled{cursor:default}
+.inp{background:var(--white);border:1px solid var(--brd);color:var(--secondary);font-family:var(--font);font-size:.9rem;padding:.55rem .9rem;border-radius:10px;outline:none;transition:border-color .2s;margin-top:.2rem}
+.inp:focus{border-color:var(--primary)}
+.inp.ok{border-color:var(--ok);color:#2d6a4f}
+.inp.err{border-color:var(--err);color:#a04545}
+.inp-sm{width:140px}.inp-md{width:220px}.inp-lg{width:100%}
+textarea.inp{width:100%;min-height:70px;resize:vertical;font-family:var(--font);line-height:1.6}
+.btn{background:var(--btn-bg);border:none;color:var(--secondary);font-family:var(--font);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1.2rem;cursor:pointer;border-radius:100px;margin-top:.8rem;font-weight:700;transition:all .2s}
+.btn:hover{background:var(--btn-hover);color:var(--white)}
+.fb{margin-top:.7rem;font-size:.87rem;padding:.6rem .95rem;border-radius:10px;display:none;line-height:1.55}
+.fb.show{display:block}
+.fb.ok{background:rgba(129,178,154,.12);color:#2d6a4f;border-left:3px solid var(--ok)}
+.fb.err{background:rgba(224,122,95,.1);color:#a04545;border-left:3px solid var(--err)}
+.hint-lnk{font-size:.78rem;color:var(--primary);cursor:pointer;margin-top:.5rem;display:inline-block;transition:color .2s;font-weight:500}
+.hint-lnk:hover{color:var(--btn-hover)}
+.hint-box{display:none;font-size:.85rem;color:var(--secondary);background:rgba(129,178,154,.08);padding:.5rem .85rem;border-left:3px solid var(--primary);border-radius:0 10px 10px 0;margin-top:.5rem;font-style:italic;line-height:1.55}
+.hint-box.show{display:block}
+.fill-row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.3rem}
+.pg-info{font-size:.75rem;color:var(--p);text-align:center;margin:1.5rem 0 .5rem;letter-spacing:.05em}
+.pg-btns{display:flex;gap:.5rem;justify-content:center;margin-bottom:1rem;flex-wrap:wrap}
+.pg-btn{background:var(--white);border:1px solid var(--brd);color:var(--secondary);font-family:var(--font);font-size:.75rem;padding:.4rem .9rem;cursor:pointer;border-radius:100px;transition:all .15s;font-weight:500}
+.pg-btn:hover{border-color:var(--primary);color:var(--primary)}
+.pg-btn.active-pg{background:var(--primary);border-color:var(--primary);color:var(--white)}
+.pbar-wrap{position:fixed;bottom:0;left:0;right:0;height:4px;background:var(--section-bg);z-index:200}
+.pbar{height:100%;background:linear-gradient(to right,var(--primary),var(--btn-bg));width:0%;transition:width .4s}
+.fb i[class^="bi-"],.hint-lnk i[class^="bi-"]{margin-right:.3rem;font-size:.95em;vertical-align:-.05em}
+@media(max-width:600px){header{padding:1.2rem 1rem;flex-direction:column;align-items:flex-start;gap:.8rem}.tabs{padding:.8rem 1rem;top:auto;position:relative}.container{padding:1.5rem 1rem 5rem}.card{padding:1.2rem}}
+</style>
+</head>
+<body>
+<header>
+  <div class="h-left">
+    <span>Prüfungsvorbereitung · 350 Übungen · Niveau B1</span>
+    <h1>Deutsches B1 — Komplettheft</h1>
+  </div>
+  <div class="score-wrap">
+    <div class="score-badge" id="scoreBadge">0 / 0 richtig</div>
+    <div class="pct-badge" id="pctBadge">—% Trefferquote</div>
+  </div>
+</header>
+<div class="tabs" id="tabBar"></div>
+<div class="container" id="mainContainer"></div>
+<div class="pbar-wrap"><div class="pbar" id="pbar"></div></div>
+<script>
+const SECTIONS=[
+{id:'grammatik',label:'Grammatik',num:'01',title:'Artikel & Deklination',exercises:[
+{type:'mc',id:'g1',sub:'Artikel',q:'Welcher Artikel passt?<br><strong>„___ Sonne scheint heute."</strong>',opts:['Der','Die','Das','Den'],ans:1,exp:'<em>die Sonne</em> (feminin).'},
+{type:'mc',id:'g2',sub:'Artikel',q:'<strong>„___ Hund spielt im Garten."</strong>',opts:['Der','Die','Das','Dem'],ans:0,exp:'<em>der Hund</em> (maskulin).'},
+{type:'mc',id:'g3',sub:'Artikel',q:'<strong>„___ Kind schläft."</strong>',opts:['Der','Die','Das','Den'],ans:2,exp:'<em>das Kind</em> (neutrum).'},
+{type:'mc',id:'g4',sub:'Artikel',q:'Akkusativ: <strong>„Ich sehe ___ Mann."</strong>',opts:['der','den','dem','des'],ans:1,exp:'Akkusativ maskulin → <em>den Mann</em>.'},
+{type:'fill',id:'g5',sub:'Artikel',q:'Ergänze den bestimmten Artikel (Nom.):<br><strong>„___ Tisch ist neu."</strong>',inp:'blank',ans:['der'],exp:'<em>der Tisch</em> (maskulin).'},
+{type:'fill',id:'g6',sub:'Artikel',q:'Ergänze (Nom.): <strong>„___ Blume ist schön."</strong>',inp:'blank',ans:['die'],exp:'<em>die Blume</em> (feminin).'},
+{type:'mc',id:'g7',sub:'Artikel',q:'Unbestimmter Artikel: <strong>„Das ist ___ Auto."</strong>',opts:['ein','eine','einen','einem'],ans:0,exp:'Neutrum Nom. → <em>ein Auto</em>.'},
+{type:'mc',id:'g8',sub:'Artikel',q:'<strong>„Ich habe ___ Schwester."</strong>',opts:['ein','eine','einen','einem'],ans:1,exp:'Akkusativ feminin → <em>eine Schwester</em>.'},
+{type:'mc',id:'g9',sub:'Possessivartikel',q:'<strong>„Das ist ___ Buch." (ich)</strong>',opts:['mein','meine','meinen','meinem'],ans:0,exp:'Neutrum Nom. → <em>mein Buch</em>.'},
+{type:'mc',id:'g10',sub:'Possessivartikel',q:'<strong>„Wo ist ___ Tasche?" (du)</strong>',opts:['dein','deine','deinen','deinem'],ans:1,exp:'Feminin Nom. → <em>deine Tasche</em>.'},
+{type:'fill',id:'g11',sub:'Possessivartikel',q:'Ergänze (er, maskulin Nom.):<br><strong>„___ Vater arbeitet viel."</strong>',inp:'blank',ans:['sein'],exp:'<em>sein Vater</em>.'},
+{type:'fill',id:'g12',sub:'Possessivartikel',q:'Ergänze (wir, Plural):<br><strong>„___ Kinder sind klein."</strong>',inp:'blank',ans:['unsere'],exp:'Plural → <em>unsere Kinder</em>.'},
+{type:'mc',id:'g13',sub:'Possessivartikel',q:'Akkusativ: <strong>„Ich besuche ___ Oma." (ich)</strong>',opts:['mein','meine','meinen','meinem'],ans:1,exp:'Feminin Akk. → <em>meine Oma</em>.'},
+{type:'mc',id:'g14',sub:'Possessivartikel',q:'<strong>„Sie liebt ___ Job." (sie)</strong>',opts:['ihr','ihre','ihren','ihrem'],ans:2,exp:'Maskulin Akk. → <em>ihren Job</em>.'},
+{type:'fill',id:'g15',sub:'Adjektivendungen',q:'Ergänze (Nom. Mask., best. Artikel):<br><strong>„Der neu___ Computer ist schnell."</strong>',inp:'blank',ans:['e'],exp:'Nom. Mask., best. Artikel → <em>-e</em>.'},
+{type:'fill',id:'g16',sub:'Adjektivendungen',q:'Ergänze (Nom. Fem., best. Artikel):<br><strong>„Die rot___ Jacke gefällt mir."</strong>',inp:'blank',ans:['e'],exp:'Nom. Fem., best. Artikel → <em>-e</em>.'},
+{type:'fill',id:'g17',sub:'Adjektivendungen',q:'Ergänze (Nom. Neutr., best. Artikel):<br><strong>„Das klein___ Kind weint."</strong>',inp:'blank',ans:['e'],exp:'Nom. Neutr., best. Artikel → <em>-e</em>.'},
+{type:'fill',id:'g18',sub:'Adjektivendungen',q:'Ergänze (Akk. Mask., best. Artikel):<br><strong>„Ich kaufe den blau___ Pullover."</strong>',inp:'blank',ans:['en'],exp:'Akk. Mask., best. Artikel → <em>-en</em>.'},
+{type:'mc',id:'g19',sub:'Adjektivendungen',q:'<strong>„Ich trinke ein___ kalt___ Wasser."</strong> (Akk. Neutr., unbest. Artikel)',opts:['ein / kaltes','einen / kalten','eine / kalte','ein / kalten'],ans:0,exp:'Akk. Neutr., unbest. → <em>ein kaltes Wasser</em>.'},
+{type:'fill',id:'g20',sub:'Adjektivendungen',q:'Ergänze (Nom. Mask., unbest. Artikel):<br><strong>„Das ist ein gut___ Freund."</strong>',inp:'blank',ans:['er'],exp:'Nom. Mask., unbest. Artikel → <em>-er</em>.'},
+{type:'mc',id:'g21',sub:'Adjektivendungen',q:'<strong>„Sie hat lang___ Haare." (Plural, kein Artikel)</strong>',opts:['e','en','er','es'],ans:0,exp:'Plural ohne Artikel Nom./Akk. → <em>-e</em>.'},
+{type:'fill',id:'g22',sub:'Adjektivendungen',q:'Ergänze (Akk. Fem., unbest. Artikel):<br><strong>„Ich suche eine günstig___ Wohnung."</strong>',inp:'blank',ans:['e'],exp:'Akk. Fem., unbest. Artikel → <em>-e</em>.'},
+{type:'mc',id:'g23',sub:'Komparativ',q:'Komparativ von <strong>„schnell"</strong>?',opts:['schneller','am schnellsten','schnellst','mehr schnell'],ans:0,exp:'Komparativ → <em>schneller</em>.'},
+{type:'mc',id:'g24',sub:'Komparativ',q:'Komparativ von <strong>„gut"</strong>?',opts:['guter','gutter','besser','mehr gut'],ans:2,exp:'Unregelmäßig: <em>gut → besser</em>.'},
+{type:'fill',id:'g25',sub:'Komparativ',q:'Ergänze den Komparativ:<br><strong>„Mein Bruder ist ___ als ich." (groß)</strong>',inp:'blank',ans:['größer'],exp:'<em>groß → größer</em> (mit Umlaut).'},
+{type:'mc',id:'g26',sub:'Komparativ',q:'Superlativ von <strong>„hoch"</strong>?',opts:['am höher','am hochsten','am höchsten','höchst'],ans:2,exp:'<em>hoch → höher → am höchsten</em>.'},
+{type:'fill',id:'g27',sub:'Komparativ',q:'Ergänze den Superlativ:<br><strong>„Der Mont Blanc ist ___ Berg der Alpen." (hoch, best. Artikel)</strong>',inp:'medium',ans:['der höchste'],exp:'<em>der höchste Berg</em>.'},
+{type:'mc',id:'g28',sub:'Komparativ',q:'<strong>„viel"</strong> — Komparativ?',opts:['vieler','mehr','meiste','viele'],ans:1,exp:'Unregelmäßig: <em>viel → mehr → am meisten</em>.'},
+{type:'mc',id:'g29',sub:'Komparativ',q:'Vergleich gleich: <strong>„Anna ist ___ groß ___ Tom."</strong>',opts:['so / wie','als / wie','wie / als','mehr / als'],ans:0,exp:'Gleichheit: <em>so … wie</em>.'},
+{type:'fill',id:'g30',sub:'Komparativ',q:'Komparativ von <strong>„gern"</strong>:',inp:'blank',ans:['lieber'],exp:'Unregelmäßig: <em>gern → lieber → am liebsten</em>.'},
+{type:'mc',id:'g31',sub:'Personalpronomen',q:'Akkusativ von <strong>„ich"</strong>?',opts:['mir','mich','ich','mein'],ans:1,exp:'Akkusativ → <em>mich</em>.'},
+{type:'mc',id:'g32',sub:'Personalpronomen',q:'Dativ von <strong>„du"</strong>?',opts:['dich','dir','du','dein'],ans:1,exp:'Dativ → <em>dir</em>.'},
+{type:'fill',id:'g33',sub:'Personalpronomen',q:'Ersetze durch ein Pronomen (Akk.):<br><strong>„Ich sehe den Mann." → „Ich sehe ___."</strong>',inp:'blank',ans:['ihn'],exp:'Maskulin Akk. → <em>ihn</em>.'},
+{type:'fill',id:'g34',sub:'Personalpronomen',q:'Ersetze (Dativ):<br><strong>„Ich helfe der Frau." → „Ich helfe ___."</strong>',inp:'blank',ans:['ihr'],exp:'Feminin Dativ → <em>ihr</em>.'},
+{type:'mc',id:'g35',sub:'Personalpronomen',q:'<strong>„Kannst du ___ helfen?" (ich)</strong>',opts:['mich','mir','ich','mein'],ans:1,exp:'<em>helfen</em> + Dativ → <em>mir</em>.'},
+{type:'mc',id:'g36',sub:'Personalpronomen',q:'<strong>„Das Buch gehört ___." (wir)</strong>',opts:['uns','wir','unser','euch'],ans:0,exp:'<em>gehören</em> + Dativ → <em>uns</em>.'},
+{type:'fill',id:'g37',sub:'Personalpronomen',q:'Ergänze (Akk., Plural sie):<br><strong>„Ich besuche meine Freunde. Ich besuche ___."</strong>',inp:'blank',ans:['sie'],exp:'Plural Akk. → <em>sie</em>.'},
+{type:'mc',id:'g38',sub:'Demonstrativ',q:'<strong>„___ Auto da gefällt mir." (Nähe/Hinweis)</strong>',opts:['Dieses','Diese','Dieser','Diesen'],ans:0,exp:'Neutrum Nom. → <em>dieses Auto</em>.'},
+{type:'mc',id:'g39',sub:'Demonstrativ',q:'<strong>„___ Frau kenne ich." (Akkusativ)</strong>',opts:['Dieser','Diese','Dieses','Diesen'],ans:1,exp:'Feminin Akk. → <em>diese Frau</em>.'},
+{type:'fill',id:'g40',sub:'Negation',q:'Verneine mit <em>kein-</em>:<br><strong>„Ich habe ___ Zeit."</strong>',inp:'blank',ans:['keine'],exp:'Feminin Akk. → <em>keine Zeit</em>.'},
+{type:'mc',id:'g41',sub:'Negation',q:'<strong>„Ich habe ___ Geld."</strong>',opts:['kein','keine','keinen','nicht'],ans:0,exp:'Neutrum Akk. → <em>kein Geld</em>.'},
+{type:'mc',id:'g42',sub:'Negation',q:'Wann benutzt man <strong>„nicht"</strong> statt <em>kein</em>?',opts:['Vor Nomen mit Artikel','Bei Verben, Adjektiven, Eigennamen','Immer','Nie'],ans:1,exp:'<em>nicht</em> verneint Verben/Adjektive; <em>kein</em> verneint Nomen.'},
+{type:'fill',id:'g43',sub:'Negation',q:'Verneine: <strong>„Ich kenne Berlin." → „Ich kenne Berlin ___."</strong>',inp:'blank',ans:['nicht'],exp:'Eigenname → <em>nicht</em>.'},
+{type:'mc',id:'g44',sub:'Fragewörter',q:'<strong>„___ heißt du?"</strong>',opts:['Wer','Wie','Was','Wo'],ans:1,exp:'Nach dem Namen fragt man mit <em>Wie heißt du?</em>'},
+{type:'mc',id:'g45',sub:'Fragewörter',q:'<strong>„___ kommst du? — Aus Spanien."</strong>',opts:['Wohin','Woher','Wo','Wann'],ans:1,exp:'Herkunft → <em>Woher</em>.'},
+{type:'fill',id:'g46',sub:'Fragewörter',q:'Ergänze: <strong>„___ alt bist du?"</strong>',inp:'blank',ans:['wie'],exp:'<em>Wie alt …?</em>'},
+{type:'mc',id:'g47',sub:'Fragewörter',q:'<strong>„___ gehst du? — Nach Hause."</strong>',opts:['Wo','Woher','Wohin','Wann'],ans:2,exp:'Richtung → <em>Wohin</em>.'},
+{type:'mc',id:'g48',sub:'Plural',q:'Plural von <strong>„das Buch"</strong>?',opts:['die Buchs','die Bücher','die Buche','die Büchen'],ans:1,exp:'<em>das Buch → die Bücher</em>.'},
+{type:'fill',id:'g49',sub:'Plural',q:'Plural von <strong>„die Frau"</strong>:',inp:'medium',ans:['die frauen'],exp:'<em>die Frau → die Frauen</em>.'},
+{type:'mc',id:'g50',sub:'Plural',q:'Plural von <strong>„der Apfel"</strong>?',opts:['die Apfeln','die Äpfel','die Apfels','die Äpfeln'],ans:1,exp:'<em>der Apfel → die Äpfel</em> (Umlaut).'},
+]},
+{id:'verben',label:'Verben',num:'02',title:'Verben & Modalverben',exercises:[
+{type:'mc',id:'v1',sub:'Modalverben',q:'<strong>„Ich ___ gut schwimmen."</strong>',opts:['kann','muss','darf','soll'],ans:0,exp:'Fähigkeit → <em>können</em>.'},
+{type:'mc',id:'v2',sub:'Modalverben',q:'<strong>„Du ___ deine Hausaufgaben machen." (Pflicht)</strong>',opts:['kannst','darfst','musst','willst'],ans:2,exp:'Notwendigkeit → <em>müssen</em>.'},
+{type:'fill',id:'v3',sub:'Modalverben',q:'Ergänze <em>möchten</em> (ich):<br><strong>„Ich ___ einen Kaffee."</strong>',inp:'blank',ans:['möchte'],exp:'<em>ich möchte</em>.'},
+{type:'mc',id:'v4',sub:'Modalverben',q:'<strong>„Hier ___ man nicht rauchen." (Verbot)</strong>',opts:['kann','muss','darf','will'],ans:2,exp:'Verbot mit Negation → <em>darf nicht</em>.'},
+{type:'fill',id:'v5',sub:'Modalverben',q:'Ergänze <em>wollen</em> (wir):<br><strong>„Wir ___ ins Kino gehen."</strong>',inp:'blank',ans:['wollen'],exp:'<em>wir wollen</em>.'},
+{type:'mc',id:'v6',sub:'Modalverben',q:'<strong>„Du ___ mehr schlafen." (Empfehlung)</strong>',opts:['sollst','darfst','kannst','willst'],ans:0,exp:'Rat/Empfehlung → <em>sollen</em>.'},
+{type:'fill',id:'v7',sub:'Modalverben',q:'Konjugiere <em>müssen</em> (er):<br><strong>„Er ___ arbeiten."</strong>',inp:'blank',ans:['muss'],exp:'<em>er muss</em>.'},
+{type:'mc',id:'v8',sub:'Modalverben',q:'Wo steht das zweite Verb bei Modalverben?',opts:['Am Anfang','Auf Position 2','Im Infinitiv am Satzende','Vor dem Subjekt'],ans:2,exp:'Modalverb auf Pos. 2, Vollverb im Infinitiv am Ende.'},
+{type:'mc',id:'v9',sub:'Modalverben Präteritum',q:'Präteritum von <em>können</em> (ich)?',opts:['kann','konnte','könnte','gekonnt'],ans:1,exp:'<em>können → ich konnte</em>.'},
+{type:'fill',id:'v10',sub:'Modalverben Präteritum',q:'Präteritum von <em>müssen</em> (er):<br><strong>„Er ___ früh aufstehen."</strong>',inp:'blank',ans:['musste'],exp:'<em>müssen → musste</em>.'},
+{type:'mc',id:'v11',sub:'Modalverben Präteritum',q:'Präteritum von <em>wollen</em> (wir)?',opts:['wollen','wollten','wollte','gewollt'],ans:1,exp:'<em>wollen → wir wollten</em>.'},
+{type:'fill',id:'v12',sub:'Modalverben Präteritum',q:'Präteritum von <em>dürfen</em> (ich):<br><strong>„Ich ___ als Kind nicht lange fernsehen."</strong>',inp:'blank',ans:['durfte'],exp:'<em>dürfen → durfte</em>.'},
+{type:'mc',id:'v13',sub:'Reflexivverben',q:'<strong>„Ich freue ___ auf das Wochenende."</strong>',opts:['mich','mir','sich','mein'],ans:0,exp:'<em>sich freuen</em>, 1. Pers. → <em>mich</em>.'},
+{type:'fill',id:'v14',sub:'Reflexivverben',q:'Ergänze das Reflexivpronomen (du):<br><strong>„Du wäschst ___ die Hände."</strong>',inp:'blank',ans:['dir'],exp:'Mit Akkusativobjekt (Hände) → Dativ <em>dir</em>.'},
+{type:'mc',id:'v15',sub:'Reflexivverben',q:'<strong>„Er interessiert ___ für Sport."</strong>',opts:['mich','dich','sich','uns'],ans:2,exp:'3. Person → <em>sich</em>.'},
+{type:'fill',id:'v16',sub:'Reflexivverben',q:'Ergänze (wir):<br><strong>„Wir treffen ___ um acht Uhr."</strong>',inp:'blank',ans:['uns'],exp:'<em>sich treffen</em>, wir → <em>uns</em>.'},
+{type:'mc',id:'v17',sub:'Reflexivverben',q:'<strong>„Setzen Sie ___ bitte!"</strong>',opts:['mich','dich','sich','uns'],ans:2,exp:'Höflichkeitsform Sie → <em>sich</em>.'},
+{type:'fill',id:'v18',sub:'Reflexivverben',q:'Ergänze (ich):<br><strong>„Ich erinnere ___ an den Termin."</strong>',inp:'blank',ans:['mich'],exp:'<em>sich erinnern an</em> → <em>mich</em>.'},
+{type:'mc',id:'v19',sub:'Trennbare Verben',q:'<strong>„Ich ___ um sieben Uhr ___." (aufstehen)</strong>',opts:['stehe / auf','aufstehe / —','auf / stehe','stehe auf / —'],ans:0,exp:'Trennbar: <em>Ich stehe … auf</em>.'},
+{type:'fill',id:'v20',sub:'Trennbare Verben',q:'Trenne das Verb (Präsens, ich):<br><strong>„einkaufen → Ich ___ im Supermarkt ___."</strong>',inp:'medium',ans:['kaufe ein','kaufe … ein'],exp:'<em>Ich kaufe … ein</em>.'},
+{type:'mc',id:'v21',sub:'Trennbare Verben',q:'Welches Verb ist trennbar?',opts:['verstehen','bekommen','anrufen','erzählen'],ans:2,exp:'<em>anrufen</em> ist trennbar: ich rufe an.'},
+{type:'fill',id:'v22',sub:'Trennbare Verben',q:'Ergänze (mitkommen, du):<br><strong>„___ du heute Abend ___?"</strong>',inp:'medium',ans:['kommst mit','kommst … mit'],exp:'<em>Kommst du … mit?</em>'},
+{type:'mc',id:'v23',sub:'Trennbare Verben',q:'Im Nebensatz: <strong>„…, weil ich früh ___."</strong>',opts:['stehe auf','aufstehe','auf stehe','stand auf'],ans:1,exp:'Im Nebensatz bleibt das trennbare Verb zusammen: <em>aufstehe</em>.'},
+{type:'mc',id:'v24',sub:'Trennbare Verben',q:'Welches Präfix ist NICHT trennbar?',opts:['an-','auf-','be-','mit-'],ans:2,exp:'<em>be-</em> ist untrennbar (bekommen, bezahlen).'},
+{type:'mc',id:'v25',sub:'Imperativ',q:'Imperativ (du) von <em>kommen</em>?',opts:['Komm!','Kommst!','Kommen!','Komme du!'],ans:0,exp:'Du-Imperativ → <em>Komm!</em>'},
+{type:'fill',id:'v26',sub:'Imperativ',q:'Imperativ (ihr) von <em>warten</em>:<br><strong>„___ bitte hier!"</strong>',inp:'blank',ans:['wartet'],exp:'Ihr-Imperativ → <em>Wartet!</em>'},
+{type:'mc',id:'v27',sub:'Imperativ',q:'Höflicher Imperativ (Sie) von <em>helfen</em>?',opts:['Hilf!','Helft!','Helfen Sie!','Sie helfen!'],ans:2,exp:'Sie-Form → <em>Helfen Sie!</em>'},
+{type:'fill',id:'v28',sub:'Imperativ',q:'Imperativ (du) von <em>sein</em>:<br><strong>„___ bitte ruhig!"</strong>',inp:'blank',ans:['sei'],exp:'Unregelmäßig: <em>Sei ruhig!</em>'},
+{type:'mc',id:'v29',sub:'Imperativ',q:'Imperativ (du) von <em>geben</em>?',opts:['Gebe!','Gib!','Gibst!','Geb!'],ans:1,exp:'Vokalwechsel e→i: <em>Gib!</em>'},
+{type:'mc',id:'v30',sub:'Unregelmäßige Verben',q:'Präsens von <em>fahren</em> (du)?',opts:['fahrst','fährst','fahrest','fahrt'],ans:1,exp:'a→ä: <em>du fährst</em>.'},
+{type:'fill',id:'v31',sub:'Unregelmäßige Verben',q:'Präsens von <em>lesen</em> (er):<br><strong>„Er ___ ein Buch."</strong>',inp:'blank',ans:['liest'],exp:'e→ie: <em>er liest</em>.'},
+{type:'mc',id:'v32',sub:'Unregelmäßige Verben',q:'Präsens von <em>nehmen</em> (du)?',opts:['nehmst','nimmst','nehmest','nimst'],ans:1,exp:'<em>du nimmst</em>.'},
+{type:'fill',id:'v33',sub:'Unregelmäßige Verben',q:'Präsens von <em>essen</em> (er):<br><strong>„Er ___ einen Apfel."</strong>',inp:'blank',ans:['isst'],exp:'e→i: <em>er isst</em>.'},
+{type:'mc',id:'v34',sub:'Unregelmäßige Verben',q:'Präsens von <em>sprechen</em> (du)?',opts:['sprechst','sprichst','sprechest','spricht'],ans:1,exp:'e→i: <em>du sprichst</em>.'},
+{type:'fill',id:'v35',sub:'Unregelmäßige Verben',q:'Präsens von <em>schlafen</em> (er):<br><strong>„Das Baby ___ viel."</strong>',inp:'blank',ans:['schläft'],exp:'a→ä: <em>er schläft</em>.'},
+{type:'mc',id:'v36',sub:'Unregelmäßige Verben',q:'Präsens von <em>laufen</em> (du)?',opts:['laufst','läufst','laufest','läuft'],ans:1,exp:'au→äu: <em>du läufst</em>.'},
+{type:'mc',id:'v37',sub:'Hilfsverben',q:'Präsens von <em>sein</em> (ihr)?',opts:['seid','sind','seit','bist'],ans:0,exp:'<em>ihr seid</em>.'},
+{type:'fill',id:'v38',sub:'Hilfsverben',q:'Präsens von <em>haben</em> (du):<br><strong>„___ du Zeit?"</strong>',inp:'blank',ans:['hast'],exp:'<em>du hast</em>.'},
+{type:'mc',id:'v39',sub:'Hilfsverben',q:'Präsens von <em>werden</em> (er)?',opts:['werdt','wirst','wird','werd'],ans:2,exp:'<em>er wird</em>.'},
+{type:'fill',id:'v40',sub:'Hilfsverben',q:'Präsens von <em>sein</em> (wir):<br><strong>„Wir ___ müde."</strong>',inp:'blank',ans:['sind'],exp:'<em>wir sind</em>.'},
+{type:'mc',id:'v41',sub:'Verben mit Dativ',q:'Welches Verb braucht den Dativ?',opts:['sehen','helfen','kaufen','besuchen'],ans:1,exp:'<em>helfen</em> + Dativ: Ich helfe dir.'},
+{type:'mc',id:'v42',sub:'Verben mit Dativ',q:'<strong>„Das Buch gefällt ___." (ich)</strong>',opts:['mich','mir','ich','mein'],ans:1,exp:'<em>gefallen</em> + Dativ → <em>mir</em>.'},
+{type:'fill',id:'v43',sub:'Verben mit Dativ',q:'Ergänze: <strong>„Ich danke ___ für das Geschenk." (du)</strong>',inp:'blank',ans:['dir'],exp:'<em>danken</em> + Dativ → <em>dir</em>.'},
+{type:'mc',id:'v44',sub:'Verben mit Dativ',q:'<strong>„Wie geht es ___?" (du)</strong>',opts:['dich','dir','du','dein'],ans:1,exp:'<em>Wie geht es dir?</em>'},
+{type:'mc',id:'v45',sub:'Konjugation',q:'Präsens von <em>arbeiten</em> (du)?',opts:['arbeitst','arbeitest','arbeitt','arbeite'],ans:1,exp:'Nach -t kommt -est: <em>du arbeitest</em>.'},
+{type:'fill',id:'v46',sub:'Konjugation',q:'Präsens von <em>heißen</em> (du):<br><strong>„Wie ___ du?"</strong>',inp:'blank',ans:['heißt'],exp:'Stamm auf -ß → <em>du heißt</em>.'},
+{type:'mc',id:'v47',sub:'Konjugation',q:'Präsens von <em>finden</em> (er)?',opts:['findt','findet','find','findest'],ans:1,exp:'Stamm auf -d → <em>er findet</em>.'},
+{type:'fill',id:'v48',sub:'Konjugation',q:'Präsens von <em>spielen</em> (wir):<br><strong>„Wir ___ Fußball."</strong>',inp:'blank',ans:['spielen'],exp:'<em>wir spielen</em>.'},
+{type:'mc',id:'v49',sub:'Konjugation',q:'Präsens von <em>öffnen</em> (du)?',opts:['öffnst','öffnest','öffnt','öffne'],ans:1,exp:'Nach -n (Konsonant) → <em>du öffnest</em>.'},
+{type:'fill',id:'v50',sub:'Konjugation',q:'Präsens von <em>reisen</em> (du):<br><strong>„___ du gern?"</strong>',inp:'blank',ans:['reist'],exp:'Stamm auf -s → <em>du reist</em>.'},
+]},
+{id:'zeitformen',label:'Zeitformen',num:'03',title:'Zeitformen',exercises:[
+{type:'mc',id:'z1',sub:'Perfekt',q:'<strong>„Ich ___ einen Film ___." (sehen)</strong>',opts:['habe / gesehen','bin / gesehen','habe / gesehet','bin / geseht'],ans:0,exp:'<em>haben</em> + <em>gesehen</em>.'},
+{type:'mc',id:'z2',sub:'Perfekt',q:'<strong>„Er ___ nach Berlin ___." (fahren)</strong>',opts:['hat / gefahren','ist / gefahren','hat / gefahrt','ist / fahren'],ans:1,exp:'Bewegung → <em>sein</em> + <em>gefahren</em>.'},
+{type:'fill',id:'z3',sub:'Perfekt',q:'Bilde das Perfekt (er, kaufen):<br><strong>„Er ___ ein Auto ___."</strong>',inp:'medium',ans:['hat gekauft','hat … gekauft'],exp:'<em>hat gekauft</em>.'},
+{type:'mc',id:'z4',sub:'Perfekt',q:'Welches Verb bildet das Perfekt mit <em>sein</em>?',opts:['essen','kommen','machen','lesen'],ans:1,exp:'<em>kommen</em> = Bewegung → <em>ist gekommen</em>.'},
+{type:'fill',id:'z5',sub:'Perfekt',q:'Partizip II von <em>trinken</em>:',inp:'blank',ans:['getrunken'],exp:'<em>trinken → getrunken</em>.'},
+{type:'mc',id:'z6',sub:'Perfekt',q:'Partizip II von <em>arbeiten</em>?',opts:['gearbeitet','gearbeitete','arbeitet','geärbeitet'],ans:0,exp:'<em>gearbeitet</em>.'},
+{type:'fill',id:'z7',sub:'Perfekt',q:'Bilde das Perfekt (sie, gehen):<br><strong>„Sie ___ nach Hause ___."</strong>',inp:'medium',ans:['ist gegangen','ist … gegangen'],exp:'<em>ist gegangen</em> (Bewegung).'},
+{type:'mc',id:'z8',sub:'Perfekt',q:'Partizip II von <em>verstehen</em>?',opts:['geverstehen','verstanden','versteht','gevorstanden'],ans:1,exp:'Untrennbar, kein ge-: <em>verstanden</em>.'},
+{type:'mc',id:'z9',sub:'Perfekt',q:'Partizip II von <em>einkaufen</em>?',opts:['eingekauft','geeinkauft','einkauft','eingekaufen'],ans:0,exp:'Trennbar: <em>ein-ge-kauft → eingekauft</em>.'},
+{type:'fill',id:'z10',sub:'Perfekt',q:'Partizip II von <em>bleiben</em> (mit Hilfsverb, er):',inp:'medium',ans:['ist geblieben','ist … geblieben'],exp:'<em>ist geblieben</em> (Zustand).'},
+{type:'mc',id:'z11',sub:'Präsens',q:'Welcher Satz steht im Präsens?',opts:['Ich habe gegessen.','Ich esse gerade.','Ich werde essen.','Ich aß.'],ans:1,exp:'<em>Ich esse</em> = Präsens.'},
+{type:'fill',id:'z12',sub:'Präsens',q:'Setze ins Präsens (er, geben):<br><strong>„Er ___ mir das Buch."</strong>',inp:'blank',ans:['gibt'],exp:'<em>er gibt</em>.'},
+{type:'mc',id:'z13',sub:'Präsens',q:'Das Präsens kann auch Zukunft ausdrücken. Welcher Satz?',opts:['Gestern regnet es.','Morgen fahre ich nach Wien.','Ich bin gefahren.','Ich war müde.'],ans:1,exp:'Mit Zeitangabe: <em>Morgen fahre ich …</em>'},
+{type:'mc',id:'z14',sub:'Präteritum',q:'Präteritum von <em>sein</em> (ich)?',opts:['bin','war','gewesen','wäre'],ans:1,exp:'<em>ich war</em>.'},
+{type:'fill',id:'z15',sub:'Präteritum',q:'Präteritum von <em>haben</em> (er):<br><strong>„Er ___ keine Zeit."</strong>',inp:'blank',ans:['hatte'],exp:'<em>er hatte</em>.'},
+{type:'mc',id:'z16',sub:'Präteritum',q:'Präteritum von <em>gehen</em> (ich)?',opts:['gehte','ging','gegangen','gang'],ans:1,exp:'<em>ich ging</em>.'},
+{type:'fill',id:'z17',sub:'Präteritum',q:'Präteritum von <em>machen</em> (er):<br><strong>„Er ___ die Tür zu."</strong>',inp:'blank',ans:['machte'],exp:'Regelmäßig: <em>machte</em>.'},
+{type:'mc',id:'z18',sub:'Präteritum',q:'Präteritum von <em>kommen</em> (sie)?',opts:['kommte','kam','gekommen','kamm'],ans:1,exp:'<em>sie kam</em>.'},
+{type:'fill',id:'z19',sub:'Präteritum',q:'Präteritum von <em>finden</em> (ich):<br><strong>„Ich ___ den Schlüssel."</strong>',inp:'blank',ans:['fand'],exp:'<em>ich fand</em>.'},
+{type:'mc',id:'z20',sub:'Präteritum',q:'Wann benutzt man das Präteritum vor allem?',opts:['Im Gespräch','In geschriebenen Texten/Erzählungen','Nur in Fragen','Nur bei Modalverben'],ans:1,exp:'Präteritum vor allem schriftlich (Erzählungen, Berichte).'},
+{type:'fill',id:'z21',sub:'Präteritum',q:'Präteritum von <em>sprechen</em> (er):',inp:'blank',ans:['sprach'],exp:'<em>er sprach</em>.'},
+{type:'mc',id:'z22',sub:'Präteritum',q:'Präteritum von <em>essen</em> (ich)?',opts:['esste','aß','gegessen','ess'],ans:1,exp:'<em>ich aß</em>.'},
+{type:'mc',id:'z23',sub:'Plusquamperfekt',q:'Wie bildet man das Plusquamperfekt?',opts:['haben/sein (Präsens) + PII','hatte/war + Partizip II','werden + Infinitiv','wurde + PII'],ans:1,exp:'Plusquamperfekt = <em>hatte/war</em> + Partizip II.'},
+{type:'mc',id:'z24',sub:'Plusquamperfekt',q:'<strong>„Bevor ich kam, ___ er schon ___." (gehen)</strong>',opts:['hatte / gegangen','war / gegangen','ist / gegangen','hat / gegangen'],ans:1,exp:'Bewegung → <em>war gegangen</em>.'},
+{type:'fill',id:'z25',sub:'Plusquamperfekt',q:'Bilde Plusquamperfekt (ich, essen):<br><strong>„Ich ___ schon ___."</strong>',inp:'medium',ans:['hatte gegessen','hatte … gegessen'],exp:'<em>hatte gegessen</em>.'},
+{type:'mc',id:'z26',sub:'Plusquamperfekt',q:'Wofür benutzt man das Plusquamperfekt?',opts:['Für die Zukunft','Für etwas vor einem anderen Ereignis in der Vergangenheit','Für die Gegenwart','Für Befehle'],ans:1,exp:'Vorzeitigkeit in der Vergangenheit.'},
+{type:'fill',id:'z27',sub:'Plusquamperfekt',q:'Ergänze: <strong>„Nachdem sie gegessen ___, ging sie ins Bett." (haben)</strong>',inp:'blank',ans:['hatte'],exp:'<em>hatte gegessen</em>.'},
+{type:'mc',id:'z28',sub:'Futur I',q:'Wie bildet man das Futur I?',opts:['werden + Infinitiv','werden + Partizip II','haben + Infinitiv','sein + PII'],ans:0,exp:'Futur I = <em>werden</em> + Infinitiv.'},
+{type:'fill',id:'z29',sub:'Futur I',q:'Bilde Futur I (ich, kaufen):<br><strong>„Ich ___ ein Auto ___."</strong>',inp:'medium',ans:['werde kaufen','werde … kaufen'],exp:'<em>werde kaufen</em>.'},
+{type:'mc',id:'z30',sub:'Futur I',q:'<strong>„Morgen ___ es regnen."</strong>',opts:['wird','werdet','werden','wirst'],ans:0,exp:'<em>es wird regnen</em>.'},
+{type:'fill',id:'z31',sub:'Futur I',q:'Futur I (wir, fahren):<br><strong>„Wir ___ nach Italien ___."</strong>',inp:'medium',ans:['werden fahren','werden … fahren'],exp:'<em>werden fahren</em>.'},
+{type:'mc',id:'z32',sub:'Futur I',q:'Welcher Satz drückt eine Vermutung über die Zukunft aus?',opts:['Ich aß gestern.','Er wird wohl zu Hause sein.','Ich bin gekommen.','Sie ging weg.'],ans:1,exp:'Futur + <em>wohl</em> = Vermutung.'},
+{type:'mc',id:'z33',sub:'Perfekt vs. Präteritum',q:'Welcher Satz passt besser ins Gespräch?',opts:['Ich kaufte gestern Brot.','Ich habe gestern Brot gekauft.','Ich kaufe gestern Brot.','Ich werde gestern Brot kaufen.'],ans:1,exp:'Im Gespräch nutzt man das Perfekt.'},
+{type:'fill',id:'z34',sub:'Perfekt vs. Präteritum',q:'Setze ins Perfekt (ich, machen):<br><strong>„Ich ___ die Arbeit ___."</strong>',inp:'medium',ans:['habe gemacht','habe … gemacht'],exp:'<em>habe gemacht</em>.'},
+{type:'mc',id:'z35',sub:'Perfekt vs. Präteritum',q:'Partizip II von <em>schreiben</em>?',opts:['geschreibt','geschrieben','schrieb','geschreiben'],ans:1,exp:'<em>geschrieben</em>.'},
+{type:'fill',id:'z36',sub:'Perfekt vs. Präteritum',q:'Partizip II von <em>fliegen</em> (mit Hilfsverb, er):',inp:'medium',ans:['ist geflogen','ist … geflogen'],exp:'<em>ist geflogen</em> (Bewegung).'},
+{type:'mc',id:'z37',sub:'Perfekt vs. Präteritum',q:'Partizip II von <em>bringen</em>?',opts:['gebringt','gebracht','gebrungen','brachte'],ans:1,exp:'<em>gebracht</em>.'},
+{type:'fill',id:'z38',sub:'Perfekt vs. Präteritum',q:'Partizip II von <em>helfen</em>:',inp:'blank',ans:['geholfen'],exp:'<em>geholfen</em>.'},
+{type:'mc',id:'z39',sub:'Perfekt vs. Präteritum',q:'Partizip II von <em>telefonieren</em>?',opts:['getelefoniert','telefoniert','telefoniere','getelefonierte'],ans:1,exp:'Verben auf -ieren: kein ge- → <em>telefoniert</em>.'},
+{type:'fill',id:'z40',sub:'Perfekt vs. Präteritum',q:'Partizip II von <em>aufstehen</em> (mit Hilfsverb, ich):',inp:'medium',ans:['bin aufgestanden','bin … aufgestanden'],exp:'<em>bin aufgestanden</em>.'},
+{type:'mc',id:'z41',sub:'Zeitangaben',q:'Welches Wort zeigt die Vergangenheit?',opts:['morgen','gestern','heute Abend','bald'],ans:1,exp:'<em>gestern</em> = Vergangenheit.'},
+{type:'mc',id:'z42',sub:'Zeitangaben',q:'Welches Wort zeigt die Zukunft?',opts:['vorgestern','letzte Woche','nächstes Jahr','damals'],ans:2,exp:'<em>nächstes Jahr</em> = Zukunft.'},
+{type:'fill',id:'z43',sub:'Zeitangaben',q:'Ergänze eine passende Zeitangabe (Vergangenheit):<br><strong>„___ war ich im Kino." (z. B. ein Wort)</strong>',inp:'blank',ans:['gestern','vorgestern','damals'],exp:'z. B. <em>gestern</em>.'},
+{type:'mc',id:'z44',sub:'Zeitangaben',q:'<strong>„___ stehe ich um sechs Uhr auf." (Gewohnheit)</strong>',opts:['Gestern','Immer','Letztes Jahr','Damals'],ans:1,exp:'Gewohnheit/Präsens → <em>immer</em>.'},
+{type:'mc',id:'z45',sub:'Zeitformen gemischt',q:'Setze richtig: <strong>„Letztes Jahr ___ ich in Spanien." (Perfekt von sein)</strong>',opts:['bin … gewesen','habe … gewesen','war … gewesen','bin … geseit'],ans:0,exp:'<em>bin gewesen</em>.'},
+{type:'fill',id:'z46',sub:'Zeitformen gemischt',q:'Setze ins Perfekt (wir, lernen):<br><strong>„Wir ___ Deutsch ___."</strong>',inp:'medium',ans:['haben gelernt','haben … gelernt'],exp:'<em>haben gelernt</em>.'},
+{type:'mc',id:'z47',sub:'Zeitformen gemischt',q:'Welcher Satz ist korrekt?',opts:['Ich habe gestern gekommen.','Ich bin gestern gekommen.','Ich war gestern kommen.','Ich habe gestern kommen.'],ans:1,exp:'<em>kommen</em> mit <em>sein</em>: <em>Ich bin gekommen</em>.'},
+{type:'fill',id:'z48',sub:'Zeitformen gemischt',q:'Setze ins Präteritum (es, geben):<br><strong>„___ ein Problem."</strong>',inp:'medium',ans:['es gab','gab es','gab'],exp:'<em>es gab</em>.'},
+{type:'mc',id:'z49',sub:'Zeitformen gemischt',q:'Partizip II von <em>nehmen</em>?',opts:['genehmt','genommen','genehmen','nahm'],ans:1,exp:'<em>genommen</em>.'},
+{type:'fill',id:'z50',sub:'Zeitformen gemischt',q:'Setze ins Perfekt (er, schlafen):<br><strong>„Er ___ lange ___."</strong>',inp:'medium',ans:['hat geschlafen','hat … geschlafen'],exp:'<em>hat geschlafen</em>.'},
+]},
+{id:'praepositionen',label:'Präpositionen',num:'04',title:'Präpositionen & Kasus',exercises:[
+{type:'mc',id:'p1',sub:'Akkusativpräpositionen',q:'<strong>„Das Geschenk ist ___ dich."</strong>',opts:['für','mit','bei','von'],ans:0,exp:'<em>für</em> + Akkusativ.'},
+{type:'mc',id:'p2',sub:'Akkusativpräpositionen',q:'Welche Präposition steht immer mit Akkusativ?',opts:['mit','durch','bei','aus'],ans:1,exp:'<em>durch</em> + Akkusativ (auch: für, ohne, gegen, um).'},
+{type:'fill',id:'p3',sub:'Akkusativpräpositionen',q:'Ergänze: <strong>„Ich gehe ___ den Park." (durch)</strong>',inp:'blank',ans:['durch'],exp:'<em>durch den Park</em> (Akk.).'},
+{type:'mc',id:'p4',sub:'Akkusativpräpositionen',q:'<strong>„Er kommt ___ Geld." (ohne)</strong>',opts:['ohne das','ohne dem','ohne des','ohne der'],ans:0,exp:'<em>ohne</em> + Akkusativ → <em>ohne das Geld</em>.'},
+{type:'mc',id:'p5',sub:'Dativpräpositionen',q:'Welche Präposition steht immer mit Dativ?',opts:['für','ohne','mit','durch'],ans:2,exp:'<em>mit</em> + Dativ (auch: nach, bei, seit, von, zu, aus).'},
+{type:'fill',id:'p6',sub:'Dativpräpositionen',q:'Ergänze: <strong>„Ich fahre ___ dem Bus." (mit)</strong>',inp:'blank',ans:['mit'],exp:'<em>mit dem Bus</em> (Dativ).'},
+{type:'mc',id:'p7',sub:'Dativpräpositionen',q:'<strong>„Ich komme ___ der Schule." (aus)</strong>',opts:['aus der','aus die','aus den','aus das'],ans:0,exp:'<em>aus</em> + Dativ → <em>aus der Schule</em>.'},
+{type:'mc',id:'p8',sub:'Dativpräpositionen',q:'<strong>„Wir wohnen ___ Onkel." (bei, mein)</strong>',opts:['bei meinem','bei meinen','bei mein','bei meiner'],ans:0,exp:'<em>bei</em> + Dativ mask. → <em>bei meinem Onkel</em>.'},
+{type:'fill',id:'p9',sub:'Dativpräpositionen',q:'Ergänze: <strong>„___ einem Jahr lerne ich Deutsch." (seit)</strong>',inp:'blank',ans:['seit'],exp:'<em>seit</em> + Dativ (Zeit).'},
+{type:'mc',id:'p10',sub:'Dativpräpositionen',q:'<strong>„Ich gehe ___ Arzt." (zu, der → Kontraktion)</strong>',opts:['zum','zur','z’n','zu der'],ans:0,exp:'<em>zu + dem = zum Arzt</em>.'},
+{type:'mc',id:'p11',sub:'Wechselpräpositionen',q:'<strong>„Das Bild hängt ___ Wand." (an, Lage)</strong>',opts:['an die','an der','an den','an das'],ans:1,exp:'Lage (wo?) → Dativ: <em>an der Wand</em>.'},
+{type:'mc',id:'p12',sub:'Wechselpräpositionen',q:'<strong>„Ich hänge das Bild ___ Wand." (an, Richtung)</strong>',opts:['an die','an der','an dem','an den'],ans:0,exp:'Richtung (wohin?) → Akk.: <em>an die Wand</em>.'},
+{type:'fill',id:'p13',sub:'Wechselpräpositionen',q:'Wo? <strong>„Das Buch liegt ___ dem Tisch." (auf)</strong>',inp:'blank',ans:['auf'],exp:'Lage + Dativ → <em>auf dem Tisch</em>.'},
+{type:'mc',id:'p14',sub:'Wechselpräpositionen',q:'Wohin? <strong>„Ich lege das Buch ___ Tisch." (auf)</strong>',opts:['auf den','auf dem','auf der','auf das'],ans:0,exp:'Richtung + Akk. → <em>auf den Tisch</em>.'},
+{type:'mc',id:'p15',sub:'Wechselpräpositionen',q:'<strong>„Die Katze sitzt ___ Stuhl." (unter, Lage)</strong>',opts:['unter den','unter dem','unter der','unter das'],ans:1,exp:'Lage + Dativ → <em>unter dem Stuhl</em>.'},
+{type:'fill',id:'p16',sub:'Wechselpräpositionen',q:'Wohin? Ergänze Artikel: <strong>„Ich gehe in ___ Kino." (das)</strong>',inp:'medium',ans:['ins','in das'],exp:'<em>in + das = ins Kino</em> (Richtung).'},
+{type:'mc',id:'p17',sub:'Wechselpräpositionen',q:'<strong>„Ich bin ___ Kino." (in, Lage)</strong>',opts:['im','ins','in den','in der'],ans:0,exp:'Lage → <em>in + dem = im Kino</em>.'},
+{type:'mc',id:'p18',sub:'Wechselpräpositionen',q:'Welche sind Wechselpräpositionen?',opts:['für, ohne, gegen','an, auf, in, über, unter','mit, nach, bei','durch, um, für'],ans:1,exp:'Wechselpräpositionen: an, auf, hinter, in, neben, über, unter, vor, zwischen.'},
+{type:'fill',id:'p19',sub:'Wechselpräpositionen',q:'Wo? <strong>„Die Lampe hängt ___ dem Tisch." (über)</strong>',inp:'blank',ans:['über'],exp:'Lage + Dativ → <em>über dem Tisch</em>.'},
+{type:'mc',id:'p20',sub:'Wechselpräpositionen',q:'<strong>„Stell die Flasche ___ Kühlschrank." (in, Richtung)</strong>',opts:['in den','im','in dem','in der'],ans:0,exp:'Richtung + Akk. mask. → <em>in den Kühlschrank</em>.'},
+{type:'mc',id:'p21',sub:'Genitivpräpositionen',q:'<strong>„___ des Regens bleiben wir zu Hause." (wegen)</strong>',opts:['Wegen','Mit','Bei','Für'],ans:0,exp:'<em>wegen</em> + Genitiv.'},
+{type:'mc',id:'p22',sub:'Genitivpräpositionen',q:'Welche Präposition steht mit Genitiv?',opts:['mit','trotz','bei','aus'],ans:1,exp:'<em>trotz</em> + Genitiv (auch: wegen, während).'},
+{type:'fill',id:'p23',sub:'Genitivpräpositionen',q:'Ergänze: <strong>„___ der Pause lerne ich." (während)</strong>',inp:'blank',ans:['während'],exp:'<em>während</em> + Genitiv.'},
+{type:'mc',id:'p24',sub:'Genitiv einfach',q:'<strong>„Das ist das Auto ___ Vaters." (mein)</strong>',opts:['mein','meines','meinem','meiner'],ans:1,exp:'Genitiv mask. → <em>meines Vaters</em>.'},
+{type:'fill',id:'p25',sub:'Genitiv einfach',q:'Ergänze (Genitiv fem.): <strong>„Das ist die Tasche ___ Frau."</strong>',inp:'blank',ans:['der'],exp:'Genitiv fem. → <em>der Frau</em>.'},
+{type:'mc',id:'p26',sub:'Lokalpräpositionen',q:'<strong>„Ich fahre ___ Deutschland." (Land ohne Artikel)</strong>',opts:['nach','in','zu','auf'],ans:0,exp:'Länder ohne Artikel → <em>nach</em>.'},
+{type:'mc',id:'p27',sub:'Lokalpräpositionen',q:'<strong>„Ich fahre ___ Schweiz." (Land mit Artikel)</strong>',opts:['nach der','in die','zu der','an die'],ans:1,exp:'Länder mit Artikel → <em>in die Schweiz</em>.'},
+{type:'fill',id:'p28',sub:'Lokalpräpositionen',q:'Ergänze: <strong>„Ich gehe ___ Hause." (Richtung)</strong>',inp:'blank',ans:['nach'],exp:'Feste Wendung: <em>nach Hause</em>.'},
+{type:'mc',id:'p29',sub:'Lokalpräpositionen',q:'<strong>„Ich bin ___ Hause." (Lage)</strong>',opts:['nach','zu','in','bei'],ans:1,exp:'Feste Wendung: <em>zu Hause</em>.'},
+{type:'fill',id:'p30',sub:'Lokalpräpositionen',q:'Ergänze: <strong>„Ich gehe ___ Supermarkt." (zu, der → Kontraktion)</strong>',inp:'blank',ans:['zum'],exp:'<em>zu + dem = zum Supermarkt</em>.'},
+{type:'mc',id:'p31',sub:'Temporalpräpositionen',q:'<strong>„___ Montag habe ich frei."</strong>',opts:['Am','Im','Um','In'],ans:0,exp:'Tage → <em>am Montag</em>.'},
+{type:'mc',id:'p32',sub:'Temporalpräpositionen',q:'<strong>„___ Sommer fahren wir ans Meer."</strong>',opts:['Am','Im','Um','An'],ans:1,exp:'Jahreszeiten/Monate → <em>im Sommer</em>.'},
+{type:'fill',id:'p33',sub:'Temporalpräpositionen',q:'Ergänze (Uhrzeit): <strong>„Der Film beginnt ___ acht Uhr."</strong>',inp:'blank',ans:['um'],exp:'Uhrzeit → <em>um acht Uhr</em>.'},
+{type:'mc',id:'p34',sub:'Temporalpräpositionen',q:'<strong>„___ zwei Wochen habe ich Urlaub." (Zukunft)</strong>',opts:['Vor','In','Seit','Nach'],ans:1,exp:'Zukunft → <em>in zwei Wochen</em>.'},
+{type:'fill',id:'p35',sub:'Temporalpräpositionen',q:'Ergänze: <strong>„___ dem Essen gehe ich spazieren." (danach)</strong>',inp:'blank',ans:['nach'],exp:'<em>nach dem Essen</em> (Dativ).'},
+{type:'mc',id:'p36',sub:'Präpositionalverben',q:'<strong>„Ich warte ___ den Bus."</strong>',opts:['auf','für','an','über'],ans:0,exp:'<em>warten auf</em> + Akkusativ.'},
+{type:'mc',id:'p37',sub:'Präpositionalverben',q:'<strong>„Ich denke ___ meine Familie."</strong>',opts:['an','auf','über','für'],ans:0,exp:'<em>denken an</em> + Akkusativ.'},
+{type:'fill',id:'p38',sub:'Präpositionalverben',q:'Ergänze: <strong>„Ich freue mich ___ das Wochenende." (Zukunft)</strong>',inp:'blank',ans:['auf'],exp:'<em>sich freuen auf</em> (Zukunft).'},
+{type:'mc',id:'p39',sub:'Präpositionalverben',q:'<strong>„Sie interessiert sich ___ Musik."</strong>',opts:['an','für','über','auf'],ans:1,exp:'<em>sich interessieren für</em> + Akk.'},
+{type:'fill',id:'p40',sub:'Präpositionalverben',q:'Ergänze: <strong>„Wir sprechen ___ das Wetter." (über)</strong>',inp:'blank',ans:['über'],exp:'<em>sprechen über</em> + Akk.'},
+{type:'mc',id:'p41',sub:'Präpositionalverben',q:'<strong>„Er hat Angst ___ Hunden."</strong>',opts:['vor','für','an','auf'],ans:0,exp:'<em>Angst haben vor</em> + Dativ.'},
+{type:'mc',id:'p42',sub:'Präpositionalverben',q:'<strong>„Ich gratuliere dir ___ Geburtstag."</strong>',opts:['für','zum','an','auf'],ans:1,exp:'<em>gratulieren zu</em> → <em>zum Geburtstag</em>.'},
+{type:'fill',id:'p43',sub:'Präpositionalverben',q:'Ergänze: <strong>„Ich helfe meiner Mutter ___ der Arbeit." (bei)</strong>',inp:'blank',ans:['bei'],exp:'<em>helfen bei</em> + Dativ.'},
+{type:'mc',id:'p44',sub:'Präpositionalverben',q:'<strong>„Wir nehmen ___ dem Kurs teil."</strong>',opts:['an','auf','in','für'],ans:0,exp:'<em>teilnehmen an</em> + Dativ.'},
+{type:'fill',id:'p45',sub:'Präpositionalverben',q:'Ergänze: <strong>„Ich bedanke mich ___ das Geschenk." (für)</strong>',inp:'blank',ans:['für'],exp:'<em>sich bedanken für</em> + Akk.'},
+{type:'mc',id:'p46',sub:'Kasus nach Verben',q:'<strong>„Ich gebe ___ Kind einen Apfel." (das)</strong>',opts:['das','dem','den','des'],ans:1,exp:'<em>geben</em> + Dativ (Person) → <em>dem Kind</em>.'},
+{type:'mc',id:'p47',sub:'Kasus nach Verben',q:'<strong>„Ich besuche ___ Großeltern." (mein, Plural Akk.)</strong>',opts:['meine','meinen','meiner','meinem'],ans:0,exp:'Plural Akk. → <em>meine Großeltern</em>.'},
+{type:'fill',id:'p48',sub:'Kasus nach Verben',q:'Ergänze (Dativ): <strong>„Das Buch gehört ___ Lehrer." (der)</strong>',inp:'blank',ans:['dem'],exp:'<em>gehören</em> + Dativ → <em>dem Lehrer</em>.'},
+{type:'mc',id:'p49',sub:'Kasus nach Verben',q:'Welcher Kasus folgt auf <em>für</em>?',opts:['Nominativ','Akkusativ','Dativ','Genitiv'],ans:1,exp:'<em>für</em> + Akkusativ.'},
+{type:'mc',id:'p50',sub:'Kasus nach Verben',q:'Welcher Kasus folgt auf <em>mit</em>?',opts:['Akkusativ','Dativ','Genitiv','Nominativ'],ans:1,exp:'<em>mit</em> + Dativ.'},
+]},
+{id:'konnektoren',label:'Konnektoren',num:'05',title:'Konnektoren & Satzbau',exercises:[
+{type:'mc',id:'kn1',sub:'Hauptsatz-Konnektoren',q:'<strong>„Ich bin müde, ___ ich gehe ins Bett."</strong>',opts:['deshalb','weil','dass','obwohl'],ans:0,exp:'Folge → <em>deshalb</em> (Hauptsatz).'},
+{type:'mc',id:'kn2',sub:'Hauptsatz-Konnektoren',q:'<strong>„Ich lerne Deutsch, ___ ich möchte in Berlin arbeiten." (Grund, Hauptsatz)</strong>',opts:['weil','denn','dass','damit'],ans:1,exp:'<em>denn</em> verbindet zwei Hauptsätze (Grund).'},
+{type:'fill',id:'kn3',sub:'Hauptsatz-Konnektoren',q:'Ergänze (und/oder/aber): <strong>„Ich trinke Tee ___ du trinkst Kaffee."</strong>',inp:'blank',ans:['und','aber'],exp:'z. B. <em>und</em> (Aufzählung).'},
+{type:'mc',id:'kn4',sub:'Hauptsatz-Konnektoren',q:'<strong>„Ich wollte kommen, ___ ich hatte keine Zeit."</strong>',opts:['und','aber','denn','oder'],ans:1,exp:'Gegensatz → <em>aber</em>.'},
+{type:'mc',id:'kn5',sub:'Hauptsatz-Konnektoren',q:'Nach <em>und</em>, <em>aber</em>, <em>oder</em>, <em>denn</em> — wo steht das Verb?',opts:['Am Ende','Auf Position 2 (normale Stellung)','Vor dem Subjekt','Egal'],ans:1,exp:'Diese Konnektoren ändern die Wortstellung nicht.'},
+{type:'fill',id:'kn6',sub:'Hauptsatz-Konnektoren',q:'Ergänze: <strong>„Er isst kein Fleisch, ___ Gemüse." (Korrektur nach Verneinung)</strong>',inp:'blank',ans:['sondern'],exp:'Nach Verneinung → <em>sondern</em>.'},
+{type:'mc',id:'kn7',sub:'Hauptsatz-Konnektoren',q:'<strong>„Möchtest du Tee ___ Kaffee?"</strong>',opts:['und','aber','oder','denn'],ans:2,exp:'Alternative → <em>oder</em>.'},
+{type:'mc',id:'kn8',sub:'Konjunktionaladverbien',q:'<strong>„Es regnet. ___ bleibe ich zu Hause."</strong>',opts:['Deshalb','Weil','Dass','Obwohl'],ans:0,exp:'Folge → <em>Deshalb</em> (Verb folgt direkt).'},
+{type:'mc',id:'kn9',sub:'Konjunktionaladverbien',q:'<strong>„Es regnet. ___ gehe ich spazieren." (Gegensatz/trotzdem)</strong>',opts:['Deshalb','Trotzdem','Weil','Damit'],ans:1,exp:'Unerwarteter Gegensatz → <em>Trotzdem</em>.'},
+{type:'fill',id:'kn10',sub:'Konjunktionaladverbien',q:'Ergänze: <strong>„Ich habe viel gelernt. ___ habe ich die Prüfung bestanden." (Folge)</strong>',inp:'blank',ans:['deshalb','deswegen','daher'],exp:'z. B. <em>deshalb</em>.'},
+{type:'mc',id:'kn11',sub:'Konjunktionaladverbien',q:'Nach <em>deshalb</em>/<em>trotzdem</em> am Satzanfang — was folgt?',opts:['Subjekt','Verb','Objekt','Nichts'],ans:1,exp:'Konjunktionaladverb auf Pos. 1, Verb auf Pos. 2.'},
+{type:'mc',id:'kn12',sub:'weil/da',q:'<strong>„Ich bleibe zu Hause, ___ ich krank bin."</strong>',opts:['weil','deshalb','denn','trotzdem'],ans:0,exp:'Grund (Nebensatz, Verb am Ende) → <em>weil</em>.'},
+{type:'fill',id:'kn13',sub:'weil/da',q:'Verb ans Ende: <strong>„Ich komme nicht, weil ich keine Zeit ___." (haben)</strong>',inp:'blank',ans:['habe'],exp:'Nebensatz → Verb am Ende: <em>habe</em>.'},
+{type:'mc',id:'kn14',sub:'weil/da',q:'Welcher Satz ist richtig?',opts:['Ich gehe, weil bin ich müde.','Ich gehe, weil ich müde bin.','Ich gehe, weil müde ich bin.','Ich gehe, weil ich bin müde.'],ans:1,exp:'<em>weil ich müde bin</em> (Verb am Ende).'},
+{type:'mc',id:'kn15',sub:'dass',q:'<strong>„Ich glaube, ___ er recht hat."</strong>',opts:['dass','das','weil','ob'],ans:0,exp:'Konjunktion → <em>dass</em>.'},
+{type:'fill',id:'kn16',sub:'dass',q:'Verb ans Ende: <strong>„Ich hoffe, dass du bald ___." (kommen)</strong>',inp:'blank',ans:['kommst'],exp:'Nebensatz → <em>kommst</em> am Ende.'},
+{type:'mc',id:'kn17',sub:'dass',q:'Wann schreibt man <em>dass</em> (mit ss)?',opts:['Als Artikel','Als Konjunktion','Als Pronomen','Nie'],ans:1,exp:'<em>dass</em> = Konjunktion; <em>das</em> = Artikel/Pronomen.'},
+{type:'mc',id:'kn18',sub:'wenn/als',q:'<strong>„___ ich Zeit habe, lese ich." (Gegenwart, wiederholt)</strong>',opts:['Wenn','Als','Ob','Dass'],ans:0,exp:'Gegenwart/Wiederholung → <em>wenn</em>.'},
+{type:'mc',id:'kn19',sub:'wenn/als',q:'<strong>„___ ich klein war, wohnte ich in Köln." (einmal, Vergangenheit)</strong>',opts:['Wenn','Als','Ob','Damit'],ans:1,exp:'Einmaliges Ereignis in der Vergangenheit → <em>als</em>.'},
+{type:'fill',id:'kn20',sub:'wenn/als',q:'Ergänze (wenn/als): <strong>„Immer ___ es regnet, bleibe ich zu Hause."</strong>',inp:'blank',ans:['wenn'],exp:'Wiederholung → <em>wenn</em>.'},
+{type:'mc',id:'kn21',sub:'wenn/als',q:'<strong>„___ ich gestern nach Hause kam, war niemand da."</strong>',opts:['Wenn','Als','Ob','Weil'],ans:1,exp:'Einmal in der Vergangenheit → <em>als</em>.'},
+{type:'mc',id:'kn22',sub:'obwohl',q:'<strong>„___ es regnet, gehe ich spazieren." (Nebensatz)</strong>',opts:['Obwohl','Trotzdem','Deshalb','Weil'],ans:0,exp:'Gegensatz (Nebensatz) → <em>obwohl</em>.'},
+{type:'fill',id:'kn23',sub:'obwohl',q:'Verb ans Ende: <strong>„Er arbeitet, obwohl er krank ___." (sein)</strong>',inp:'blank',ans:['ist'],exp:'Nebensatz → <em>ist</em> am Ende.'},
+{type:'mc',id:'kn24',sub:'obwohl',q:'Was ist der Unterschied zwischen <em>obwohl</em> und <em>trotzdem</em>?',opts:['Kein Unterschied','obwohl = Nebensatz, trotzdem = Hauptsatz','trotzdem = Nebensatz','Beide am Ende'],ans:1,exp:'<em>obwohl</em> leitet Nebensatz ein; <em>trotzdem</em> ist Konjunktionaladverb.'},
+{type:'mc',id:'kn25',sub:'damit',q:'<strong>„Ich lerne viel, ___ ich die Prüfung bestehe." (Ziel)</strong>',opts:['damit','weil','obwohl','dass'],ans:0,exp:'Ziel/Zweck → <em>damit</em>.'},
+{type:'mc',id:'kn26',sub:'damit/um zu',q:'<strong>„Ich lerne Deutsch, ___ in Deutschland ___ arbeiten."</strong>',opts:['um / zu','damit / zu','weil / —','dass / zu'],ans:0,exp:'Gleiches Subjekt → <em>um … zu + Infinitiv</em>.'},
+{type:'fill',id:'kn27',sub:'damit/um zu',q:'Ergänze: <strong>„Sie spart Geld, ___ ein Auto ___ kaufen." (um … zu)</strong>',inp:'medium',ans:['um … zu','um zu'],exp:'<em>um … zu kaufen</em>.'},
+{type:'mc',id:'kn28',sub:'damit/um zu',q:'Wann benutzt man <em>um … zu</em> statt <em>damit</em>?',opts:['Wenn das Subjekt verschieden ist','Wenn das Subjekt gleich ist','Immer','Nie'],ans:1,exp:'Gleiches Subjekt → <em>um … zu</em>.'},
+{type:'mc',id:'kn29',sub:'temporale Konnektoren',q:'<strong>„___ ich aufstehe, dusche ich." (zuerst aufstehen, dann duschen)</strong>',opts:['Nachdem','Bevor','Während','Obwohl'],ans:0,exp:'<em>Nachdem</em> = danach (Vorzeitigkeit).'},
+{type:'mc',id:'kn30',sub:'temporale Konnektoren',q:'<strong>„___ ich schlafe, putze ich meine Zähne." (zuerst Zähne, dann schlafen)</strong>',opts:['Nachdem','Bevor','Seit','Weil'],ans:1,exp:'<em>Bevor</em> = vorher.'},
+{type:'fill',id:'kn31',sub:'temporale Konnektoren',q:'Ergänze: <strong>„___ ich koche, höre ich Musik." (gleichzeitig)</strong>',inp:'blank',ans:['während'],exp:'Gleichzeitigkeit → <em>während</em>.'},
+{type:'mc',id:'kn32',sub:'temporale Konnektoren',q:'<strong>„___ ich in Berlin wohne, fühle ich mich wohl." (seit einem Zeitpunkt)</strong>',opts:['Seit','Bevor','Nachdem','Obwohl'],ans:0,exp:'<em>Seitdem/Seit</em> = ab einem Zeitpunkt.'},
+{type:'mc',id:'kn33',sub:'temporale Konnektoren',q:'Welche Zeitform passt nach <em>nachdem</em> (Hauptsatz Präteritum)?',opts:['Präsens','Plusquamperfekt','Futur','Imperativ'],ans:1,exp:'<em>Nachdem</em> + Plusquamperfekt, Hauptsatz Präteritum.'},
+{type:'mc',id:'kn34',sub:'Satzstellung',q:'Korrekte Wortstellung (Aussagesatz)?',opts:['Ich morgen komme.','Morgen ich komme.','Morgen komme ich.','Komme ich morgen.'],ans:2,exp:'Verb auf Pos. 2 → <em>Morgen komme ich.</em>'},
+{type:'mc',id:'kn35',sub:'Satzstellung',q:'Wo steht das Verb im Aussagesatz?',opts:['Position 1','Position 2','Am Ende','Egal'],ans:1,exp:'Im Hauptsatz: Verb auf Position 2.'},
+{type:'fill',id:'kn36',sub:'Satzstellung',q:'Stelle um (Beginn mit „Heute"):<br><strong>„Ich gehe heute einkaufen." → „Heute ___ ich einkaufen."</strong>',inp:'blank',ans:['gehe'],exp:'Verb bleibt auf Pos. 2: <em>Heute gehe ich …</em>'},
+{type:'mc',id:'kn37',sub:'Satzstellung',q:'TE-KA-MO-LO: Reihenfolge der Angaben?',opts:['Lokal-Modal-Kausal-Temporal','Temporal-Kausal-Modal-Lokal','Modal-Lokal-Temporal','Lokal-Temporal'],ans:1,exp:'Te-Ka-Mo-Lo: temporal, kausal, modal, lokal.'},
+{type:'mc',id:'kn38',sub:'Satzstellung',q:'Welcher Satz ist richtig (TE-MO-LO)?',opts:['Ich fahre nach Berlin morgen mit dem Zug.','Ich fahre morgen mit dem Zug nach Berlin.','Ich fahre mit dem Zug morgen nach Berlin.','Ich morgen fahre nach Berlin.'],ans:1,exp:'<em>morgen (Te) – mit dem Zug (Mo) – nach Berlin (Lo)</em>.'},
+{type:'mc',id:'kn39',sub:'Satzstellung',q:'Dativ und Akkusativ: Welche Reihenfolge mit zwei Nomen?',opts:['Akkusativ vor Dativ','Dativ vor Akkusativ','Egal','Immer Genitiv zuerst'],ans:1,exp:'Zwei Nomen: Dativ vor Akkusativ. (Ich gebe dem Kind den Ball.)'},
+{type:'fill',id:'kn40',sub:'Satzstellung',q:'Verb am Ende (Nebensatz): <strong>„Ich weiß, dass er Deutsch ___." (sprechen)</strong>',inp:'blank',ans:['spricht'],exp:'Nebensatz → <em>spricht</em> am Ende.'},
+{type:'mc',id:'kn41',sub:'Fragesätze',q:'W-Frage — wo steht das Verb?',opts:['Position 1','Position 2 (nach dem Fragewort)','Am Ende','Vor dem Fragewort'],ans:1,exp:'W-Frage: Fragewort + Verb. (Wann kommst du?)'},
+{type:'mc',id:'kn42',sub:'Fragesätze',q:'Ja/Nein-Frage — wo steht das Verb?',opts:['Position 1','Position 2','Am Ende','Egal'],ans:0,exp:'Ja/Nein-Frage: Verb auf Position 1. (Kommst du?)'},
+{type:'fill',id:'kn43',sub:'Fragesätze',q:'Bilde die Ja/Nein-Frage: <strong>„Du wohnst in Wien." → „___ du in Wien?"</strong>',inp:'blank',ans:['wohnst'],exp:'Verb nach vorn: <em>Wohnst du …?</em>'},
+{type:'mc',id:'kn44',sub:'indirekte Fragen',q:'<strong>„Ich weiß nicht, ___ er kommt." (Ja/Nein indirekt)</strong>',opts:['ob','dass','wenn','was'],ans:0,exp:'Indirekte Ja/Nein-Frage → <em>ob</em>.'},
+{type:'fill',id:'kn45',sub:'indirekte Fragen',q:'Verb ans Ende: <strong>„Kannst du mir sagen, wo der Bahnhof ___?" (sein)</strong>',inp:'blank',ans:['ist'],exp:'Nebensatz → <em>ist</em> am Ende.'},
+{type:'mc',id:'kn46',sub:'zweiteilige Konnektoren',q:'<strong>„Ich trinke ___ Kaffee ___ Tee." (beides)</strong>',opts:['sowohl / als auch','weder / noch','entweder / oder','zwar / aber'],ans:0,exp:'Beides → <em>sowohl … als auch</em>.'},
+{type:'mc',id:'kn47',sub:'zweiteilige Konnektoren',q:'<strong>„Ich mag ___ Kaffee ___ Tee." (keins von beiden)</strong>',opts:['sowohl / als auch','weder / noch','entweder / oder','nicht nur / sondern'],ans:1,exp:'Negation beider → <em>weder … noch</em>.'},
+{type:'fill',id:'kn48',sub:'zweiteilige Konnektoren',q:'Ergänze: <strong>„___ du kommst, ___ du bleibst zu Hause." (Alternative)</strong>',inp:'medium',ans:['entweder … oder','entweder oder'],exp:'Alternative → <em>entweder … oder</em>.'},
+{type:'mc',id:'kn49',sub:'Konnektoren gemischt',q:'<strong>„Er ist reich, ___ er ist nicht glücklich."</strong>',opts:['weil','aber','damit','dass'],ans:1,exp:'Gegensatz → <em>aber</em>.'},
+{type:'transform',id:'kn50',sub:'Konnektoren gemischt',q:'Verbinde mit <em>weil</em>:<br><strong>„Ich bleibe zu Hause. Ich bin krank."</strong>',hint:'Ich bleibe zu Hause, weil ich krank bin.',keys:['weil','krank','bin']},
+]},
+{id:'wortschatz',label:'Wortschatz',num:'06',title:'Wortschatz & Leseverstehen',exercises:[
+{type:'mc',id:'w1',sub:'Familie',q:'Die Schwester meiner Mutter ist meine ___.',opts:['Oma','Tante','Cousine','Nichte'],ans:1,exp:'Schwester der Mutter = <em>Tante</em>.'},
+{type:'mc',id:'w2',sub:'Familie',q:'Der Sohn meines Bruders ist mein ___.',opts:['Neffe','Cousin','Enkel','Schwager'],ans:0,exp:'Sohn des Bruders = <em>Neffe</em>.'},
+{type:'fill',id:'w3',sub:'Familie',q:'Die Eltern meiner Eltern sind meine ___ (Plural).',inp:'medium',ans:['großeltern'],exp:'<em>Großeltern</em>.'},
+{type:'mc',id:'w4',sub:'Familie',q:'Eine Person, die nicht verheiratet ist, ist ___.',opts:['verheiratet','ledig','geschieden','verwitwet'],ans:1,exp:'Nicht verheiratet = <em>ledig</em>.'},
+{type:'mc',id:'w5',sub:'Wohnen',q:'In welchem Raum kocht man?',opts:['Schlafzimmer','Küche','Badezimmer','Wohnzimmer'],ans:1,exp:'Man kocht in der <em>Küche</em>.'},
+{type:'mc',id:'w6',sub:'Wohnen',q:'Womit kann man nach oben fahren (Haus)?',opts:['Treppe','Aufzug','Balkon','Keller'],ans:1,exp:'Der <em>Aufzug</em> (Lift) fährt nach oben.'},
+{type:'fill',id:'w7',sub:'Wohnen',q:'Wie heißt das Geld, das man monatlich für eine Wohnung zahlt?',inp:'medium',ans:['die miete','miete'],exp:'<em>die Miete</em>.'},
+{type:'mc',id:'w8',sub:'Wohnen',q:'Ein Raum unter dem Dach heißt ___.',opts:['Keller','Dachboden','Garage','Flur'],ans:1,exp:'Unter dem Dach = <em>Dachboden</em>.'},
+{type:'mc',id:'w9',sub:'Arbeit',q:'Wer arbeitet in einem Krankenhaus und behandelt Patienten?',opts:['Lehrer','Arzt','Koch','Verkäufer'],ans:1,exp:'Im Krankenhaus arbeitet der <em>Arzt</em>.'},
+{type:'mc',id:'w10',sub:'Arbeit',q:'Das Geld, das man für die Arbeit bekommt, heißt ___.',opts:['Miete','Gehalt','Steuer','Rechnung'],ans:1,exp:'<em>Gehalt</em> (oder Lohn).'},
+{type:'fill',id:'w11',sub:'Arbeit',q:'Wie heißt eine schriftliche Bitte um eine Stelle?',inp:'medium',ans:['die bewerbung','bewerbung'],exp:'<em>die Bewerbung</em>.'},
+{type:'mc',id:'w12',sub:'Arbeit',q:'Wer repariert Autos?',opts:['Bäcker','Mechaniker','Friseur','Kellner'],ans:1,exp:'Der <em>Mechaniker</em> repariert Autos.'},
+{type:'mc',id:'w13',sub:'Reisen',q:'Wo kauft man eine Fahrkarte für den Zug?',opts:['am Schalter','in der Apotheke','beim Bäcker','im Kino'],ans:0,exp:'Fahrkarten gibt es <em>am Schalter</em> (oder Automaten).'},
+{type:'mc',id:'w14',sub:'Reisen',q:'Wo übernachtet man auf einer Reise?',opts:['im Bahnhof','im Hotel','im Supermarkt','im Büro'],ans:1,exp:'Man übernachtet <em>im Hotel</em>.'},
+{type:'fill',id:'w15',sub:'Reisen',q:'Wie heißt das Dokument, das man zum Reisen ins Ausland braucht?',inp:'medium',ans:['der reisepass','reisepass','pass'],exp:'<em>der Reisepass</em>.'},
+{type:'mc',id:'w16',sub:'Reisen',q:'Was packt man für eine Reise?',opts:['den Koffer','die Miete','das Gehalt','die Rechnung'],ans:0,exp:'Man packt <em>den Koffer</em>.'},
+{type:'mc',id:'w17',sub:'Gesundheit',q:'Wo kauft man Medikamente?',opts:['Bäckerei','Apotheke','Metzgerei','Bibliothek'],ans:1,exp:'Medikamente gibt es in der <em>Apotheke</em>.'},
+{type:'mc',id:'w18',sub:'Gesundheit',q:'„Ich habe ___." (Schmerzen im Kopf)',opts:['Bauchschmerzen','Kopfschmerzen','Zahnschmerzen','Halsschmerzen'],ans:1,exp:'Kopf → <em>Kopfschmerzen</em>.'},
+{type:'fill',id:'w19',sub:'Gesundheit',q:'Wie heißt das Gegenteil von „krank"?',inp:'blank',ans:['gesund'],exp:'<em>gesund</em>.'},
+{type:'mc',id:'w20',sub:'Gesundheit',q:'Was macht man beim Arzt, wenn man krank ist?',opts:['einkaufen','einen Termin haben','kochen','reisen'],ans:1,exp:'Man hat <em>einen Termin</em> beim Arzt.'},
+{type:'mc',id:'w21',sub:'Essen',q:'Welches ist ein Getränk?',opts:['Brot','Käse','Wasser','Apfel'],ans:2,exp:'<em>Wasser</em> ist ein Getränk.'},
+{type:'mc',id:'w22',sub:'Essen',q:'Womit isst man eine Suppe?',opts:['mit der Gabel','mit dem Löffel','mit dem Messer','mit den Händen'],ans:1,exp:'Suppe isst man mit dem <em>Löffel</em>.'},
+{type:'fill',id:'w23',sub:'Essen',q:'Wie heißt die erste Mahlzeit am Morgen?',inp:'medium',ans:['das frühstück','frühstück'],exp:'<em>das Frühstück</em>.'},
+{type:'mc',id:'w24',sub:'Essen',q:'Welches ist ein Obst?',opts:['Karotte','Banane','Kartoffel','Zwiebel'],ans:1,exp:'<em>Banane</em> ist Obst.'},
+{type:'mc',id:'w25',sub:'Hobbys',q:'Was macht man im Schwimmbad?',opts:['lesen','schwimmen','kochen','schlafen'],ans:1,exp:'Im Schwimmbad → <em>schwimmen</em>.'},
+{type:'fill',id:'w26',sub:'Hobbys',q:'Wie nennt man die freie Zeit ohne Arbeit?',inp:'medium',ans:['die freizeit','freizeit'],exp:'<em>die Freizeit</em>.'},
+{type:'mc',id:'w27',sub:'Hobbys',q:'Wo leiht man sich Bücher aus?',opts:['im Kino','in der Bibliothek','im Stadion','im Restaurant'],ans:1,exp:'Bücher leiht man in der <em>Bibliothek</em>.'},
+{type:'mc',id:'w28',sub:'Synonyme',q:'Synonym für <strong>„schön"</strong>?',opts:['hässlich','hübsch','schlecht','schnell'],ans:1,exp:'<em>schön ≈ hübsch</em>.'},
+{type:'mc',id:'w29',sub:'Synonyme',q:'Synonym für <strong>„sprechen"</strong>?',opts:['reden','laufen','essen','schlafen'],ans:0,exp:'<em>sprechen ≈ reden</em>.'},
+{type:'mc',id:'w30',sub:'Synonyme',q:'Synonym für <strong>„beginnen"</strong>?',opts:['enden','anfangen','aufhören','schließen'],ans:1,exp:'<em>beginnen ≈ anfangen</em>.'},
+{type:'mc',id:'w31',sub:'Synonyme',q:'Synonym für <strong>„schnell"</strong>?',opts:['langsam','rasch','müde','spät'],ans:1,exp:'<em>schnell ≈ rasch</em>.'},
+{type:'mc',id:'w32',sub:'Synonyme',q:'Synonym für <strong>„kaufen"</strong>?',opts:['verkaufen','erwerben','verlieren','suchen'],ans:1,exp:'<em>kaufen ≈ erwerben</em>.'},
+{type:'fill',id:'w33',sub:'Synonyme',q:'Ein anderes Wort für <strong>„nett"</strong>:',inp:'blank',ans:['freundlich','sympathisch','lieb'],exp:'z. B. <em>freundlich</em>.'},
+{type:'mc',id:'w34',sub:'Antonyme',q:'Gegenteil von <strong>„groß"</strong>?',opts:['hoch','klein','lang','breit'],ans:1,exp:'<em>groß ↔ klein</em>.'},
+{type:'mc',id:'w35',sub:'Antonyme',q:'Gegenteil von <strong>„teuer"</strong>?',opts:['billig','reich','klein','neu'],ans:0,exp:'<em>teuer ↔ billig</em>.'},
+{type:'mc',id:'w36',sub:'Antonyme',q:'Gegenteil von <strong>„alt"</strong>? (Person)',opts:['neu','jung','klein','kurz'],ans:1,exp:'Bei Personen: <em>alt ↔ jung</em>.'},
+{type:'fill',id:'w37',sub:'Antonyme',q:'Gegenteil von <strong>„hell"</strong>:',inp:'blank',ans:['dunkel'],exp:'<em>hell ↔ dunkel</em>.'},
+{type:'mc',id:'w38',sub:'Antonyme',q:'Gegenteil von <strong>„öffnen"</strong>?',opts:['schließen','aufmachen','beginnen','kaufen'],ans:0,exp:'<em>öffnen ↔ schließen</em>.'},
+{type:'fill',id:'w39',sub:'Antonyme',q:'Gegenteil von <strong>„laut"</strong>:',inp:'blank',ans:['leise'],exp:'<em>laut ↔ leise</em>.'},
+{type:'mc',id:'w40',sub:'Leseverstehen',q:'„Anna steht jeden Tag um 6 Uhr auf. Sie frühstückt und fährt mit dem Fahrrad zur Arbeit."<br>Wie kommt Anna zur Arbeit?',opts:['mit dem Auto','mit dem Bus','mit dem Fahrrad','zu Fuß'],ans:2,exp:'„…fährt mit dem Fahrrad zur Arbeit."'},
+{type:'mc',id:'w41',sub:'Leseverstehen',q:'(Text Anna) Wann steht Anna auf?',opts:['um 5 Uhr','um 6 Uhr','um 7 Uhr','um 8 Uhr'],ans:1,exp:'„…jeden Tag um 6 Uhr auf."'},
+{type:'mc',id:'w42',sub:'Leseverstehen',q:'„Im Sommer fahren viele Deutsche ans Meer oder in die Berge. Sie machen dort Urlaub."<br>Wohin fahren viele Deutsche im Sommer?',opts:['ins Büro','ans Meer oder in die Berge','in die Schule','zur Arbeit'],ans:1,exp:'„…ans Meer oder in die Berge."'},
+{type:'mc',id:'w43',sub:'Leseverstehen',q:'(Text Sommer) Was machen sie dort?',opts:['arbeiten','Urlaub machen','lernen','einkaufen'],ans:1,exp:'„Sie machen dort Urlaub."'},
+{type:'mc',id:'w44',sub:'Leseverstehen',q:'„Herr Müller sucht eine neue Wohnung. Sie soll drei Zimmer haben und nicht zu teuer sein."<br>Was sucht Herr Müller?',opts:['ein Auto','eine Wohnung','einen Job','einen Urlaub'],ans:1,exp:'„…sucht eine neue Wohnung."'},
+{type:'mc',id:'w45',sub:'Leseverstehen',q:'(Text Müller) Wie viele Zimmer soll die Wohnung haben?',opts:['zwei','drei','vier','fünf'],ans:1,exp:'„…drei Zimmer haben."'},
+{type:'mc',id:'w46',sub:'Tagesablauf',q:'Was macht man normalerweise am Abend?',opts:['frühstücken','zu Abend essen','zur Schule gehen','aufwachen'],ans:1,exp:'Am Abend: <em>zu Abend essen</em>.'},
+{type:'fill',id:'w47',sub:'Tagesablauf',q:'Wie heißt das Möbelstück, in dem man schläft?',inp:'medium',ans:['das bett','bett'],exp:'<em>das Bett</em>.'},
+{type:'mc',id:'w48',sub:'Wetter',q:'„Es ist sonnig." Wie ist das Wetter?',opts:['Es regnet.','Die Sonne scheint.','Es schneit.','Es ist neblig.'],ans:1,exp:'sonnig = die <em>Sonne scheint</em>.'},
+{type:'fill',id:'w49',sub:'Wetter',q:'Wie heißt das Wetter, wenn Wasser vom Himmel fällt?',inp:'blank',ans:['regen','der regen'],exp:'<em>der Regen</em> (es regnet).'},
+{type:'mc',id:'w50',sub:'Einkaufen',q:'Wo kauft man Brot und Brötchen?',opts:['in der Bäckerei','in der Apotheke','im Kino','in der Bank'],ans:0,exp:'Brot gibt es in der <em>Bäckerei</em>.'},
+]},
+{id:'textsorten',label:'Textsorten',num:'07',title:'Textsorten & Schreiben',exercises:[
+{type:'mc',id:'ts1',sub:'Anrede',q:'Wie beginnt man eine informelle E-Mail an einen Freund?',opts:['Sehr geehrter Herr Müller,','Liebe Anna,','Hochachtungsvoll,','Mit freundlichen Grüßen'],ans:1,exp:'Informell → <em>Liebe Anna,</em>'},
+{type:'mc',id:'ts2',sub:'Anrede',q:'Wie beginnt man einen formellen Brief?',opts:['Hallo,','Liebe Grüße','Sehr geehrte Damen und Herren,','Tschüss'],ans:2,exp:'Formell → <em>Sehr geehrte Damen und Herren,</em>'},
+{type:'fill',id:'ts3',sub:'Anrede',q:'Ergänze die formelle Anrede an Frau Schmidt:<br><strong>„Sehr geehrte ___ Schmidt,"</strong>',inp:'blank',ans:['frau'],exp:'<em>Sehr geehrte Frau Schmidt,</em>'},
+{type:'mc',id:'ts4',sub:'Anrede',q:'Welche Anrede ist informell?',opts:['Sehr geehrter Herr Dr. Weber,','Hallo Tom,','Sehr geehrte Frau Müller,','Sehr geehrte Damen und Herren,'],ans:1,exp:'<em>Hallo Tom,</em> ist informell.'},
+{type:'mc',id:'ts5',sub:'Grußformel',q:'Wie endet man eine formelle E-Mail?',opts:['Tschüss','Bis bald','Mit freundlichen Grüßen','Liebe Grüße'],ans:2,exp:'Formell → <em>Mit freundlichen Grüßen</em>.'},
+{type:'mc',id:'ts6',sub:'Grußformel',q:'Wie endet man eine informelle Nachricht an einen Freund?',opts:['Mit freundlichen Grüßen','Hochachtungsvoll','Liebe Grüße','Sehr geehrte'],ans:2,exp:'Informell → <em>Liebe Grüße</em> / Viele Grüße.'},
+{type:'fill',id:'ts7',sub:'Grußformel',q:'Ergänze eine informelle Grußformel (zwei Wörter):',inp:'medium',ans:['liebe grüße','viele grüße','bis bald'],exp:'z. B. <em>Liebe Grüße</em>.'},
+{type:'mc',id:'ts8',sub:'informelle E-Mail',q:'Du schreibst einem Freund. Welcher Satz passt?',opts:['Ich teile Ihnen mit, dass …','Hey, wie geht es dir?','Sehr geehrter Herr,','Hochachtungsvoll'],ans:1,exp:'Informell → <em>Hey, wie geht es dir?</em>'},
+{type:'mc',id:'ts9',sub:'informelle E-Mail',q:'Welche Anrede passt zu einem Freund?',opts:['du','Sie','man','es'],ans:0,exp:'Freunde duzt man → <em>du</em>.'},
+{type:'transform',id:'ts10',sub:'informelle E-Mail',q:'Schreibe eine Einladung an einen Freund zu deiner Party (1 Satz mit „kommen" und „Party"):',hint:'Hallo Tom, kommst du am Samstag zu meiner Party?',keys:['party','komm']},
+{type:'mc',id:'ts11',sub:'informelle E-Mail',q:'Wie fragt man informell nach dem Befinden?',opts:['Wie geht es Ihnen?','Wie geht\'s dir?','Wie befinden Sie sich?','Ist alles in Ordnung, Herr?'],ans:1,exp:'Informell → <em>Wie geht\'s dir?</em>'},
+{type:'mc',id:'ts12',sub:'formeller Brief',q:'Welcher Satz ist formell?',opts:['Ich wollte mal fragen …','Ich möchte mich nach … erkundigen.','Hey, eine Frage:','Sag mal …'],ans:1,exp:'Formell → <em>Ich möchte mich … erkundigen.</em>'},
+{type:'mc',id:'ts13',sub:'formeller Brief',q:'Wie bittet man formell um Information?',opts:['Schick mir mal Infos!','Könnten Sie mir bitte Informationen senden?','Gib mir die Infos.','Ich will Infos.'],ans:1,exp:'Höflich-formell mit <em>Könnten Sie …?</em>'},
+{type:'fill',id:'ts14',sub:'formeller Brief',q:'Ergänze höflich: <strong>„___ Sie mir bitte helfen?" (Höflichkeitsfrage)</strong>',inp:'medium',ans:['könnten','würden','können'],exp:'<em>Könnten Sie …?</em>'},
+{type:'mc',id:'ts15',sub:'formeller Brief',q:'In einem formellen Brief benutzt man …',opts:['du','ihr','Sie','man'],ans:2,exp:'Formell → Höflichkeitsform <em>Sie</em>.'},
+{type:'mc',id:'ts16',sub:'Einladung',q:'Welcher Satz ist eine Einladung?',opts:['Ich kann leider nicht kommen.','Ich lade dich zu meinem Geburtstag ein.','Es tut mir leid.','Danke für die Einladung.'],ans:1,exp:'<em>Ich lade dich … ein.</em>'},
+{type:'fill',id:'ts17',sub:'Einladung',q:'Ergänze das trennbare Verb: <strong>„Ich lade dich zur Feier ___."</strong>',inp:'blank',ans:['ein'],exp:'<em>einladen → lade … ein</em>.'},
+{type:'mc',id:'ts18',sub:'Zusage/Absage',q:'Welcher Satz ist eine Zusage?',opts:['Leider kann ich nicht kommen.','Gerne komme ich zu deiner Party!','Ich habe keine Zeit.','Das geht leider nicht.'],ans:1,exp:'Zusage → <em>Gerne komme ich …</em>'},
+{type:'mc',id:'ts19',sub:'Zusage/Absage',q:'Wie sagt man höflich ab?',opts:['Nein.','Leider kann ich nicht kommen, weil ich arbeiten muss.','Keine Lust.','Vielleicht.'],ans:1,exp:'Höfliche Absage mit Begründung.'},
+{type:'transform',id:'ts20',sub:'Zusage/Absage',q:'Schreibe eine höfliche Absage (mit „leider" und einem Grund):',hint:'Leider kann ich nicht kommen, weil ich krank bin.',keys:['leider','weil']},
+{type:'mc',id:'ts21',sub:'Entschuldigung',q:'Wie entschuldigt man sich höflich?',opts:['Ist mir egal.','Es tut mir leid, dass ich zu spät bin.','Na und?','Pech gehabt.'],ans:1,exp:'<em>Es tut mir leid, dass …</em>'},
+{type:'fill',id:'ts22',sub:'Entschuldigung',q:'Ergänze: <strong>„Es ___ mir leid." (Entschuldigung)</strong>',inp:'blank',ans:['tut'],exp:'<em>Es tut mir leid.</em>'},
+{type:'mc',id:'ts23',sub:'Bitte',q:'Wie bittet man höflich um etwas?',opts:['Gib mir das!','Könntest du mir bitte helfen?','Ich will das.','Mach das!'],ans:1,exp:'Höflich → <em>Könntest du …?</em>'},
+{type:'mc',id:'ts24',sub:'Danken',q:'Wie bedankt man sich?',opts:['Vielen Dank für deine Hilfe!','Das ist mir egal.','Tschüss.','Na klar.'],ans:0,exp:'<em>Vielen Dank für …</em>'},
+{type:'fill',id:'ts25',sub:'Danken',q:'Ergänze: <strong>„Vielen ___ für deine Hilfe!"</strong>',inp:'blank',ans:['dank'],exp:'<em>Vielen Dank!</em>'},
+{type:'mc',id:'ts26',sub:'Beschreibung',q:'Welcher Satz beschreibt eine Person?',opts:['Es regnet heute.','Mein Bruder ist groß und hat braune Haare.','Ich gehe einkaufen.','Der Bus kommt um acht.'],ans:1,exp:'Personenbeschreibung mit Aussehen.'},
+{type:'transform',id:'ts27',sub:'Beschreibung',q:'Beschreibe dein Zimmer (1 Satz mit „es gibt" und einem Möbelstück):',hint:'In meinem Zimmer gibt es ein Bett und einen Schreibtisch.',keys:['gibt','zimmer']},
+{type:'mc',id:'ts28',sub:'Beschreibung',q:'Welches Wort beschreibt einen Charakter?',opts:['groß','blau','freundlich','rund'],ans:2,exp:'<em>freundlich</em> beschreibt den Charakter.'},
+{type:'mc',id:'ts29',sub:'Mitteilung',q:'Eine kurze Notiz für die Familie: Welcher Satz passt?',opts:['Sehr geehrte Damen und Herren','Bin beim Einkaufen, komme um 18 Uhr zurück.','Hochachtungsvoll','Ich erlaube mir mitzuteilen'],ans:1,exp:'Kurze, informelle Mitteilung.'},
+{type:'fill',id:'ts30',sub:'Mitteilung',q:'Ergänze eine kurze Notiz: <strong>„Bin beim Arzt. ___ um 17 Uhr zurück."</strong>',inp:'blank',ans:['komme','bin'],exp:'z. B. <em>Komme um 17 Uhr zurück.</em>'},
+{type:'mc',id:'ts31',sub:'E-Mail Struktur',q:'Was steht am Anfang einer E-Mail?',opts:['die Grußformel','die Anrede','die Unterschrift','das Datum'],ans:1,exp:'Zuerst kommt die <em>Anrede</em>.'},
+{type:'mc',id:'ts32',sub:'E-Mail Struktur',q:'Was steht am Ende einer E-Mail vor dem Namen?',opts:['die Anrede','die Grußformel','der Betreff','die Frage'],ans:1,exp:'Vor dem Namen → <em>Grußformel</em>.'},
+{type:'fill',id:'ts33',sub:'E-Mail Struktur',q:'Wie heißt die kurze Zeile, die das Thema der E-Mail nennt?',inp:'medium',ans:['der betreff','betreff'],exp:'<em>der Betreff</em>.'},
+{type:'mc',id:'ts34',sub:'Redemittel',q:'Wie leitet man den Grund einer E-Mail ein?',opts:['Tschüss','Ich schreibe dir, weil …','Liebe Grüße','Mit freundlichen Grüßen'],ans:1,exp:'<em>Ich schreibe dir, weil …</em>'},
+{type:'mc',id:'ts35',sub:'Redemittel',q:'Wie fragt man höflich nach einer Antwort?',opts:['Antworte sofort!','Ich freue mich auf deine Antwort.','Schreib zurück!','Mach schnell.'],ans:1,exp:'Höflich → <em>Ich freue mich auf deine Antwort.</em>'},
+{type:'fill',id:'ts36',sub:'Redemittel',q:'Ergänze: <strong>„Ich ___ mich auf deine Antwort." (sich freuen)</strong>',inp:'blank',ans:['freue'],exp:'<em>Ich freue mich …</em>'},
+{type:'mc',id:'ts37',sub:'Redemittel',q:'Wie macht man einen Vorschlag?',opts:['Du musst kommen.','Wollen wir ins Kino gehen?','Komm sofort!','Ich befehle dir.'],ans:1,exp:'Vorschlag → <em>Wollen wir …?</em>'},
+{type:'mc',id:'ts38',sub:'Redemittel',q:'Wie drückt man eine Meinung aus?',opts:['Es regnet.','Ich finde, dass Sport wichtig ist.','Der Bus kommt.','Wie spät ist es?'],ans:1,exp:'Meinung → <em>Ich finde, dass …</em>'},
+{type:'fill',id:'ts39',sub:'Redemittel',q:'Ergänze: <strong>„Meiner ___ nach ist das richtig." (Meinung)</strong>',inp:'blank',ans:['meinung'],exp:'<em>Meiner Meinung nach …</em>'},
+{type:'mc',id:'ts40',sub:'Anfrage',q:'Welcher Satz ist eine einfache formelle Anfrage?',opts:['Ich will einen Termin.','Ich hätte gerne einen Termin am Montag.','Gib mir einen Termin.','Termin Montag.'],ans:1,exp:'Höflich → <em>Ich hätte gerne …</em>'},
+{type:'mc',id:'ts41',sub:'Anfrage',q:'Wie fragt man nach dem Preis?',opts:['Wie viel kostet das?','Wo ist das?','Wann ist das?','Wer ist das?'],ans:0,exp:'Preis → <em>Wie viel kostet das?</em>'},
+{type:'fill',id:'ts42',sub:'Anfrage',q:'Ergänze: <strong>„Ich ___ gerne wissen, wann der Kurs beginnt." (möchten)</strong>',inp:'blank',ans:['möchte','würde'],exp:'<em>Ich möchte gerne wissen …</em>'},
+{type:'mc',id:'ts43',sub:'Textsortenwissen',q:'Was ist eine SMS/Nachricht typischerweise?',opts:['lang und formell','kurz und informell','ein Brief','ein Vertrag'],ans:1,exp:'Eine Nachricht ist meist <em>kurz und informell</em>.'},
+{type:'mc',id:'ts44',sub:'Textsortenwissen',q:'Wofür schreibt man einen Lebenslauf?',opts:['für eine Party','für eine Bewerbung','für den Urlaub','für Freunde'],ans:1,exp:'Lebenslauf gehört zur <em>Bewerbung</em>.'},
+{type:'mc',id:'ts45',sub:'Textsortenwissen',q:'Welche Textsorte ist formell?',opts:['Nachricht an Freund','Bewerbungsschreiben','Einkaufszettel','Notiz für die Familie'],ans:1,exp:'<em>Bewerbungsschreiben</em> ist formell.'},
+{type:'mc',id:'ts46',sub:'Verbindungswörter',q:'Wie zählt man im Text auf?',opts:['Erstens … Zweitens …','Tschüss … Hallo …','Leider … Gerne …','Ja … Nein …'],ans:0,exp:'Aufzählung → <em>Erstens … Zweitens …</em>'},
+{type:'mc',id:'ts47',sub:'Verbindungswörter',q:'Wie schließt man einen Text ab?',opts:['Zuerst','Zum Schluss / Abschließend','Erstens','Außerdem'],ans:1,exp:'Schluss → <em>Zum Schluss / Abschließend</em>.'},
+{type:'fill',id:'ts48',sub:'Verbindungswörter',q:'Ergänze ein Wort für eine Ergänzung: <strong>„Das Hotel ist schön. ___ ist es billig." (zusätzlich)</strong>',inp:'blank',ans:['außerdem','auch','zudem'],exp:'z. B. <em>Außerdem …</em>'},
+{type:'transform',id:'ts49',sub:'Schreiben',q:'Schreibe eine kurze Bitte an deinen Lehrer (formell, mit „Könnten Sie"):',hint:'Sehr geehrter Herr Müller, könnten Sie mir bitte die Hausaufgaben schicken?',keys:['könnten sie','bitte']},
+{type:'transform',id:'ts50',sub:'Schreiben',q:'Schreibe eine kurze Antwort auf eine Einladung (Zusage mit „gerne"):',hint:'Liebe Anna, gerne komme ich zu deiner Party. Vielen Dank für die Einladung!',keys:['gerne','komme']},
+]},
+];
+const state={total:0,correct:0,answered:new Set()};
+let currentSection=0;
+const PAGE_SIZE=10;
+let currentPage={};
+function updateScore(){
+  document.getElementById('scoreBadge').textContent=`${state.correct} / ${state.total} richtig`;
+  const pct=state.total===0?0:Math.round(state.correct/state.total*100);
+  document.getElementById('pctBadge').textContent=`${pct}% Trefferquote`;
+  document.getElementById('pbar').style.width=(state.answered.size===0?0:Math.min(100,Math.round(state.answered.size/350*100)))+'%';
+}
+function buildTabs(){
+  const bar=document.getElementById('tabBar');
+  SECTIONS.forEach((sec,i)=>{
+    const b=document.createElement('button');
+    b.className='tab-btn'+(i===0?' active':'');
+    b.innerHTML=`${sec.label} <span class="cnt">${sec.exercises.length}</span>`;
+    b.onclick=()=>showSection(i);
+    bar.appendChild(b);
+  });
+}
+function showSection(idx){
+  currentSection=idx;
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  renderSection(idx);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderSection(idx){
+  const sec=SECTIONS[idx];
+  const mc=document.getElementById('mainContainer');
+  if(!currentPage[idx])currentPage[idx]=0;
+  const page=currentPage[idx];
+  const exercises=sec.exercises;
+  const totalPages=Math.ceil(exercises.length/PAGE_SIZE);
+  const start=page*PAGE_SIZE;
+  const slice=exercises.slice(start,start+PAGE_SIZE);
+  const grouped={};
+  slice.forEach(ex=>{if(!grouped[ex.sub])grouped[ex.sub]=[];grouped[ex.sub].push(ex);});
+  let html=`<div class="sec-hdr" data-num="${sec.num}"><h2>${sec.title}</h2></div>`;
+  html+=`<div class="pg-info">Seite ${page+1} von ${totalPages} · Übungen ${start+1}–${Math.min(start+PAGE_SIZE,exercises.length)} von ${exercises.length}</div>`;
+  html+=`<div class="pg-btns">`;
+  for(let p=0;p<totalPages;p++)html+=`<button class="pg-btn${p===page?' active-pg':''}" onclick="changePage(${idx},${p})">${p+1}</button>`;
+  html+=`</div>`;
+  Object.entries(grouped).forEach(([sub,exs])=>{
+    html+=`<div class="subsec">${sub}</div>`;
+    exs.forEach(ex=>{html+=renderExercise(ex);});
+  });
+  html+=`<div class="pg-btns" style="margin-top:2rem">`;
+  if(page>0)html+=`<button class="pg-btn" onclick="changePage(${idx},${page-1})">← Zurück</button>`;
+  if(page<totalPages-1)html+=`<button class="pg-btn" onclick="changePage(${idx},${page+1})">Weiter →</button>`;
+  html+=`</div>`;
+  mc.innerHTML=html;
+}
+function changePage(secIdx,page){
+  currentPage[secIdx]=page;
+  renderSection(secIdx);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderExercise(ex){
+  const num=ex.id;
+  const isDone=state.answered.has(num);
+  let html=`<div class="card${isDone?' ok':''}" id="card-${num}"><span class="card-num">#${num.toUpperCase()}</span>`;
+  html+=`<div class="prompt">${ex.q}</div>`;
+  if(ex.type==='mc'){
+    const letters=['A','B','C','D'];
+    html+=`<div class="choices">`;
+    ex.opts.forEach((opt,i)=>{
+      let cls='';
+      if(isDone&&i===ex.ans)cls='ok';
+      html+=`<button class="opt${cls?' '+cls:''}" onclick="checkMC('${num}',${i},${ex.ans},'${(ex.exp||'').replace(/'/g,"\\'")}')"`+(isDone?' disabled':'')+`><span class="ltr">${letters[i]}</span>${opt}</button>`;
+    });
+    html+=`</div>`;
+    if(isDone&&ex.exp)html+=`<div class="fb ok show"><i class="bi-check-circle-fill"></i> ${ex.exp}</div>`;
+    else html+=`<div class="fb" id="fb-${num}"></div>`;
+  } else if(ex.type==='fill'){
+    const w=ex.inp==='blank'?'inp-sm':ex.inp==='medium'?'inp-md':'inp-lg';
+    html+=`<div class="fill-row"><input class="inp ${w}" id="inp-${num}" placeholder="…"${isDone?' disabled':''}></div>`;
+    if(!isDone)html+=`<button class="btn" onclick="checkFill('${num}')">Prüfen</button>`;
+    html+=`<div class="fb" id="fb-${num}">${isDone?'<span style="color:var(--p)">Beantwortet.</span>':''}</div>`;
+  } else if(ex.type==='transform'){
+    html+=`<textarea class="inp" id="inp-${num}" placeholder="Antwort …"${isDone?' disabled':''}></textarea>`;
+    if(ex.hint)html+=`<span class="hint-lnk" onclick="toggleHint('hint-${num}')"><i class="bi-search"></i> Tipp anzeigen</span><div class="hint-box" id="hint-${num}">${ex.hint}</div>`;
+    if(!isDone)html+=`<button class="btn" onclick="checkTransform('${num}')">Prüfen</button>`;
+    html+=`<div class="fb" id="fb-${num}">${isDone?'<span style="color:var(--p)">Beantwortet.</span>':''}</div>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+function checkMC(id,chosen,correct,exp){
+  if(state.answered.has(id))return;
+  state.answered.add(id);state.total++;
+  const card=document.getElementById('card-'+id);
+  card.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('ok');else if(i===chosen)b.classList.add('err');});
+  const ok=chosen===correct;
+  if(ok)state.correct++;
+  const fb=document.getElementById('fb-'+id);
+  if(fb){fb.innerHTML=ok?`<i class="bi-check-circle-fill"></i> Richtig! ${exp}`:`<i class="bi-x-circle-fill"></i> Falsch. Richtig: Option ${['A','B','C','D'][correct]}. ${exp}`;fb.className='fb '+(ok?'ok':'err')+' show';}
+  card.classList.add(ok?'ok':'err');
+  updateScore();
+}
+function findEx(id){for(const sec of SECTIONS)for(const ex of sec.exercises)if(ex.id===id)return ex;return null;}
+function checkFill(id){
+  if(state.answered.has(id))return;
+  const ex=findEx(id);if(!ex)return;
+  const inp=document.getElementById('inp-'+id);
+  const val=inp.value.trim().toLowerCase();
+  const ok=ex.ans.some(a=>val===a.toLowerCase()||val.replace(/\s+/g,' ')===a.toLowerCase());
+  state.answered.add(id);state.total++;
+  if(ok)state.correct++;
+  inp.disabled=true;inp.classList.add(ok?'ok':'err');
+  const card=document.getElementById('card-'+id);card.classList.add(ok?'ok':'err');
+  const fb=document.getElementById('fb-'+id);
+  fb.innerHTML=ok?`<i class="bi-check-circle-fill"></i> Richtig! ${ex.exp||''}`:`<i class="bi-x-circle-fill"></i> Falsch. Richtig: <strong>${ex.ans[0]}</strong>. ${ex.exp||''}`;
+  fb.className='fb '+(ok?'ok':'err')+' show';
+  updateScore();
+}
+function checkTransform(id){
+  if(state.answered.has(id))return;
+  const ex=findEx(id);if(!ex)return;
+  const ta=document.getElementById('inp-'+id);
+  const val=ta.value.trim().toLowerCase();
+  if(!val){const fb=document.getElementById('fb-'+id);fb.innerHTML='<i class="bi-exclamation-triangle-fill"></i> Bitte einen Satz eingeben.';fb.className='fb err show';return;}
+  const ok=ex.keys.every(k=>val.includes(k.toLowerCase()));
+  state.answered.add(id);state.total++;
+  if(ok)state.correct++;
+  ta.disabled=true;ta.classList.add(ok?'ok':'err');
+  const card=document.getElementById('card-'+id);card.classList.add(ok?'ok':'err');
+  const fb=document.getElementById('fb-'+id);
+  fb.innerHTML=ok?`<i class="bi-check-circle-fill"></i> Gut! Enthält die wesentlichen Elemente.`:`<i class="bi-x-circle-fill"></i> Überprüfe deine Antwort. Tipp: ${ex.hint||''}`;
+  fb.className='fb '+(ok?'ok':'err')+' show';
+  updateScore();
+}
+function toggleHint(id){const h=document.getElementById(id);if(h)h.classList.toggle('show');}
+buildTabs();
+renderSection(0);
+</script>
+</body>
+</html>

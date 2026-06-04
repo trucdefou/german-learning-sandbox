@@ -39,16 +39,19 @@ speaking, all with instant feedback.
 ## Project structure
 
 ```
-index.html                 Landing page (level selection)
-b1-deutsch-komplett.html    B1 written workbook (350 exercises)
-b1-hoeren-sprechen.html     B1 listening & speaking (Web Speech API)
-b2-deutsch-komplett.html    B2 written workbook (350 exercises)
-b2-hoeren-sprechen.html     B2 listening & speaking (Web Speech API)
+deutsch/
+  index.html                Landing page (level selection)
+  b1/
+    schriftlich.html        B1 written workbook (350 exercises)
+    hoeren-sprechen.html    B1 listening & speaking (Web Speech API)
+  b2/
+    schriftlich.html        B2 written workbook (350 exercises)
+    hoeren-sprechen.html    B2 listening & speaking (Web Speech API)
 assets/img/                 Favicons
 ```
 
 ## Usage
 
-Open `index.html` in a modern browser and pick a level. For the
+Open `deutsch/index.html` in a modern browser and pick a level. For the
 **Hören & Sprechen** modules, use **Chrome** or **Edge** and allow microphone
 access, since they rely on the Web Speech API.
